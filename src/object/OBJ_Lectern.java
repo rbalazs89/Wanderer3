@@ -17,5 +17,4 @@ public class OBJ_Lectern extends SuperObject{
         solidArea.width = 64 - 20;
         solidArea.height = 59;
     }
-
 }

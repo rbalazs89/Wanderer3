@@ -32,7 +32,6 @@ public class GamePanel extends JPanel implements Runnable{
     //SAVELOAD:
     public ProgressQuest progress = new ProgressQuest(this);
     public SaveLoad saveLoad = new SaveLoad(this);
-
     public int saveSlotNumber;
     /////////////////////////////////////////////////////////////////////
     public ItemGenerator itemGenerator = new ItemGenerator(this);
@@ -88,8 +87,8 @@ public class GamePanel extends JPanel implements Runnable{
     public ArrayList<Entity> allFightingEntities = new ArrayList<>();
     public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
-    public Entity npc[][] = new Entity[maxMapNumber][30];
-    public Entity fighters[][] = new Entity[maxMapNumber][30];
+    public Entity[][] npc = new Entity[maxMapNumber][30];
+    public Entity[][] fighters = new Entity[maxMapNumber][30];
     ArrayList<Entity> entityList = new ArrayList<>(); // to draw based on Y coordinate
     public ArrayList<Entity> attacks = new ArrayList<>(); // melee attacks
     public ArrayList<Entity> spells = new ArrayList<>(); // all spells
@@ -106,7 +105,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public UI ui = new UI(this);
 
-    public SuperObject obj[][] = new SuperObject[maxMapNumber][30]; // solid doors, pickables on touch, events on touch etc
+    public SuperObject[][] obj = new SuperObject[maxMapNumber][30]; // solid doors, pickables on touch, events on touch etc
     public CollisionChecker cChecker= new CollisionChecker(this);
     public ArrayList<SuperObject> interactObjects = new ArrayList<>(); // pickables with interact key, must be updated based on current ma
 
@@ -143,7 +142,6 @@ public class GamePanel extends JPanel implements Runnable{
     public final int loadSavedGameLoadingState = 13;
 
     public final  UtilityTool uTool = new UtilityTool(this);
-
 
     //TODO different resolution, I couldn't make resizing work properly
 

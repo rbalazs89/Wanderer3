@@ -211,5 +211,4 @@ public class SuperObject {
         }
         else return 32;
     }
-
 }

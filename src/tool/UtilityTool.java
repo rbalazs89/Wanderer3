@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-public class UtilityTool {
+public class    UtilityTool {
 
     GamePanel gp;
 

@@ -8,7 +8,6 @@ import java.io.IOException;
 
 public class Main {
     public static JFrame window;
-
     public static void main(String[] args) {
 
         Image cursorImage = Toolkit.getDefaultToolkit().getImage(Main.class.getResource("/ui/pointer.png"));

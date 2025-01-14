@@ -48,14 +48,14 @@ public class KeyHandler implements KeyListener {
                 fPressed = true;
             }
 
-            else if (code == KeyEvent.VK_M){
+            /*else if (code == KeyEvent.VK_M){
                 gp.player.life += 10;
                 gp.player.mana += 10;
             }
             else if (code == KeyEvent.VK_N){
                 gp.player.life -= 10;
                 gp.player.mana -= 10;
-            }
+            }*/
             if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP){
                 upPressed = true;
                 upPressed2 = true;
