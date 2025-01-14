@@ -47,7 +47,6 @@ public class KeyHandler implements KeyListener {
             else if(code == KeyEvent.VK_F){
                 fPressed = true;
             }
-
             /*else if (code == KeyEvent.VK_M){
                 gp.player.life += 10;
                 gp.player.mana += 10;
