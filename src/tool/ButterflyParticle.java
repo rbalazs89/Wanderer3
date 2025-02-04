@@ -10,7 +10,7 @@ public class ButterflyParticle {
     public int y;
     private float vx, vy; // Velocity components
 
-    private Random rand = new Random();
+    private final Random rand = new Random();
     //public boolean flyCloseToEachOther;
     //public BufferedImage[] images;
     private int spriteCounter = 0;

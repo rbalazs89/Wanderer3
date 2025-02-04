@@ -5,7 +5,6 @@ import tool.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +13,7 @@ import java.util.Random;
 
 public class DecorManager {
     GamePanel gp;
-    public int mapLocationNum[][];
+    public int[][] mapLocationNum;
     Decor[] images = new Decor[300];
     public DecorManager(GamePanel gp) {
         this.gp = gp;
@@ -69,7 +68,7 @@ public class DecorManager {
             while (col < gp.currentMapMaxCol && row < gp.currentMapMaxRow){
                 String line = br.readLine();
                 while(col < gp.currentMapMaxCol) {
-                    String numbers[] = line.split(" ");
+                    String[] numbers = line.split(" ");
 
                     int num = Integer.parseInt(numbers[col]);
 
@@ -84,7 +83,7 @@ public class DecorManager {
             }
             br.close();
         }
-        catch (Exception e){
+        catch (Exception ignored){
 
         }
     }
@@ -97,16 +96,16 @@ public class DecorManager {
                 int tileNum = mapLocationNum[worldCol][worldRow];
 
                 if (tileNum != 0) {
-                    int worldX = worldCol * gp.tileSize;
-                    int worldY = worldRow * gp.tileSize;
+                    int worldX = worldCol * GamePanel.tileSize;
+                    int worldY = worldRow * GamePanel.tileSize;
                     int screenX = worldX - gp.player.worldX + gp.player.screenX;
                     int screenY = worldY - gp.player.worldY + gp.player.screenY;
                     Decor currentDecor = images[tileNum];
 
-                    if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                            worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                            worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                            worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+                    if (worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                            worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                            worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                            worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY) {
                         if(currentDecor.allowRandomPosWithinTile){
                             g2.drawImage(currentDecor.image, screenX + currentDecor.posXWithinTile, screenY + currentDecor.posYWithinTile, null);
                         } else {
@@ -128,7 +127,7 @@ public class DecorManager {
         images[index] = new Decor();
         try {
             images[index].image = ImageIO.read(getClass().getResourceAsStream("/decor/" + imagePath +".png"));
-            images[index].image = uTool.scaleImage(images[index].image, gp.tileSize, gp.tileSize);
+            images[index].image = uTool.scaleImage(images[index].image, GamePanel.tileSize, GamePanel.tileSize);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -147,8 +146,8 @@ public class DecorManager {
             e.printStackTrace();
         }
         if(allowRandomWithinTile){
-            decor.posYWithinTile = random.nextInt(gp.tileSize - decor.image.getWidth() + 1);
-            decor.posXWithinTile = random.nextInt(gp.tileSize - decor.image.getHeight() + 1);
+            decor.posYWithinTile = random.nextInt(GamePanel.tileSize - decor.image.getWidth() + 1);
+            decor.posXWithinTile = random.nextInt(GamePanel.tileSize - decor.image.getHeight() + 1);
         }
     }
 }
