@@ -10,7 +10,6 @@ public class OBJ_NPCShopA1House extends SuperObject{
     InventoryPage shopInventory = new InventoryPage(gp);
     public OBJ_NPCShopA1House(GamePanel gp) {
         super(gp);
-        this.gp = gp;
         interactable = true;
         image = null;
         getGlitterImages();

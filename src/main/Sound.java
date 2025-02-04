@@ -5,10 +5,14 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Sound {
 
     Clip clip;
+    private static final List<Clip> activeClips = new ArrayList<>();
+
     URL soundURL[] = new URL[100];
     FloatControl fc;
     public int volumeScale = 8; //starting volume
@@ -99,6 +103,14 @@ public class Sound {
         soundURL[77] = getClass().getResource("/sound/music/villagechill.wav");
         soundURL[78] = getClass().getResource("/sound/inventory/placeItem.wav");
         soundURL[79] = getClass().getResource("/sound/inventory/grabItem.wav");
+        soundURL[80] = getClass().getResource("/sound/npc/happyturtle.wav");
+        soundURL[81] = getClass().getResource("/sound/music/icelandkindergarden.wav");
+        soundURL[82] = getClass().getResource("/sound/attacks/arrowsound.wav");
+        soundURL[83] = getClass().getResource("/sound/npc/butterflyhealing.wav");
+        soundURL[84] = getClass().getResource("/sound/npc/slipandfall.wav");
+        soundURL[85] = getClass().getResource("/sound/npc/childcry1.wav");
+        soundURL[86] = getClass().getResource("/sound/npc/childcry2.wav");
+        soundURL[87] = getClass().getResource("/sound/npc/childcry3.wav");
     }
 
     public void setFile(int i){
@@ -114,18 +126,51 @@ public class Sound {
         }
     }
 
+
     public void play() {
-        clip.start();
+        if (clip != null) {
+            clip.start();
+        }
     }
+
+    /*
+    public void play() {
+        if (clip != null) {
+            stop(); // Stop previous sound effect before playing a new one
+            clip.setFramePosition(0);
+            clip.start();
+            activeClips.add(clip);  // Keep track of this clip
+        }
+    }*/
 
     public void loop() {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
+
     public void stop(){
-        if( clip != null){
+        if (clip != null){
             clip.stop();
         }
+    }
+
+    /*public void stop() {
+        if (clip != null && clip.isRunning()) {
+            clip.stop();
+            clip.flush();
+            clip.setFramePosition(0);
+        }
+    }*/
+
+    public static void stopAllSE() {
+        /*for (Clip c : activeClips) {
+            if (c.isRunning()) {
+                c.stop();
+                c.flush();
+                c.close();
+            }
+        }
+        activeClips.clear(); // Remove all stopped clips from memory*/
     }
 
     public void checkVolume() {

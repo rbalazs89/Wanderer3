@@ -1,6 +1,5 @@
 package entity.monster.act1;
 
-import entity.Entity;
 import entity.Fighter;
 import main.GamePanel;
 
@@ -63,7 +62,7 @@ public class MON_Ghost extends Fighter {
     public void setActionAI(){
         if(!isGoingBackToSpawn){
             controlSpeed();
-            randomMovement();
+            setDirectionFromRandomMovement();
         }
 
         goBackCheckCounter++;
@@ -102,7 +101,7 @@ public class MON_Ghost extends Fighter {
 
         if(isDying){
             if(deathTimeCounter == 1){
-                specialOnDeath();
+                specialOnDying();
                 playDeathSound();
                 //dropItem(); doesnt drop item
                 speed = 0;
@@ -130,7 +129,7 @@ public class MON_Ghost extends Fighter {
 
     }
 
-    public void specialOnDeath(){
+    public void specialOnDying(){
         gp.player.momoJuice.charge = Math.min(gp.player.momoJuice.charge + 1,gp.player.momoJuice.maxCharge);
     }
 

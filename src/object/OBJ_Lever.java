@@ -2,17 +2,10 @@ package object;
 
 import main.GamePanel;
 
-import javax.imageio.ImageIO;
-import java.io.IOException;
-import java.util.ArrayList;
-
 public class OBJ_Lever extends SuperObject{
-
-    GamePanel gp;
 
     public OBJ_Lever(GamePanel gp) {
         super(gp);
-        this.gp = gp;
         interactable = true;
         image = setup("/objects/interact/lever_p0");
         getGlitterImages();

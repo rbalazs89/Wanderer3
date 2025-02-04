@@ -3,16 +3,16 @@ import main.GamePanel;
 
 import java.awt.*;
 
-public class NPC_Villager extends Entity {
+public class NPC_Villager extends NPC {
 
     public NPC_Villager(GamePanel gp) {
         super(gp);
         direction = "down";
         speed = 1;
-        solidArea = new Rectangle(3 * gp.tileSize / 16,
-                gp.tileSize * 5/ 16,
-                gp.tileSize * 10 / 16,
-                gp.tileSize * 11 / 16);
+        solidArea = new Rectangle(3 * GamePanel.tileSize / 16,
+                GamePanel.tileSize * 5/ 16,
+                GamePanel.tileSize * 10 / 16,
+                GamePanel.tileSize * 11 / 16);
 
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
@@ -52,7 +52,7 @@ public class NPC_Villager extends Entity {
     }
 
     public void getImage() {
-        int tileSize = gp.tileSize;
+        int tileSize = GamePanel.tileSize;
 
         up1 = setup("/entity/npcvillager/villager_male_up_1", tileSize, tileSize);
         up2 = setup("/entity/npcvillager/villager_male_up_2", tileSize, tileSize);
@@ -69,8 +69,8 @@ public class NPC_Villager extends Entity {
         setActionWhenNear();
 
         if(targetPathFollowed){
-            int goalCol = gp.player.worldMiddleX() / gp.tileSize;
-            int goalRow = gp.player.worldMiddleY()/gp.tileSize;
+            int goalCol = gp.player.worldMiddleX() / GamePanel.tileSize;
+            int goalRow = gp.player.worldMiddleY()/ GamePanel.tileSize;
 
             searchPath(goalCol, goalRow, false);
         }
@@ -88,7 +88,7 @@ public class NPC_Villager extends Entity {
                 if (50 < i && i <= 75) {
                     direction = "left";
                 }
-                if (75 < i && i <= 100) {
+                if (75 < i) {
                     direction = "right";
                 }
                 actionLockCounter = 0;

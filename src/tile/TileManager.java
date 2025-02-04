@@ -16,7 +16,7 @@ public class TileManager {
     GamePanel gp;
     public Tile[] tile;
     public int mapTileNum[][];
-    public boolean drawPath = false;
+    public boolean drawPath = true;
     public BufferedImage tileSheetImage;
 
     public TileManager(GamePanel gp){

@@ -28,6 +28,10 @@ import static java.awt.Color.BLACK;
 import static main.Main.window;
 
 public class GamePanel extends JPanel implements Runnable{
+    // TODO use int r = ThreadLocalRandom.current().nextInt(100); // 0 inc, 100 excl
+
+    public static final int maxNPC = 30;
+    public static final int maxOBJ = 30;
 
     //SAVELOAD:
     public ProgressQuest progress = new ProgressQuest(this);
@@ -52,8 +56,8 @@ public class GamePanel extends JPanel implements Runnable{
     public DataBaseClass1 dataBase1 = new DataBaseClass1(this);
     static final int scale = 1;
     public static final int tileSize = originalTileSize * scale;
-    public int maxScreenCol = 16;
-    public int maxScreenRow = 12;
+    public static final int maxScreenCol = 16;
+    public static final int maxScreenRow = 12;
     public final int screenWidth = tileSize * maxScreenCol; // 1024
     public final int screenHeight = tileSize * maxScreenRow; // 768
 
@@ -62,7 +66,7 @@ public class GamePanel extends JPanel implements Runnable{
     //public final int maxWorldRow = 50;
     public int currentMapMaxCol;
     public int currentMapMaxRow;
-    public int currentMap = 1; // TODO should load from save file
+    public int currentMap = 1;
 
     //full screen settings:
     int screenWidth2 = screenWidth;
@@ -87,7 +91,7 @@ public class GamePanel extends JPanel implements Runnable{
     public ArrayList<Entity> allFightingEntities = new ArrayList<>();
     public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
-    public Entity[][] npc = new Entity[maxMapNumber][30];
+    public Entity[][] npc = new Entity[maxMapNumber][maxNPC];
     public Entity[][] fighters = new Entity[maxMapNumber][30];
     ArrayList<Entity> entityList = new ArrayList<>(); // to draw based on Y coordinate
     public ArrayList<Entity> attacks = new ArrayList<>(); // melee attacks
@@ -105,7 +109,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public UI ui = new UI(this);
 
-    public SuperObject[][] obj = new SuperObject[maxMapNumber][30]; // solid doors, pickables on touch, events on touch etc
+    public SuperObject[][] obj = new SuperObject[maxMapNumber][maxOBJ]; // solid doors, pickables on touch, events on touch etc
     public CollisionChecker cChecker= new CollisionChecker(this);
     public ArrayList<SuperObject> interactObjects = new ArrayList<>(); // pickables with interact key, must be updated based on current ma
 
@@ -142,6 +146,11 @@ public class GamePanel extends JPanel implements Runnable{
     public final int loadSavedGameLoadingState = 13;
 
     public final  UtilityTool uTool = new UtilityTool(this);
+    // TODO not used for now, player middle position is used, will be calculated from player class
+    public static final int halfHeight = maxScreenRow * tileSize / 2;
+    public static final int halfWidth = maxScreenCol * tileSize / 2;
+    public int anchorX;
+    public int anchorY;
 
     //TODO different resolution, I couldn't make resizing work properly
 
@@ -343,8 +352,10 @@ public class GamePanel extends JPanel implements Runnable{
                 decorManager.draw(g2);
                 mapBlockManager.draw(g2, this);
                 for (int i = 0; i < obj[1].length; i++) {
-                    if (obj[currentMap][i] != null && !obj[currentMap][i].interactable) {
-                        obj[currentMap][i].draw(g2, this);
+                    if (obj[currentMap][i] != null) {
+                        if(!obj[currentMap][i].interactable){
+                            obj[currentMap][i].draw(g2, this);
+                        }
                     }
                 }
 
@@ -435,6 +446,10 @@ public class GamePanel extends JPanel implements Runnable{
     public void stopMusic(){
         music.stop();
     }
+    public void stopSE() {
+        se.stopAllSE();
+    }
+
 
     public void playSE(int i) {
         se.setFile(i);
@@ -597,15 +612,25 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void mapSwitch(){
-        //assets:
+        //assets & special
         if (currentMap == 1){
             aSetter.ghostsNearCemetery();
+            aSetter.setTurtleInCampBasedOnQuestA1();
+        } else if(currentMap == 5){
+            aSetter.setSingersKindergarten(5);
         }
         else if(currentMap == 7){
             aSetter.setBigBroFighter();
         }
         else if(currentMap == 9){
             aSetter.setBigBroNPC();
+        } else if (currentMap == 11){
+
+        }
+
+        if(progress.act1InteractedObjects[4]){
+            npc[3][0] = null;
+            // removes freed turtle, should be moved to camp
         }
 
         gameState = transitionState;
@@ -637,10 +662,42 @@ public class GamePanel extends JPanel implements Runnable{
         eManager.update();
 
         player.refreshPlayerStatsNoItems();
-        startSinging(currentMap);
+
+        //stopSE();
+
+        if(currentMap != 11){
+            startSinging(currentMap);
+        }
+
+        if(currentMap == 11){
+            if(fighters[11][0] != null){
+                startSinging(currentMap);
+            }
+        }
+
     }
 
     public void resetPuzzles(){
         obj[10][29] = null;
+    }
+
+
+    public void restartMusic(){
+        if(currentMap != 11 && currentMap != 5){
+            startSinging(currentMap);
+        }
+        if(currentMap == 5){
+            if(npc[currentMap][0] != null){
+                if(npc[currentMap][0].singing){
+                    startSinging(currentMap);
+                }
+            }
+        }
+        if(currentMap == 11){
+            if(fighters[currentMap][0] != null){
+                startSinging(currentMap);
+            }
+        }
+
     }
 }

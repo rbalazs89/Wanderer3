@@ -4,7 +4,6 @@ import entity.Entity;
 import entity.Fighter;
 import entity.attacks.projectile.MON_FireBall;
 import main.GamePanel;
-import object.OBJ_DroppedItem;
 import object.OBJ_DroppedTalentBook;
 
 import java.util.ArrayList;
@@ -94,7 +93,6 @@ public class MON_RedWizard extends Fighter {
             if(targetEntity != null) {
                 new MON_FireBall(gp, this, targetEntity, 3);
             }
-
         }
 
         if(attackFrameCounter == attackFramePoint2){
@@ -198,7 +196,7 @@ public class MON_RedWizard extends Fighter {
 
         } else {
 
-            randomMovement();
+            setDirectionFromRandomMovement();
             // only perform this calculation 3 times per second, not every frame:
             checkForEnemiesCounter++;
             Entity closestFightingEnemy = null;

@@ -115,7 +115,7 @@ public class MON_Skeleton extends Fighter {
         if(targetPathFollowed){
             setActionAIPath();
         } else {
-            randomMovement();
+            setDirectionFromRandomMovement();
 
             // only perform this calculation 3 times per second, not every frame:
             checkForEnemiesCounter++;

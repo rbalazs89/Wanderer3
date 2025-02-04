@@ -7,14 +7,12 @@ import java.awt.*;
 import java.io.IOException;
 
 public class OBJ_MapTransition extends SuperObject{
-    GamePanel gp;
     int nextMapNumber;
     int playerPosX;
     int playerPosY;
 
     public OBJ_MapTransition(GamePanel gp, int nextMapNumber, int playerPosX, int playerPosY) {
         super(gp);
-        this.gp = gp;
         this.nextMapNumber = nextMapNumber;
         this.playerPosX = playerPosX;
         this.playerPosY = playerPosY;

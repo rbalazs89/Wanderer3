@@ -14,7 +14,6 @@ public class A_Brother extends Fighter {
 
     public A_Brother(GamePanel gp){
         super(gp);
-        this.gp = gp;
         entityType = 5;
         drawHpBar = true;
         collisionEntity = false;
@@ -127,7 +126,7 @@ public class A_Brother extends Fighter {
 
 
     public void createAttackInstance() {
-        new BRO_MeleeAttack(gp, attackFramePoint2 - attackFramePoint1, attackDirection, meleeAttackRange, this);
+        new BRO_MeleeAttack(gp, attackDirection, meleeAttackRange, this);
     }
 
     public void draw(Graphics2D g2){

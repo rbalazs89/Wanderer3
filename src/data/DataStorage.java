@@ -26,7 +26,7 @@ public class DataStorage implements Serializable {
     int[] skillPoints = new int[12];
     int[] equippedSkills = new int[6];
     boolean[] act1BookPickedUp = new boolean[8];
-    boolean[] act1InteractedObjects = new boolean[4];
+    boolean[] act1InteractedObjects = new boolean[6];
 
     //equipped items:
     int[] equippedItems = new int[8];

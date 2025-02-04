@@ -10,7 +10,6 @@ public class MON_Bat extends Fighter {
 
     public MON_Bat(GamePanel gp){
         super(gp);
-        this.gp = gp;
 
         entityType = 2;
         drawHpBar = true;
@@ -75,7 +74,6 @@ public class MON_Bat extends Fighter {
 
          */
     }
-
 
     public void createAttackInstance() {
         new MON_MeleeAttack2(gp, attackFramePoint2 - attackFramePoint1, attackDirection, meleeAttackRange, this);

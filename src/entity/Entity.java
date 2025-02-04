@@ -1,6 +1,7 @@
 package entity;
 
 import main.GamePanel;
+import object.OBJ_DroppedGold;
 import object.OBJ_DroppedItem;
 import tool.UtilityTool;
 
@@ -12,10 +13,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Entity {
+    public Font talkingFont = new Font("Calibri", Font.PLAIN, 13);
     public BufferedImage[] walkUp;
     public BufferedImage[] walkRight;
     public BufferedImage[] walkDown;
     public BufferedImage[] walkLeft;
+    public BufferedImage[][] walkImages;
+    public int maxWalkSpriteArrayLength;
     public boolean sleeping;
     public boolean stunned;
     public int stunStrength;
@@ -24,6 +28,9 @@ public class Entity {
     public int worldX, worldY;
     public int speed;
     public int defaultSpeed;
+
+    public boolean singing = false;
+    public boolean walking = true;
     public static final int deathTimer = 120;
     public int movementSpritesNumber = 9;
     public int movementSpriteChangeFrame = 7;
@@ -77,7 +84,7 @@ public class Entity {
     public boolean collisionEntity = false; // better false for npcs ? collision with other entities
     public String dialogues[] = new String[20];
 
-    int dialogueIndex = 0;
+    public int dialogueIndex = 0;
     public String name; //for debug only
 
     /// to avoid new instances:
@@ -97,6 +104,8 @@ public class Entity {
     public double spellDmgModifier = 1;
     public int aiBehaviourNumber = 0;
     public boolean frozen = false;
+    public int goalCol = 0;
+    public int goalRow = 0;
 
     public Entity(GamePanel gp){
 
@@ -135,7 +144,8 @@ public class Entity {
     public void update() {
         setActionAI();
         checkCollision();
-        if (!collisionOn) {
+        moveIfNoCollision();
+        /*if (!collisionOn) {
             switch (direction) {
                 case "up":
                     worldY -= speed;
@@ -150,7 +160,7 @@ public class Entity {
                     worldX += speed;
                     break;
             }
-        }
+        }*/
     }
 
     public void draw(Graphics2D g2){
@@ -210,6 +220,25 @@ public class Entity {
             g2.drawImage(image, screenX, screenY,null);
             if(actionWhenNear1){
                 nearHeadDialogue(g2);
+            }
+        }
+    }
+
+    public void moveIfNoCollision(){
+        if (!collisionOn) {
+            switch (direction) {
+                case "up":
+                    worldY -= speed;
+                    break;
+                case "down":
+                    worldY += speed;
+                    break;
+                case "left":
+                    worldX -= speed;
+                    break;
+                case "right":
+                    worldX += speed;
+                    break;
             }
         }
     }
@@ -371,7 +400,7 @@ public class Entity {
     }
 
     public void setActionWhenNear() {
-        if(middleDistance(gp.player) < gp.tileSize * 3 / 2){
+        if(middleDistance(gp.player) < GamePanel.tileSize * 3 / 2){
             actionWhenNear1 = true;
         }
 
@@ -454,6 +483,35 @@ public class Entity {
         }
     }
 
+    public void drawHoverGuide(ArrayList<String> lines, int x, int y, int width, Graphics2D g2) {
+        int padding = 10;
+        int fixedWidth = width;
+
+        // Get font metrics for the current font
+        FontMetrics fm = g2.getFontMetrics();
+        int textHeight = fm.getHeight();
+
+        // Split text into lines
+        int boxHeight = textHeight * lines.size() + 2 * padding;
+
+        // Draw the semi-transparent black box
+        g2.setColor(new Color(0, 0, 0, 200));
+        g2.fillRoundRect(x, y, fixedWidth, boxHeight, 10, 10);
+
+        // Draw the silver border
+        g2.setColor(new Color(192, 192, 192));
+        g2.setStroke(new BasicStroke(2));
+        g2.drawRoundRect(x, y, fixedWidth, boxHeight, 10, 10);
+
+        // Draw the text
+        g2.setColor(Color.WHITE);
+        int textY = y + padding + fm.getAscent();
+        for (String line : lines) {
+            g2.drawString(line, x + padding, textY);
+            textY += textHeight;
+        }
+    }
+
     public static BufferedImage addBlueTint(BufferedImage original) {
         int width = original.getWidth();
         int height = original.getHeight();
@@ -489,6 +547,7 @@ public class Entity {
     }
 
     public void searchPath(int goalCol, int goalRow, boolean stopAtEnd){
+
         int startCol = (worldX + solidArea.x) / gp.tileSize;
         int startRow = (worldY + solidArea.y) / gp.tileSize;
 
@@ -553,12 +612,86 @@ public class Entity {
                     isGoingBackToSpawn = false;
                     targetPathFollowed = false;
                     speed = defaultSpeed;
+                    executeIfPathReached();
                 }
             }
         }
     }
 
-    public void randomMovement(){
+    public boolean searchPathBoolean(int goalCol, int goalRow, boolean stopAtEnd){
+        int startCol = (worldX + solidArea.x) / gp.tileSize;
+        int startRow = (worldY + solidArea.y) / gp.tileSize;
+
+        gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow);
+
+        if(gp.pFinder.search()) {
+
+            int nextX = gp.pFinder.pathList.get(0).col * gp.tileSize;
+            int nextY = gp.pFinder.pathList.get(0).row * gp.tileSize;
+
+            int enLeftX = worldX + solidArea.x;
+            int enRightX = worldX + solidArea.x + solidArea.width;
+            int enTopY = worldY + solidArea.y;
+            int enBottomY = worldY + solidArea.y + solidArea.height;
+
+            if (enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.tileSize) {
+                direction = "up";
+            } else if (enTopY < nextY && enLeftX >= nextX && enRightX < nextX + gp.tileSize) {
+                direction = "down";
+
+            } else if (enTopY >= nextY && enBottomY < nextY + gp.tileSize) {
+                if (enLeftX > nextX) {
+                    direction = "left";
+                }
+                if (enLeftX < nextX) {
+                    direction = "right";
+                }
+            } else if (enTopY > nextY && enLeftX > nextX) {
+                direction = "up";
+                checkCollision();
+                if (collisionOn == true) {
+                    direction = "left";
+                }
+            } else if (enTopY > nextY && enLeftX < nextX) {
+                direction = "up";
+                checkCollision();
+                if (collisionOn == true) {
+                    direction = "right";
+                }
+            } else if (enTopY < nextY && enLeftX > nextX) {
+                direction = "down";
+                checkCollision();
+                if (collisionOn) {
+                    direction = "left";
+                }
+            } else if (enTopY < nextY && enLeftX < nextX) {
+                direction = "down";
+                checkCollision();
+                if (collisionOn) {
+                    direction = "right";
+                }
+            }
+            if (worldX == nextX && worldY == nextY) {
+                gp.pFinder.pathList.remove(0);
+            }
+
+            int nextCol = gp.pFinder.pathList.get(0).col;
+            int nextRow = gp.pFinder.pathList.get(0).row;
+
+            if (stopAtEnd) {
+                if (nextCol == goalCol && nextRow == goalRow) {
+                    isGoingBackToSpawn = false;
+                    targetPathFollowed = false;
+                    speed = defaultSpeed;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setDirectionFromRandomMovement(){
         actionLockCounter ++;
         randomMovementCheckIfCollidedCounter++;
         if (randomMovementCheckIfCollidedCounter > 10){
@@ -614,7 +747,20 @@ public class Entity {
         gp.interactObjects.add(myItem);
     }
 
+    public void dropGoldReward(int goldValue){
+        OBJ_DroppedGold myItem = new OBJ_DroppedGold(gp);
+        myItem.goldValue = goldValue;
+        int[] tempArray = gp.uTool.findPlaceForDroppedItem2(worldMiddleX(), worldMiddleY());
+        myItem.worldX = tempArray[0];
+        myItem.worldY = tempArray[1];
+        gp.interactObjects.add(myItem);
+    }
+
     public void setAI(int AINumber){
         aiBehaviourNumber = AINumber;
+    }
+
+    public void executeIfPathReached(){
+
     }
 }

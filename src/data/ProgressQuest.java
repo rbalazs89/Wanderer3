@@ -25,11 +25,13 @@ public class ProgressQuest {
      * 7 cave lvl1 +
      */
     public boolean[] act1BookPickedUp = new boolean[8];
-    public boolean[] act1InteractedObjects = new boolean[4];
+    public boolean[] act1InteractedObjects = new boolean[6];
     /** 0: water lever
      *  1: wooden sword
      *  2: family boots picked up
      *  3: lever in cave
+     *  4: tortoise saved
+     *  5: tortoise talked to
      */
 
     GamePanel gp;
@@ -44,7 +46,7 @@ public class ProgressQuest {
                     act1InteractedObjects[0] = true;
                 }
             }
-            if(object.item != null){
+            if(object != null){
                 if(object.item != null){
                     if (object.item.itemCode == 1){
                         act1InteractedObjects[1] = true;
@@ -73,8 +75,9 @@ public class ProgressQuest {
         }
     }
 
-    // id number sometimes matches asset number, if no asset number available its negative and must be unique
-    // taken unique: -3, -4
+    /** id number sometimes matches asset number, if no asset number available its negative and must be unique
+     taken unique: -3, -4
+     */
     public void setTalentBook(int mapNumber, int identificationNumber){
         switch (mapNumber){
             case 1:{
@@ -84,6 +87,12 @@ public class ProgressQuest {
                 }
                 break;
             }
+            case 2:
+                if (identificationNumber == 8) {
+                    act1BookPickedUp[7] = true;
+                    break;
+                }
+                break;
             case 3:{
                 if (identificationNumber == -1) {
                     act1BookPickedUp[0] = true;
@@ -114,12 +123,6 @@ public class ProgressQuest {
                 }
                 else if (identificationNumber == -4){
                     act1BookPickedUp[3] = true;
-                    break;
-                }
-                break;
-            case 2:
-                if (identificationNumber == 8) {
-                    act1BookPickedUp[7] = true;
                     break;
                 }
                 break;

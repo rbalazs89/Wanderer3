@@ -6,7 +6,6 @@ public class OBJ_TalentBook extends SuperObject {
 
     public OBJ_TalentBook(GamePanel gp) {
         super(gp);
-        this.gp = gp;
         image = setup("/objects/pickables/talentbook");
     }
 

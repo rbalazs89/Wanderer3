@@ -18,6 +18,31 @@ public class CollisionChecker {
         this.gp = gp;
     }
 
+    public void checkMapEnd(Entity entity){
+
+        int entityLeftWorldX = entity.worldX + entity.solidArea.x;
+        int entityRightWorldX = entity.worldX + entity.solidArea.x + entity.solidArea.width;
+        int entityTopWorldY = entity.worldY + entity.solidArea.y;
+        int entityBottomWorldY = entity.worldY + entity.solidArea.y + entity.solidArea.height;
+
+        if(entityTopWorldY < 0){
+            entity.worldY = entity.worldY + entity.speed + 1;
+            return;
+        }
+        if(entityBottomWorldY > gp.tileSize * gp.currentMapMaxRow - 3 * entity.speed){
+            entity.worldY = entity.worldY - entity.speed - 1;
+            return;
+        }
+        if (entityLeftWorldX < 0) {
+            entity.worldX = entity.worldX + entity.speed + 1;
+            return;
+        }
+        if(entityRightWorldX > gp.tileSize * gp.currentMapMaxCol - 3 * entity.speed) {
+            entity.worldX = entity.worldX - entity.speed - 1;
+            return;
+        }
+    }
+
     //player and entity collision with environment:
     public void checkTile(Entity entity) {
 
@@ -164,8 +189,6 @@ public class CollisionChecker {
                 entity.solidArea.y = solidAreaDefaultY;
                 gp.obj[gp.currentMap][i].solidArea.x = solidAreaDefaultXOBJ;
                 gp.obj[gp.currentMap][i].solidArea.y = solidAreaDefaultYOBJ;
-                //gp.obj[gp.currentMap][i].solidArea.x = gp.obj[gp.currentMap][i].solidAreaDefaultX;
-                //gp.obj[gp.currentMap][i].solidArea.y = gp.obj[gp.currentMap][i].solidAreaDefaultY;
             }
         }
         return index;

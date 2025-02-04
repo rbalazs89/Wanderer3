@@ -212,7 +212,8 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = gp.playState;
                 gp.playSE(4);
-                gp.startSinging(gp.currentMap);
+                gp.restartMusic();
+                //gp.startSinging(gp.currentMap);
             }
 
             else if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
@@ -251,7 +252,8 @@ public class KeyHandler implements KeyListener {
                     }
                     case 4: {
                         gp.gameState = gp.playState;
-                        gp.startSinging(gp.currentMap);
+                        //gp.startSinging(gp.currentMap);
+                        gp.restartMusic();
                         break;
                     }
                 }

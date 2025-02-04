@@ -41,8 +41,6 @@ public abstract class Fighter extends Entity {
     public int goBackToSpawnMaxDistance = gp.tileSize * 7;
     public int goBackAtThisTargetDistance = gp.tileSize * 7;
     public Entity targetEntity;
-    public int goalCol = 0;
-    public int goalRow = 0;
     public String attackDirection;
     public int attackCoolDownCounter;
     public int attackCoolDownValue = 100; //melee attack cooldown
@@ -243,7 +241,7 @@ public abstract class Fighter extends Entity {
             }
         }
 
-        //lose aggro if distance too big
+        //lose aggro if distance too big from spawn
         if(goBackCheckCounter >=  20) {
             if (Math.abs(worldX - spawnX) > goBackToSpawnMaxDistance || Math.abs(worldY - spawnY) > goBackToSpawnMaxDistance) {
                 targetEntity = null;
@@ -316,6 +314,7 @@ public abstract class Fighter extends Entity {
     }
 
     public void drawAttackImageMelee1(){
+
         attackSpriteNum = Math.min(attackFrameCounter / (attackFramePoint2/9), 8);
 
         switch (attackDirection) {
@@ -387,7 +386,7 @@ public abstract class Fighter extends Entity {
         if(targetPathFollowed){
             setActionAIPath();
         } else {
-            randomMovement();
+            setDirectionFromRandomMovement();
 
             // only perform this calculation 3 times per second, not every frame:
             checkForEnemiesCounter++;
@@ -552,7 +551,7 @@ public abstract class Fighter extends Entity {
 
         if(isDying){
             if(deathTimeCounter == 1){
-                specialOnDeath();
+                specialOnDying();
                 playDeathSound();
                 dropItem();
                 speed = 0;
@@ -572,6 +571,7 @@ public abstract class Fighter extends Entity {
                 for (int i = 0; i < gp.fighters[1].length; i++) {
                     if(gp.fighters[gp.currentMap][i] == this){
                         gp.fighters[gp.currentMap][i] = null;
+                        specialOnDeath();
                         break;
                     }
                 }
@@ -679,7 +679,15 @@ public abstract class Fighter extends Entity {
         aiBehaviourNumber = AINumber;
     }
 
+    public void specialOnDying(){
+
+    }
+
     public void specialOnDeath(){
+
+    }
+
+    public void executeIfPathReached(){
 
     }
 

@@ -16,7 +16,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 /**
         //int framesPerSprite = 60 / 10; // 60 frames divided by 10 sprites
@@ -135,7 +134,7 @@ public class MON_ShadowBoss extends Fighter {
         if (!frozen) {
             if(!isDying){
                 if(!screaming && !meleeAttack2 && !meleeAttack1){
-                    randomMovement();
+                    setDirectionFromRandomMovement();
                 }
                 searchTargetEntity();
 

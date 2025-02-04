@@ -15,8 +15,8 @@ import tool.DamageNumber;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.RasterFormatException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Player extends Entity {
     KeyHandler keyH;
@@ -146,15 +146,6 @@ public class Player extends Entity {
     private boolean hasHalfSpeed = false; // determine half speedd by items
     private int halfSpeedCounter = 0;
     public int diedToA1Boss = 0;
-
-    //not used I think its better to use from gp equippedinventorypage
-    Item equippedArmor;
-    Item equippedShield;
-    Item equippedHelm;
-    Item equippedSword;
-    Item equippedGloves;
-    Item equippedBoots;
-    ArrayList<Item> itemsInInventory = new ArrayList<>();
     public BufferedImage testImage;
     //Talent:
     public int unSpentTalentPoints = 1;
@@ -182,15 +173,15 @@ public class Player extends Entity {
         getPlayerAttackImage();
         getCastPlayerImage();
         getHurtPlayerImage();
-        screenX = gp.screenWidth/2 - gp.tileSize/2;
-        screenY = gp.screenHeight/2 - gp.tileSize/2;
+        screenX = gp.screenWidth/2 - GamePanel.tileSize /2;
+        screenY = gp.screenHeight/2 - GamePanel.tileSize /2;
         name = "csibészvitéz";
 
         solidArea = new Rectangle(
-                3 * gp.tileSize / 16,
-                gp.tileSize * 3/ 16,
-                gp.tileSize * 10 / 16,
-                gp.tileSize * 12 / 16);
+                3 * GamePanel.tileSize / 16,
+                GamePanel.tileSize * 3/ 16,
+                GamePanel.tileSize * 10 / 16,
+                GamePanel.tileSize * 12 / 16);
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         maxLife = 100; // savefile
@@ -198,9 +189,7 @@ public class Player extends Entity {
         maxMana = 50; // savefile
         mana = 50; //savefile
 
-        for (int i = 0; i < resist.length; i++) {
-            resist[i] = 0;
-        }
+        Arrays.fill(resist, 0);
 
         //dashSpeed = speed + 8;
         //attackArea1.width = GamePanel.tileSize * 5 / 4;
@@ -240,7 +229,7 @@ public class Player extends Entity {
 
         //talent:
         for (int i = 0; i < 7; i++) {
-            playerTalents.talentList[i].currentPointsOnTalent = 0;
+            PlayerTalents.talentList[i].currentPointsOnTalent = 0;
         }
         unSpentTalentPoints = 1;
 
@@ -343,6 +332,14 @@ public class Player extends Entity {
         experience += wonValue;
         if(gp.visibleExpValue){
             gp.ui.addMessage("Slaying " + monsterName + " gave you " + experienceValue + " EXP points.");
+        }
+    }
+
+    public void kidSpecialWinExperience(int monsterLevel, int experienceValue, String monsterName){
+        int wonValue = gp.dataBase1.levelDifferenceExperience(level, monsterLevel, experienceValue);
+        experience += wonValue;
+        if(gp.visibleExpValue){
+            gp.ui.addMessage("Smacking the " + monsterName + " gave you " + experienceValue + " EXP points.");
         }
     }
 
@@ -1647,7 +1644,7 @@ public class Player extends Entity {
 
 
         if(!areEnemiesNearby){
-            if (random.nextInt(30) + 1 >= 29){
+            if (random.nextInt(120) + 1 >= 119){
                 winLife(1);
                 winMana(1);
             }
@@ -1753,8 +1750,9 @@ public class Player extends Entity {
 
     public void testCommand() {
         //gp.ui.drawTestOn = !gp.ui.drawTestOn;
-        //gp.keyH.lPressed = false;
-        //new Teleport(gp);
+        gp.keyH.lPressed = false;
+
+        new Teleport(gp);
     }
 
     public int auraRadius() {
@@ -1824,5 +1822,9 @@ public class Player extends Entity {
                 halfSpeedCounter = 0;
             }
         }
+    }
+
+    public void winGold(int value){
+        gold = gold + value;
     }
 }

@@ -1,5 +1,6 @@
 package data;
 
+import entity.playerrelated.PlayerTalents;
 import main.GamePanel;
 
 import java.io.*;
@@ -34,8 +35,8 @@ public class SaveLoad {
 
             //TALENTS:
             ds.unSpentTalentPoints = gp.player.unSpentTalentPoints;
-            for (int i = 0; i < gp.player.playerTalents.talentList.length; i++) {
-                ds.talentPoints[i] = gp.player.playerTalents.talentList[i].currentPointsOnTalent;
+            for (int i = 0; i < PlayerTalents.talentList.length; i++) {
+                ds.talentPoints[i] = PlayerTalents.talentList[i].currentPointsOnTalent;
             }
 
             //SKILL:
@@ -54,7 +55,7 @@ public class SaveLoad {
                 ds.act1BookPickedUp[i] = gp.progress.act1BookPickedUp[i];
             }
 
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 5; i++) {
                 ds.act1InteractedObjects[i] = gp.progress.act1InteractedObjects[i];
             }
 
@@ -123,8 +124,8 @@ public class SaveLoad {
 
             //TALENTS:
             gp.player.unSpentTalentPoints = ds.unSpentTalentPoints;
-            for (int i = 0; i < gp.player.playerTalents.talentList.length; i++) {
-                gp.player.playerTalents.talentList[i].currentPointsOnTalent = ds.talentPoints[i];
+            for (int i = 0; i < PlayerTalents.talentList.length; i++) {
+                PlayerTalents.talentList[i].currentPointsOnTalent = ds.talentPoints[i];
             }
 
             //SKILL:
@@ -141,11 +142,21 @@ public class SaveLoad {
 
             //Progress:
             for (int i = 0; i < 7; i++) {
-                 gp.progress.act1BookPickedUp[i] = ds.act1BookPickedUp[i];
+                if (i < ds.act1BookPickedUp.length) {
+                    gp.progress.act1BookPickedUp[i] = ds.act1BookPickedUp[i];
+                } else {
+                    // Default value for new entries in older save files
+                    gp.progress.act1BookPickedUp[i] = false;
+                }
             }
 
-            for (int i = 0; i < 4; i++) {
-                gp.progress.act1InteractedObjects[i] = ds.act1InteractedObjects[i];
+            for (int i = 0; i < 5; i++) {
+                if (i < ds.act1InteractedObjects.length) {
+                    gp.progress.act1InteractedObjects[i] = ds.act1InteractedObjects[i];
+                } else {
+                    // Default value for new entries in older save files
+                    gp.progress.act1InteractedObjects[i] = false;
+                }
             }
 
             //LOAD INVENTORY:

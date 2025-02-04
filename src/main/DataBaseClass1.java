@@ -1,8 +1,4 @@
 package main;
-import item.Item;
-
-import java.util.HashMap;
-
 public class DataBaseClass1 {
     /** this class has no real logic related to game process, just functions that return numbers */
     GamePanel gp;
@@ -43,6 +39,7 @@ public class DataBaseClass1 {
                 return 75;
             case 3: return 76;
             case 4: return 76;
+            case 5: return 81;
             case 6: return 58;
             case 8:
             case 9:
@@ -70,26 +67,26 @@ public class DataBaseClass1 {
             }
             if(gp.currentMap == 11 && gp.player.diedToA1Boss == 2) {
                 respawn[0] = 10;
-                respawn[1] = gp.tileSize * 5;
-                respawn[2] = gp.tileSize * 8;
+                respawn[1] = GamePanel.tileSize * 5;
+                respawn[2] = GamePanel.tileSize * 8;
                 return respawn;
             }
 
             if(!gp.progress.act1InteractedObjects[0]){
                 respawn[0] = 1;
-                respawn[1] = gp.tileSize * 47;
-                respawn[2] = gp.tileSize * 5;
+                respawn[1] = GamePanel.tileSize * 47;
+                respawn[2] = GamePanel.tileSize * 5;
                 return respawn;
             } else {
                 respawn[0] = 1;
-                respawn[1] = gp.tileSize * 23;
-                respawn[2] = gp.tileSize * 25;
+                respawn[1] = GamePanel.tileSize * 23;
+                respawn[2] = GamePanel.tileSize * 25;
                 return respawn;
             }
-        }
+        }/*
         respawn[0] = 0;
         respawn[1] = 0;
-        respawn[2] = 0;
+        respawn[2] = 0;*/
         return respawn;
     }
 

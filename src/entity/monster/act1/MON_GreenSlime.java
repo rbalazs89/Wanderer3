@@ -24,7 +24,6 @@ public class MON_GreenSlime extends Fighter {
     int counterMagic1 = 0;
     boolean canCastMagic1 = true;
 
-
     public MON_GreenSlime(GamePanel gp) {
         super(gp);
         this.gp = gp;

@@ -146,7 +146,7 @@ public class MON_SkeletonKing extends Fighter {
         if(targetPathFollowed){
             setActionAIPath();
         } else {
-            randomMovement();
+            setDirectionFromRandomMovement();
 
             // only perform this calculation 3 times per second, not every frame:
             checkForEnemiesCounter++;
@@ -345,7 +345,7 @@ public class MON_SkeletonKing extends Fighter {
         }
     }
 
-    public void specialOnDeath(){
+    public void specialOnDying(){
         if(gp.currentMap == 7){
             if(!gp.progress.act1InteractedObjects[2]){
                 if(gp.obj[7][1] != null){

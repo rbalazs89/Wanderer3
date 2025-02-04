@@ -1,9 +1,9 @@
 package main;
 
 //import entity.Monster;
-import entity.*;
 import entity.allied.A_Brother;
 import entity.monster.act1.*;
+import entity.npc.*;
 import object.*;
 import object.puzzle.harrypotterpuzzle.OBJ_FireObject;
 import object.puzzle.harrypotterpuzzle.OBJ_HarryPotterPuzzle;
@@ -21,16 +21,18 @@ public class AssetSetter {
      * 2: cave  got music but not good
      * 3: bunnies map
      * 4: wolves + mage music good
+     * 5 kindergarten
      * 6: church + music good
      * 7: house cellar
      * 8: shop + music good
      * 9: my house + music good
      * 10 cave 2
      * 11 boss room + music good
+     * //12 a1 ending music taken
      */
 
     GamePanel gp;
-    int tileSize = gp.tileSize;
+    int tileSize = GamePanel.tileSize;
     public AssetSetter(GamePanel gp){
         this.gp = gp;
     }
@@ -47,6 +49,9 @@ public class AssetSetter {
 
         currentMap = 4;
         setObjectMap4(currentMap); // mage
+
+        currentMap = 5;
+        setObjectMap5(currentMap); // kindergarten
 
         currentMap = 6;
         setObjectMap6(currentMap); // church
@@ -67,9 +72,20 @@ public class AssetSetter {
         setObjectMap11(currentMap); // bossxmap
     }
 
+
+
     public void setNPC() {
         int currentMap = 1;
         setNPCMap1(currentMap);
+
+        currentMap = 3;
+        setNPCMap3(currentMap);
+
+        currentMap = 4;
+        setNPCMap4(currentMap);
+
+        currentMap = 5;
+        setNPCMap5(currentMap);
 
         currentMap = 6;
         setNPCMap6(currentMap);
@@ -80,6 +96,8 @@ public class AssetSetter {
         currentMap = 9;
         setNPCMap9(currentMap);
     }
+
+
 
     public void setFighter(){
         int currentMap = 1;
@@ -154,6 +172,14 @@ public class AssetSetter {
         gp.fighters[currentMap][29].setDefaultSpawn();
     }
 
+    public void setTurtleInCampBasedOnQuestA1(){
+        if(gp.progress.act1InteractedObjects[4]){
+            gp.npc[1][6] = new NPC_CampTortoise(gp);
+            gp.npc[1][6].worldX = tileSize * 10;
+            gp.npc[1][6].worldY = tileSize * 10;
+        }
+    }
+
     public void setObjectMap1(int currentMap){
         gp.obj[currentMap][0] = new OBJ_MapTransitionPickable(gp,8,7 * gp.tileSize,10 * gp.tileSize);
         gp.obj[currentMap][0].worldX = 37 * tileSize;
@@ -197,7 +223,7 @@ public class AssetSetter {
         gp.obj[currentMap][10].worldY = 3 * tileSize;
         gp.obj[currentMap][10].interactThisList.add(gp.obj[currentMap][9]);
         if(gp.progress.act1InteractedObjects[0]){
-            gp.obj[currentMap][10].progressInteract();
+            gp.obj[currentMap][10].progressInteract(); // separate method not to cause sound on loading
         }
 
         gp.obj[currentMap][11] = new OBJ_MapTransition(gp, 3, tileSize * 1, tileSize * 2);
@@ -223,6 +249,10 @@ public class AssetSetter {
         gp.obj[currentMap][16] = new OBJ_MomoRefillOnce(gp,4);
         gp.obj[currentMap][16].worldX = 27 * tileSize;
         gp.obj[currentMap][16].worldY = (int)(38.5 * tileSize);
+
+        gp.obj[currentMap][17] = new OBJ_MapTransitionPickable(gp, 5, 9 * GamePanel.tileSize, (int)(15.5 * GamePanel.tileSize));
+        gp.obj[currentMap][17].worldX = 33 * tileSize;
+        gp.obj[currentMap][17].worldY = 21 * tileSize;
     }
 
     public void setObjectMap2(int currentMap){
@@ -281,12 +311,24 @@ public class AssetSetter {
         gp.obj[currentMap][1] = new OBJ_MapTransition(gp, 1, tileSize * 46, tileSize * 48);
         gp.obj[currentMap][1].worldX = 1 * tileSize;
         gp.obj[currentMap][1].worldY = 0 * tileSize;
+
+        if(!gp.progress.act1InteractedObjects[4]){
+            gp.obj[currentMap][2] = new OBJ_TurtleHelper(gp);
+            gp.obj[currentMap][2].worldX = tileSize * 38;
+            gp.obj[currentMap][2].worldY = tileSize * 28;
+        }
     }
 
     public void setObjectMap4(int currentMap){
         gp.obj[currentMap][0] = new OBJ_MapTransition(gp, 1, tileSize * 16, tileSize * 48);
         gp.obj[currentMap][0].worldX = 41 * tileSize;
         gp.obj[currentMap][0].worldY = 0 * tileSize;
+    }
+
+    private void setObjectMap5(int currentMap) {
+        gp.obj[currentMap][0] = new OBJ_MapTransitionPickable(gp, 1, tileSize * 33, tileSize * 22);
+        gp.obj[currentMap][0].worldX = 9 * tileSize;
+        gp.obj[currentMap][0].worldY = 16 * tileSize;
     }
 
     public void setObjectMap6(int currentMap){
@@ -320,7 +362,6 @@ public class AssetSetter {
         if(gp.progress.act1InteractedObjects[2]){
             gp.obj[currentMap][1].progressInteract();
         }
-
     }
 
     public void setObjectMap8(int currentMap){
@@ -349,7 +390,7 @@ public class AssetSetter {
     }
 
     public void setObjectMap10(int currentMap){
-        //29 reserved for puzzle, don't use
+        //index 29 reserved for puzzle, don't use
         gp.obj[currentMap][0] = new OBJ_HarryPotterPuzzle(gp);
         gp.obj[currentMap][0].worldX = 18 * tileSize;
         gp.obj[currentMap][0].worldY = 13 * tileSize;
@@ -396,6 +437,7 @@ public class AssetSetter {
     }
 
     private void setNPCMap1(int currentMap) {
+        //6 and 8 taken
         gp.npc[currentMap][0] = new NPC_Cow(gp);
         gp.npc[currentMap][0].worldX = tileSize * 26;
         gp.npc[currentMap][0].worldY = tileSize * 21;
@@ -422,6 +464,35 @@ public class AssetSetter {
         gp.npc[currentMap][5].worldX = tileSize * 23;
         gp.npc[currentMap][5].worldY = tileSize * 22;
 
+        setTurtleInCampBasedOnQuestA1(); // uses index 6
+
+        // index 8 used by npc_arrowchild spawned by fighter entity
+    }
+
+
+
+    private void setNPCMap3(int currentMap) {
+        if(!gp.progress.act1InteractedObjects[4]){
+            gp.npc[currentMap][0] = new NPC_TurnedOverTortoise(gp);
+            gp.npc[currentMap][0].worldX = tileSize * 38;
+            gp.npc[currentMap][0].worldY = tileSize * 28;
+        }
+    }
+    private void setNPCMap4(int currentMap) {
+        gp.npc[currentMap][0] = new NPC_Butterflies(gp);
+        gp.npc[currentMap][0].worldX = tileSize * 28;
+        gp.npc[currentMap][0].worldY = tileSize * 3;
+        gp.npc[currentMap][0].setDefaultSpawn();
+
+        gp.npc[currentMap][1] = new NPC_Butterflies(gp);
+        gp.npc[currentMap][1].worldX = tileSize * 21;
+        gp.npc[currentMap][1].worldY = tileSize * 19;
+        gp.npc[currentMap][1].setDefaultSpawn();
+
+    }
+    private void setNPCMap5(int currentMap) {
+        //uses index 0...4
+        setSingersKindergarten(currentMap);
     }
 
     private void setNPCMap6(int currentMap) {
@@ -446,7 +517,7 @@ public class AssetSetter {
         gp.npc[currentMap][1].worldX = tileSize * 8;
         gp.npc[currentMap][1].worldY = tileSize * 8;
 
-        setBigBroNPC();
+        setBigBroNPC(); // uses index 2
     }
 
     private void setFighterMap1(int currentMap) {
@@ -471,7 +542,11 @@ public class AssetSetter {
         gp.fighters[currentMap][4].worldX = tileSize * 43;
         gp.fighters[currentMap][4].worldY = tileSize * 12;
 
-        ghostsNearCemetery();
+        gp.fighters[currentMap][5] = new ENEMY_Child(gp);
+        gp.fighters[currentMap][5].worldX = tileSize * 34;
+        gp.fighters[currentMap][5].worldY = tileSize * 18;
+
+        ghostsNearCemetery(); //uses index 26....29
     }
 
     private void setFighterMap2(int currentMap) {
@@ -610,8 +685,6 @@ public class AssetSetter {
         gp.fighters[currentMap][26].worldX = tileSize * 25;
         gp.fighters[currentMap][26].worldY = tileSize * 20;
         gp.fighters[currentMap][26].setDefaultSpawn();
-
-
     }
 
     private void setFighterMap3(int currentMap) {
@@ -943,5 +1016,27 @@ public class AssetSetter {
             gp.npc[9][2].worldX = tileSize * 6;
             gp.npc[9][2].worldY = tileSize * 6;
         }
+    }
+
+    public void setSingersKindergarten(int currentMap){
+        gp.npc[currentMap][0] = new NPC_NapTimeEnforcer(gp);
+        gp.npc[currentMap][0].worldX = 8 * tileSize;
+        gp.npc[currentMap][0].worldY = 8 * tileSize;
+
+        gp.npc[currentMap][1] = new NPC_Child1(gp);
+        gp.npc[currentMap][1].worldX = 8 * tileSize;
+        gp.npc[currentMap][1].worldY = 10 * tileSize;
+
+        gp.npc[currentMap][2] = new NPC_Child2(gp);
+        gp.npc[currentMap][2].worldX = 10 * tileSize;
+        gp.npc[currentMap][2].worldY = 11 * tileSize;
+
+        gp.npc[currentMap][3] = new NPC_Child3(gp);
+        gp.npc[currentMap][3].worldX = 8 * tileSize;
+        gp.npc[currentMap][3].worldY = 12 * tileSize;
+
+        gp.npc[currentMap][4] = new NPC_Child4(gp);
+        gp.npc[currentMap][4].worldX = 6 * tileSize;
+        gp.npc[currentMap][4].worldY = 11 * tileSize;
     }
 }

@@ -8,7 +8,6 @@ public class OBJ_MomoRefillOnce extends SuperObject{
 
     public OBJ_MomoRefillOnce(GamePanel gp, int pictureNumber){
         super(gp);
-        this.gp = gp;
         getGlitterImages();
         interactable = true;
         name = "pumpkin";
