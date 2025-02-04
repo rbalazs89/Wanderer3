@@ -75,7 +75,7 @@ public class KeyHandler implements KeyListener {
                 enterPressed = true;
             }
             if(code == KeyEvent.VK_O){
-                checkDrawTime = !checkDrawTime;
+                //checkDrawTime = !checkDrawTime;
             }
             else if(code == KeyEvent.VK_P){
                 gp.gameState = gp.pauseState;

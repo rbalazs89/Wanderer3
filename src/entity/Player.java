@@ -1747,7 +1747,7 @@ public class Player extends Entity {
         //gp.ui.drawTestOn = !gp.ui.drawTestOn;
         gp.keyH.lPressed = false;
 
-        new Teleport(gp);
+        //new Teleport(gp);
     }
 
     public int auraRadius() {

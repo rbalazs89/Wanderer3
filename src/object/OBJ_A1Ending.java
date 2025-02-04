@@ -24,6 +24,7 @@ public class OBJ_A1Ending extends SuperObject{
     }
 
     public void pickup() {
+        gp.saveLoad.save();
         gp.gameState = gp.gameEndState;
     }
 }

@@ -250,7 +250,6 @@ public class UI {
 
         // START:
         if (endingCounter == 1) {
-            gp.saveLoad.save();
             gp.startSinging(12); // Set ending music
 
             drawStringText[0] = "Congratulations on completing the game";

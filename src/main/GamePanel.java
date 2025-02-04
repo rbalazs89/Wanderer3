@@ -612,6 +612,8 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void mapSwitch(){
+        saveLoad.save();
+
         //assets & special
         if (currentMap == 1){
             aSetter.ghostsNearCemetery();
