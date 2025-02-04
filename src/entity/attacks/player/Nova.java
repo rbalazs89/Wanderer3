@@ -1,20 +1,20 @@
 package entity.attacks.player;
 import entity.Entity;
 import main.GamePanel;
-import tool.DamageNumber;
 
 import java.awt.*;
 import java.awt.geom.*;
 import java.util.Random;
 
 public class Nova extends Spells {
-    private int x, y;
+    private final int x;
+    private final int y;
     private final int maxRadius;
     private int currentRadius;
     private final int expansionSpeed;
     private boolean expanding;
     private final int thickness;
-    private Random random;
+    private final Random random;
 
     public Nova(GamePanel gp) {
         super(gp);

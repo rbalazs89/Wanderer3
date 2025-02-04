@@ -12,9 +12,6 @@ import java.awt.image.BufferedImage;
 
 public class FrozenOrb extends Spells {
 
-    //this class only used by player
-    //this class uses progression instead of life value for update access
-    private int endX, endY;
     private final int  endWorldX, endWorldY, startWorldX, startWorldY;
     private static double speed; // for this class use different speed
     private float progress; // to track the animation progress
@@ -30,8 +27,10 @@ public class FrozenOrb extends Spells {
         auraRadiusSpell = 20;
         damageType = 2; // cold element
 
-        endX = gp.mouseH.mouseX;
-        endY = gp.mouseH.mouseY;
+        //this class only used by player
+        //this class uses progression instead of life value for update access
+        int endX = gp.mouseH.mouseX;
+        int endY = gp.mouseH.mouseY;
 
         startWorldX = gp.player.worldMiddleX();
         startWorldY = gp.player.worldMiddleY();

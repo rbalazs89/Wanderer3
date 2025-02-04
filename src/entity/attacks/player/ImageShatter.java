@@ -9,11 +9,14 @@ import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ImageShatter extends Spells {
-    private int startX, startY;
-    private int endX, endY;
-    private int playerWorldAtStartX, playerWorldAtStartY;
+    private final int startX;
+    private final int startY;
+    private final int endX;
+    private final int endY;
+    private final int playerWorldAtStartX;
+    private final int playerWorldAtStartY;
     private CopyOnWriteArrayList<Particle> particles;
-    private Random random = new Random();
+    private final Random random = new Random();
 
     public ImageShatter(GamePanel gp, int startX, int startY, int endX, int endY) {
         super(gp);

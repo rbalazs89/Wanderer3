@@ -8,6 +8,7 @@ import entity.playerrelated.PlayerTalents;
 import item.InventoryPage;
 import item.Item;
 import item.MomoJuice;
+import main.DataBaseClass1;
 import main.GamePanel;
 import main.KeyHandler;
 import object.SuperObject;
@@ -15,9 +16,9 @@ import tool.DamageNumber;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.Arrays;
 
+@SuppressWarnings("IntegerDivisionInFloatingPointContext")
 public class Player extends Entity {
     KeyHandler keyH;
     BufferedImage image = null;
@@ -271,13 +272,9 @@ public class Player extends Entity {
         canInteract = true;
 
         // clear progress:
-        for (int i = 0; i < gp.progress.act1InteractedObjects.length; i++) {
-            gp.progress.act1InteractedObjects[i] = false;
-        }
+        Arrays.fill(gp.progress.act1InteractedObjects, false);
 
-        for (int i = 0; i < gp.progress.act1BookPickedUp.length; i++) {
-            gp.progress.act1BookPickedUp[i] = false;
-        }
+        Arrays.fill(gp.progress.act1BookPickedUp, false);
 
         // clear storage pages inventory
         for (int i = 0; i < gp.allInventoryPages.storagePages.length; i++) {
@@ -322,7 +319,7 @@ public class Player extends Entity {
     public void checkIfLvLUp(){
         if(experience >= nextLevelExp){
             previousLevelExp = nextLevelExp;
-            nextLevelExp = nextLevelExp + gp.dataBase1.getRequiredExpForNextLevel(level);
+            nextLevelExp = nextLevelExp + DataBaseClass1.getRequiredExpForNextLevel(level);
             lvlUp();
         }
     }
@@ -487,9 +484,7 @@ public class Player extends Entity {
         }
         unSpentSkillPoints = unSpentSkillPoints + tempInt;
 
-        for (int i = 0; i < equippedSpellList.length; i++) {
-            equippedSpellList[i] = null;
-        }
+        Arrays.fill(equippedSpellList, null);
 
         //reset talents:
         playerTalents.resetAllTalents();
@@ -504,13 +499,13 @@ public class Player extends Entity {
 
     //changing map
     public void setDefaultValues() {
-        worldX = 47 * gp.tileSize;
-        worldY = 5 * gp.tileSize;
+        worldX = 47 * GamePanel.tileSize;
+        worldY = 5 * GamePanel.tileSize;
         direction = "down";
     }
 
     public void getCastPlayerImage(){
-        int downimages = gp.tileSize;
+        int downimages = GamePanel.tileSize;
         castUp1 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 ,40,196, 196, gp.tileSize, gp.tileSize);
         castUp2 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256 * 1,40,196, 196, gp.tileSize, gp.tileSize);
         castUp3 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256 * 2,40,196, 196, gp.tileSize, gp.tileSize);
@@ -553,102 +548,102 @@ public class Player extends Entity {
     }
 
     public void getPlayerImage() {
-        up1 = setupSheet("/entity/updatedplayer/up/run_up_1", 0,0, 180, 190, gp.tileSize, gp.tileSize);
-        up2 = setup("/entity/updatedplayer/up/run_up_2", gp.tileSize, gp.tileSize);
-        up3 = setup("/entity/updatedplayer/up/run_up_3", gp.tileSize, gp.tileSize);
-        up4 = setup("/entity/updatedplayer/up/run_up_4", gp.tileSize, gp.tileSize);
-        up5 = setup("/entity/updatedplayer/up/run_up_5", gp.tileSize, gp.tileSize);
-        up6 = setup("/entity/updatedplayer/up/run_up_6", gp.tileSize, gp.tileSize);
-        up7 = setup("/entity/updatedplayer/up/run_up_7", gp.tileSize, gp.tileSize);
-        up8 = setup("/entity/updatedplayer/up/run_up_8", gp.tileSize, gp.tileSize);
-        up9 = setup("/entity/updatedplayer/up/run_up_9", gp.tileSize, gp.tileSize);
-        down1 = setup("/entity/updatedplayer/down/run_down_1", gp.tileSize, gp.tileSize);
-        down2 = setup("/entity/updatedplayer/down/run_down_2", gp.tileSize, gp.tileSize);
-        down3 = setup("/entity/updatedplayer/down/run_down_3", gp.tileSize, gp.tileSize);
-        down4 = setup("/entity/updatedplayer/down/run_down_4", gp.tileSize, gp.tileSize);
-        down5 = setup("/entity/updatedplayer/down/run_down_5", gp.tileSize, gp.tileSize);
-        down6 = setup("/entity/updatedplayer/down/run_down_6", gp.tileSize, gp.tileSize);
-        down7 = setup("/entity/updatedplayer/down/run_down_7", gp.tileSize, gp.tileSize);
-        down8 = setup("/entity/updatedplayer/down/run_down_8", gp.tileSize, gp.tileSize);
-        down9 = setup("/entity/updatedplayer/down/run_down_9", gp.tileSize, gp.tileSize);
-        left1 = setup("/entity/updatedplayer/left/run_left_1", gp.tileSize, gp.tileSize);
-        left2 = setup("/entity/updatedplayer/left/run_left_2", gp.tileSize, gp.tileSize);
-        left3 = setup("/entity/updatedplayer/left/run_left_3", gp.tileSize, gp.tileSize);
-        left4 = setup("/entity/updatedplayer/left/run_left_4", gp.tileSize, gp.tileSize);
-        left5 = setup("/entity/updatedplayer/left/run_left_5", gp.tileSize, gp.tileSize);
-        left6 = setup("/entity/updatedplayer/left/run_left_6", gp.tileSize, gp.tileSize);
-        left7 = setup("/entity/updatedplayer/left/run_left_7", gp.tileSize, gp.tileSize);
-        left8 = setup("/entity/updatedplayer/left/run_left_8", gp.tileSize, gp.tileSize);
-        left9 = setup("/entity/updatedplayer/left/run_left_9", gp.tileSize, gp.tileSize);
-        right1 = setup("/entity/updatedplayer/right/run_right_1", gp.tileSize, gp.tileSize);
-        right2 = setup("/entity/updatedplayer/right/run_right_2", gp.tileSize, gp.tileSize);
-        right3 = setup("/entity/updatedplayer/right/run_right_3", gp.tileSize, gp.tileSize);
-        right4 = setup("/entity/updatedplayer/right/run_right_4", gp.tileSize, gp.tileSize);
-        right5 = setup("/entity/updatedplayer/right/run_right_5", gp.tileSize, gp.tileSize);
-        right6 = setup("/entity/updatedplayer/right/run_right_6", gp.tileSize, gp.tileSize);
-        right7 = setup("/entity/updatedplayer/right/run_right_7", gp.tileSize, gp.tileSize);
-        right8 = setup("/entity/updatedplayer/right/run_right_8", gp.tileSize, gp.tileSize);
-        right9 = setup("/entity/updatedplayer/right/run_right_9", gp.tileSize, gp.tileSize);
+        up1 = setupSheet("/entity/updatedplayer/up/run_up_1", 0,0, 180, 190, GamePanel.tileSize, GamePanel.tileSize);
+        up2 = setup("/entity/updatedplayer/up/run_up_2", GamePanel.tileSize, GamePanel.tileSize);
+        up3 = setup("/entity/updatedplayer/up/run_up_3", GamePanel.tileSize, GamePanel.tileSize);
+        up4 = setup("/entity/updatedplayer/up/run_up_4", GamePanel.tileSize, GamePanel.tileSize);
+        up5 = setup("/entity/updatedplayer/up/run_up_5", GamePanel.tileSize, GamePanel.tileSize);
+        up6 = setup("/entity/updatedplayer/up/run_up_6", GamePanel.tileSize, GamePanel.tileSize);
+        up7 = setup("/entity/updatedplayer/up/run_up_7", GamePanel.tileSize, GamePanel.tileSize);
+        up8 = setup("/entity/updatedplayer/up/run_up_8", GamePanel.tileSize, GamePanel.tileSize);
+        up9 = setup("/entity/updatedplayer/up/run_up_9", GamePanel.tileSize, GamePanel.tileSize);
+        down1 = setup("/entity/updatedplayer/down/run_down_1", GamePanel.tileSize, GamePanel.tileSize);
+        down2 = setup("/entity/updatedplayer/down/run_down_2", GamePanel.tileSize, GamePanel.tileSize);
+        down3 = setup("/entity/updatedplayer/down/run_down_3", GamePanel.tileSize, GamePanel.tileSize);
+        down4 = setup("/entity/updatedplayer/down/run_down_4", GamePanel.tileSize, GamePanel.tileSize);
+        down5 = setup("/entity/updatedplayer/down/run_down_5", GamePanel.tileSize, GamePanel.tileSize);
+        down6 = setup("/entity/updatedplayer/down/run_down_6", GamePanel.tileSize, GamePanel.tileSize);
+        down7 = setup("/entity/updatedplayer/down/run_down_7", GamePanel.tileSize, GamePanel.tileSize);
+        down8 = setup("/entity/updatedplayer/down/run_down_8", GamePanel.tileSize, GamePanel.tileSize);
+        down9 = setup("/entity/updatedplayer/down/run_down_9", GamePanel.tileSize, GamePanel.tileSize);
+        left1 = setup("/entity/updatedplayer/left/run_left_1", GamePanel.tileSize, GamePanel.tileSize);
+        left2 = setup("/entity/updatedplayer/left/run_left_2", GamePanel.tileSize, GamePanel.tileSize);
+        left3 = setup("/entity/updatedplayer/left/run_left_3", GamePanel.tileSize, GamePanel.tileSize);
+        left4 = setup("/entity/updatedplayer/left/run_left_4", GamePanel.tileSize, GamePanel.tileSize);
+        left5 = setup("/entity/updatedplayer/left/run_left_5", GamePanel.tileSize, GamePanel.tileSize);
+        left6 = setup("/entity/updatedplayer/left/run_left_6", GamePanel.tileSize, GamePanel.tileSize);
+        left7 = setup("/entity/updatedplayer/left/run_left_7", GamePanel.tileSize, GamePanel.tileSize);
+        left8 = setup("/entity/updatedplayer/left/run_left_8", GamePanel.tileSize, GamePanel.tileSize);
+        left9 = setup("/entity/updatedplayer/left/run_left_9", GamePanel.tileSize, GamePanel.tileSize);
+        right1 = setup("/entity/updatedplayer/right/run_right_1", GamePanel.tileSize, GamePanel.tileSize);
+        right2 = setup("/entity/updatedplayer/right/run_right_2", GamePanel.tileSize, GamePanel.tileSize);
+        right3 = setup("/entity/updatedplayer/right/run_right_3", GamePanel.tileSize, GamePanel.tileSize);
+        right4 = setup("/entity/updatedplayer/right/run_right_4", GamePanel.tileSize, GamePanel.tileSize);
+        right5 = setup("/entity/updatedplayer/right/run_right_5", GamePanel.tileSize, GamePanel.tileSize);
+        right6 = setup("/entity/updatedplayer/right/run_right_6", GamePanel.tileSize, GamePanel.tileSize);
+        right7 = setup("/entity/updatedplayer/right/run_right_7", GamePanel.tileSize, GamePanel.tileSize);
+        right8 = setup("/entity/updatedplayer/right/run_right_8", GamePanel.tileSize, GamePanel.tileSize);
+        right9 = setup("/entity/updatedplayer/right/run_right_9", GamePanel.tileSize, GamePanel.tileSize);
 
-        idleDown1 = setup("/entity/updatedplayer/idledown/idle_down_1", gp.tileSize, gp.tileSize);
-        idleDown2 = setup("/entity/updatedplayer/idledown/idle_down_2", gp.tileSize, gp.tileSize);
-        idleDown3 = setup("/entity/updatedplayer/idledown/idle_down_3", gp.tileSize, gp.tileSize);
-        idleDown4 = setup("/entity/updatedplayer/idledown/idle_down_4", gp.tileSize, gp.tileSize);
-        idleDown5 = setup("/entity/updatedplayer/idledown/idle_down_5", gp.tileSize, gp.tileSize);
-        idleDown6 = setup("/entity/updatedplayer/idledown/idle_down_6", gp.tileSize, gp.tileSize);
-        idleDown7 = setup("/entity/updatedplayer/idledown/idle_down_7", gp.tileSize, gp.tileSize);
-        idleDown8 = setup("/entity/updatedplayer/idledown/idle_down_8", gp.tileSize, gp.tileSize);
-        idleDown9 = setup("/entity/updatedplayer/idledown/idle_down_9", gp.tileSize, gp.tileSize);
-        idleUp1 = setup("/entity/updatedplayer/idleup/idle_up_1", gp.tileSize, gp.tileSize);
-        idleUp2 = setup("/entity/updatedplayer/idleup/idle_up_2", gp.tileSize, gp.tileSize);
-        idleUp3 = setup("/entity/updatedplayer/idleup/idle_up_3", gp.tileSize, gp.tileSize);
-        idleUp4 = setup("/entity/updatedplayer/idleup/idle_up_4", gp.tileSize, gp.tileSize);
-        idleUp5 = setup("/entity/updatedplayer/idleup/idle_up_5", gp.tileSize, gp.tileSize);
-        idleUp6 = setup("/entity/updatedplayer/idleup/idle_up_6", gp.tileSize, gp.tileSize);
-        idleUp7 = setup("/entity/updatedplayer/idleup/idle_up_7", gp.tileSize, gp.tileSize);
-        idleUp8 = setup("/entity/updatedplayer/idleup/idle_up_8", gp.tileSize, gp.tileSize);
-        idleUp9 = setup("/entity/updatedplayer/idleup/idle_up_9", gp.tileSize, gp.tileSize);
-        idleLeft1 = setup("/entity/updatedplayer/idleleft/idle_left_1", gp.tileSize, gp.tileSize);
-        idleLeft2 = setup("/entity/updatedplayer/idleleft/idle_left_2", gp.tileSize, gp.tileSize);
-        idleLeft3 = setup("/entity/updatedplayer/idleleft/idle_left_3", gp.tileSize, gp.tileSize);
-        idleLeft4 = setup("/entity/updatedplayer/idleleft/idle_left_4", gp.tileSize, gp.tileSize);
-        idleLeft5 = setup("/entity/updatedplayer/idleleft/idle_left_5", gp.tileSize, gp.tileSize);
-        idleLeft6 = setup("/entity/updatedplayer/idleleft/idle_left_6", gp.tileSize, gp.tileSize);
-        idleLeft7 = setup("/entity/updatedplayer/idleleft/idle_left_7", gp.tileSize, gp.tileSize);
-        idleLeft8 = setup("/entity/updatedplayer/idleleft/idle_left_8", gp.tileSize, gp.tileSize);
-        idleLeft9 = setup("/entity/updatedplayer/idleleft/idle_left_9", gp.tileSize, gp.tileSize);
-        idleRight1 = setup("/entity/updatedplayer/idleright/idle_right_1", gp.tileSize, gp.tileSize);
-        idleRight2 = setup("/entity/updatedplayer/idleright/idle_right_2", gp.tileSize, gp.tileSize);
-        idleRight3 = setup("/entity/updatedplayer/idleright/idle_right_3", gp.tileSize, gp.tileSize);
-        idleRight4 = setup("/entity/updatedplayer/idleright/idle_right_4", gp.tileSize, gp.tileSize);
-        idleRight5 = setup("/entity/updatedplayer/idleright/idle_right_5", gp.tileSize, gp.tileSize);
-        idleRight6 = setup("/entity/updatedplayer/idleright/idle_right_6", gp.tileSize, gp.tileSize);
-        idleRight7 = setup("/entity/updatedplayer/idleright/idle_right_7", gp.tileSize, gp.tileSize);
-        idleRight8 = setup("/entity/updatedplayer/idleright/idle_right_8", gp.tileSize, gp.tileSize);
-        idleRight9 = setup("/entity/updatedplayer/idleright/idle_right_9", gp.tileSize, gp.tileSize);
+        idleDown1 = setup("/entity/updatedplayer/idledown/idle_down_1", GamePanel.tileSize, GamePanel.tileSize);
+        idleDown2 = setup("/entity/updatedplayer/idledown/idle_down_2", GamePanel.tileSize, GamePanel.tileSize);
+        idleDown3 = setup("/entity/updatedplayer/idledown/idle_down_3", GamePanel.tileSize, GamePanel.tileSize);
+        idleDown4 = setup("/entity/updatedplayer/idledown/idle_down_4", GamePanel.tileSize, GamePanel.tileSize);
+        idleDown5 = setup("/entity/updatedplayer/idledown/idle_down_5", GamePanel.tileSize, GamePanel.tileSize);
+        idleDown6 = setup("/entity/updatedplayer/idledown/idle_down_6", GamePanel.tileSize, GamePanel.tileSize);
+        idleDown7 = setup("/entity/updatedplayer/idledown/idle_down_7", GamePanel.tileSize, GamePanel.tileSize);
+        idleDown8 = setup("/entity/updatedplayer/idledown/idle_down_8", GamePanel.tileSize, GamePanel.tileSize);
+        idleDown9 = setup("/entity/updatedplayer/idledown/idle_down_9", GamePanel.tileSize, GamePanel.tileSize);
+        idleUp1 = setup("/entity/updatedplayer/idleup/idle_up_1", GamePanel.tileSize, GamePanel.tileSize);
+        idleUp2 = setup("/entity/updatedplayer/idleup/idle_up_2", GamePanel.tileSize, GamePanel.tileSize);
+        idleUp3 = setup("/entity/updatedplayer/idleup/idle_up_3", GamePanel.tileSize, GamePanel.tileSize);
+        idleUp4 = setup("/entity/updatedplayer/idleup/idle_up_4", GamePanel.tileSize, GamePanel.tileSize);
+        idleUp5 = setup("/entity/updatedplayer/idleup/idle_up_5", GamePanel.tileSize, GamePanel.tileSize);
+        idleUp6 = setup("/entity/updatedplayer/idleup/idle_up_6", GamePanel.tileSize, GamePanel.tileSize);
+        idleUp7 = setup("/entity/updatedplayer/idleup/idle_up_7", GamePanel.tileSize, GamePanel.tileSize);
+        idleUp8 = setup("/entity/updatedplayer/idleup/idle_up_8", GamePanel.tileSize, GamePanel.tileSize);
+        idleUp9 = setup("/entity/updatedplayer/idleup/idle_up_9", GamePanel.tileSize, GamePanel.tileSize);
+        idleLeft1 = setup("/entity/updatedplayer/idleleft/idle_left_1", GamePanel.tileSize, GamePanel.tileSize);
+        idleLeft2 = setup("/entity/updatedplayer/idleleft/idle_left_2", GamePanel.tileSize, GamePanel.tileSize);
+        idleLeft3 = setup("/entity/updatedplayer/idleleft/idle_left_3", GamePanel.tileSize, GamePanel.tileSize);
+        idleLeft4 = setup("/entity/updatedplayer/idleleft/idle_left_4", GamePanel.tileSize, GamePanel.tileSize);
+        idleLeft5 = setup("/entity/updatedplayer/idleleft/idle_left_5", GamePanel.tileSize, GamePanel.tileSize);
+        idleLeft6 = setup("/entity/updatedplayer/idleleft/idle_left_6", GamePanel.tileSize, GamePanel.tileSize);
+        idleLeft7 = setup("/entity/updatedplayer/idleleft/idle_left_7", GamePanel.tileSize, GamePanel.tileSize);
+        idleLeft8 = setup("/entity/updatedplayer/idleleft/idle_left_8", GamePanel.tileSize, GamePanel.tileSize);
+        idleLeft9 = setup("/entity/updatedplayer/idleleft/idle_left_9", GamePanel.tileSize, GamePanel.tileSize);
+        idleRight1 = setup("/entity/updatedplayer/idleright/idle_right_1", GamePanel.tileSize, GamePanel.tileSize);
+        idleRight2 = setup("/entity/updatedplayer/idleright/idle_right_2", GamePanel.tileSize, GamePanel.tileSize);
+        idleRight3 = setup("/entity/updatedplayer/idleright/idle_right_3", GamePanel.tileSize, GamePanel.tileSize);
+        idleRight4 = setup("/entity/updatedplayer/idleright/idle_right_4", GamePanel.tileSize, GamePanel.tileSize);
+        idleRight5 = setup("/entity/updatedplayer/idleright/idle_right_5", GamePanel.tileSize, GamePanel.tileSize);
+        idleRight6 = setup("/entity/updatedplayer/idleright/idle_right_6", GamePanel.tileSize, GamePanel.tileSize);
+        idleRight7 = setup("/entity/updatedplayer/idleright/idle_right_7", GamePanel.tileSize, GamePanel.tileSize);
+        idleRight8 = setup("/entity/updatedplayer/idleright/idle_right_8", GamePanel.tileSize, GamePanel.tileSize);
+        idleRight9 = setup("/entity/updatedplayer/idleright/idle_right_9", GamePanel.tileSize, GamePanel.tileSize);
 
-        dashUp = setup("/entity/updatedplayer/up/dash_up", gp.tileSize, gp.tileSize);
-        dashDown = setup("/entity/updatedplayer/down/dash_down", gp.tileSize, gp.tileSize);
-        dashRight = setup("/entity/updatedplayer/right/dash_right", gp.tileSize, gp.tileSize);
-        dashLeft = setup("/entity/updatedplayer/left/dash_left", gp.tileSize, gp.tileSize);
+        dashUp = setup("/entity/updatedplayer/up/dash_up", GamePanel.tileSize, GamePanel.tileSize);
+        dashDown = setup("/entity/updatedplayer/down/dash_down", GamePanel.tileSize, GamePanel.tileSize);
+        dashRight = setup("/entity/updatedplayer/right/dash_right", GamePanel.tileSize, GamePanel.tileSize);
+        dashLeft = setup("/entity/updatedplayer/left/dash_left", GamePanel.tileSize, GamePanel.tileSize);
     }
 
     private void getHurtPlayerImage() {
         for (int i = 0; i < 9; i++) {
-            hurtUp[i] = setupSheet("/entity/updatedplayer/stunned/hurtsheet_up", 30 + i * 256,40,196, 196, gp.tileSize, gp.tileSize);
-            hurtRight[i] = setupSheet("/entity/updatedplayer/stunned/hurtsheet_right", 30 + i * 256,40,196, 196, gp.tileSize, gp.tileSize);
-            hurtDown[i] = setupSheet("/entity/updatedplayer/stunned/hurtsheet_down", 30 + i * 256,40,196, 196, gp.tileSize, gp.tileSize);
+            hurtUp[i] = setupSheet("/entity/updatedplayer/stunned/hurtsheet_up", 30 + i * 256,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+            hurtRight[i] = setupSheet("/entity/updatedplayer/stunned/hurtsheet_right", 30 + i * 256,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+            hurtDown[i] = setupSheet("/entity/updatedplayer/stunned/hurtsheet_down", 30 + i * 256,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
         }
         for (int i = 8; i > -1; i--) {
-            hurtLeft[i] = setupSheet("/entity/updatedplayer/stunned/hurtsheet_left", 30 + i * 256,40,196, 196, gp.tileSize, gp.tileSize);
+            hurtLeft[i] = setupSheet("/entity/updatedplayer/stunned/hurtsheet_left", 30 + i * 256,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
         }
     }
 
     public void getPlayerAttackImage() {
-        attackUp1 = setup("/entity/updatedplayer/attack/attack_up_1", (int)(gp.tileSize * 4/3), (int)(gp.tileSize * 19/12));
-        attackUp2 = setup("/entity/updatedplayer/attack/attack_up_2", (int)(gp.tileSize * 4/3), (int)(gp.tileSize * 19/12));
-        attackUpRight1 = setup("/entity/updatedplayer/attack/attack_upright_1", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 19/12));
-        attackUpRight2 = setup("/entity/updatedplayer/attack/attack_upright_2", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 19/12));
+        attackUp1 = setup("/entity/updatedplayer/attack/attack_up_1", (int)(GamePanel.tileSize * 4/3), (int)(GamePanel.tileSize * 19/12));
+        attackUp2 = setup("/entity/updatedplayer/attack/attack_up_2", (int)(GamePanel.tileSize * 4/3), (int)(GamePanel.tileSize * 19/12));
+        attackUpRight1 = setup("/entity/updatedplayer/attack/attack_upright_1", (int)(gp.tileSize * 19/12), (int)(GamePanel.tileSize * 19/12));
+        attackUpRight2 = setup("/entity/updatedplayer/attack/attack_upright_2", (int)(gp.tileSize * 19/12), (int)(GamePanel.tileSize * 19/12));
         attackRight1 = setup("/entity/updatedplayer/attack/attack_right_1", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 4/3));
         attackRight2 = setup("/entity/updatedplayer/attack/attack_right_2", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 4/3));
         attackDown1 = setup("/entity/updatedplayer/attack/attack_down_1", (int)(gp.tileSize * 4/3), (int)(gp.tileSize * 19/12));

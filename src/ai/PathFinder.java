@@ -1,6 +1,5 @@
 package ai;
 
-import entity.Entity;
 import main.GamePanel;
 
 import java.util.ArrayList;
@@ -102,7 +101,7 @@ public class PathFinder {
     }
 
     public boolean search() {
-        while(goalReached == false && step < maxStep){
+        while(!goalReached && step < maxStep){
             int col = currentNode.col;
             int row = currentNode.row;
 
@@ -153,7 +152,7 @@ public class PathFinder {
     }
 
     public void openNode(Node node) {
-        if(node.open == false && node.checked == false && node.solid == false) {
+        if(!node.open && !node.checked && !node.solid) {
             node.open = true;
             node.parent = currentNode;
             openList.add(node);

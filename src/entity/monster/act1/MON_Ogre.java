@@ -16,10 +16,10 @@ public class MON_Ogre extends Fighter {
         entityType = 2;
         getImage();
 
-        solidArea.x = gp.tileSize / 16 * 1;
-        solidArea.y = gp.tileSize / 16 * 4;
-        solidArea.width = gp.tileSize / 16 * 14;
-        solidArea.height = gp.tileSize / 16 * 12;
+        solidArea.x = GamePanel.tileSize / 16;
+        solidArea.y = GamePanel.tileSize / 16 * 4;
+        solidArea.width = GamePanel.tileSize / 16 * 14;
+        solidArea.height = GamePanel.tileSize / 16 * 12;
         solidAreaDefaultY = solidArea.y;
         solidAreaDefaultX = solidArea.x;
         entityType = 2;
@@ -38,12 +38,12 @@ public class MON_Ogre extends Fighter {
         attackChanceWhenAvailable = 100;
         attackDamage = 40;
         defaultSpeed = 1;
-        meleeAttackRange = gp.tileSize;
+        meleeAttackRange = GamePanel.tileSize;
         maxLife = 250;
         experienceValue = 310;
 
-        aggroAtThisDistance = 3 * gp.tileSize;
-        shouldTryToAttackRange = (int) (2.5 * gp.tileSize);
+        aggroAtThisDistance = 3 * GamePanel.tileSize;
+        shouldTryToAttackRange = (int) (2.5 * GamePanel.tileSize);
 
         /////
         life = maxLife;
@@ -104,52 +104,31 @@ public class MON_Ogre extends Fighter {
     public void drawAttackImageMelee1(){
         if(attackFrameCounter <= attackFramePoint1){
             switch (attackDirection) {
-                case "up":
-                    image = attackUp1;
-                    break;
-                case "right":
-                    image = attackRight1;
-                    break;
-                case "down":
-                    image = attackDown1;
-                    break;
-                case "left":
-                    image = attackLeft1;
-                    break;
+                case "up" -> image = attackUp1;
+                case "right" -> image = attackRight1;
+                case "down" -> image = attackDown1;
+                case "left" -> image = attackLeft1;
             }
-        }
-        else if(attackFrameCounter > attackFramePoint1){
+        } else {
             switch (attackDirection) {
-                case "up":
-                    image = attackUp2;
-                    break;
-                case "right":
-                    image = attackRight2;
-                    break;
-                case "down":
-                    image = attackDown2;
-                    break;
-                case "left":
-                    image = attackLeft2;
-                    break;
+                case "up" -> image = attackUp2;
+                case "right" -> image = attackRight2;
+                case "down" -> image = attackDown2;
+                case "left" -> image = attackLeft2;
             }
         }
         //image correction:
         switch (attackDirection) {
-            case "up":
-                screenX = screenX - (image.getWidth()/2 - gp.tileSize/2);
-                screenY = screenY - (image.getHeight() - gp.tileSize);
-                break;
-            case "right":
-                screenY = screenY - (image.getHeight()/2 - gp.tileSize/2);
-                break;
-            case "down":
-                screenX = screenX - (image.getWidth()/2 - gp.tileSize/2);
-                break;
-            case "left":
-                screenX = screenX - (image.getWidth() - gp.tileSize);
-                screenY = screenY - (image.getHeight()/2 - gp.tileSize/2);
-                break;
+            case "up" -> {
+                screenX = screenX - (image.getWidth() / 2 - GamePanel.tileSize / 2);
+                screenY = screenY - (image.getHeight() - GamePanel.tileSize);
+            }
+            case "right" -> screenY = screenY - (image.getHeight() / 2 - GamePanel.tileSize / 2);
+            case "down" -> screenX = screenX - (image.getWidth() / 2 - GamePanel.tileSize / 2);
+            case "left" -> {
+                screenX = screenX - (image.getWidth() - GamePanel.tileSize);
+                screenY = screenY - (image.getHeight() / 2 - GamePanel.tileSize / 2);
+            }
         }
     }
     public void drawDying(){

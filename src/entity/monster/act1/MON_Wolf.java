@@ -12,14 +12,14 @@ public class MON_Wolf extends Fighter {
         collisionEntity = false;
         name = "Wolf";
         sleepDistance = 4;
-        solidArea.x = gp.tileSize / 16 * 1;
-        solidArea.y = gp.tileSize / 16 * 4;
-        solidArea.width = gp.tileSize / 16 * 14;
-        solidArea.height = gp.tileSize / 16 * 12;
+        solidArea.x = GamePanel.tileSize / 16;
+        solidArea.y = GamePanel.tileSize / 16 * 4;
+        solidArea.width = GamePanel.tileSize / 16 * 14;
+        solidArea.height = GamePanel.tileSize / 16 * 12;
         solidAreaDefaultY = solidArea.y;
         solidAreaDefaultX = solidArea.x;
         getImages();
-        goBackToSpawnMaxDistance = 10 * gp.tileSize;
+        goBackToSpawnMaxDistance = 10 * GamePanel.tileSize;
         attackSoundReferenceNumber = -1; // make sound at attack start, not attack instance, because this entity moves during his attack
         sleeping = true;
 
@@ -31,14 +31,14 @@ public class MON_Wolf extends Fighter {
         attackChanceWhenAvailable = 90;
         attackDamage = 30;
         defaultSpeed = 2;
-        meleeAttackRange =  (int) (0.9 * gp.tileSize);
+        meleeAttackRange =  (int) (0.9 * GamePanel.tileSize);
         maxLife = 215;
         experienceValue = 190;
 
         attackFramePoint1 = 50;
         attackFramePoint2 = 100;
-        aggroAtThisDistance = 4 * gp.tileSize;
-        shouldTryToAttackRange = (int) (2.5 * gp.tileSize);
+        aggroAtThisDistance = 4 * GamePanel.tileSize;
+        shouldTryToAttackRange = (int) (2.5 * GamePanel.tileSize);
 
         ///
         life = maxLife;
@@ -87,42 +87,19 @@ public class MON_Wolf extends Fighter {
             }
         }
         if(attackFrameCounter < attackFramePoint2/2){
-            switch (attackDirection){
-                case "up":{
-                    worldY--;
-                    break;
-                }
-                case "right":{
-                    worldX++;
-                    break;
-                }
-                case "down":{
-                    worldY++;
-                    break;
-                }
-                case "left":{
-                    worldX--;
-                    break;
-                }
+            switch (attackDirection) {
+                case "up" -> worldY--;
+                case "right" -> worldX++;
+                case "down" ->worldY++;
+                case "left" -> worldX--;
             }
         } else {
-            switch (attackDirection){
-                case "up":{
+            switch (attackDirection) {
+                case "up" ->
                     worldY++;
-                    break;
-                }
-                case "right":{
-                    worldX--;
-                    break;
-                }
-                case "down":{
-                    worldY--;
-                    break;
-                }
-                case "left":{
-                    worldX++;
-                    break;
-                }
+                case "right" -> worldX--;
+                case "down" -> worldY--;
+                case "left" -> worldX++;
             }
         }
 

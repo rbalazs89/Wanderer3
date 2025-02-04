@@ -8,11 +8,14 @@ import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ParticleEffectForAttack extends Spells {
-    private int startX, startY;
-    private int endX, endY;
-    private int playerWorldAtStartX, playerWorldAtStartY;
+    private final int startX;
+    private final int startY;
+    private final int endX;
+    private final int endY;
+    private final int playerWorldAtStartX;
+    private final int playerWorldAtStartY;
     private CopyOnWriteArrayList<ParticleEffectForAttack.Particle> particles;
-    private Random random = new Random();
+    private final Random random = new Random();
 
     public ParticleEffectForAttack(GamePanel gp, int startX, int startY, int endX, int endY) {
         super(gp);
@@ -70,17 +73,16 @@ public class ParticleEffectForAttack extends Spells {
                 velocityY += random.nextDouble() * 3; // Random velocity between 0 and 3
             }
             int lifespan = random.nextInt(60) + 30; // Lifespan between 30 and 90 frames
-            particles.add(new ParticleEffectForAttack.Particle(x, y, velocityX, velocityY, lifespan));
+            particles.add(new Particle(x, y, velocityX, velocityY, lifespan));
         }
     }
 
-
-
-    private class Particle {
+    private static class Particle {
         private int drawX, drawY;
         private int x, y;
-        private double velocityX, velocityY;
-        private int lifespan;
+        private final double velocityX;
+        private final double velocityY;
+        private final int lifespan;
         private int age;
 
         public Particle(int x, int y, double velocityX, double velocityY, int lifespan) {

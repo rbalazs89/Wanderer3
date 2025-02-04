@@ -16,13 +16,13 @@ public class MON_Skeleton extends Fighter {
         name = "Skeleton";
         sleepDistance = 4;
         solidArea.x = 2;
-        solidArea.y = gp.tileSize / 16 * 1;
-        solidArea.width = gp.tileSize / 16 * 14;
+        solidArea.y = GamePanel.tileSize / 16;
+        solidArea.width = GamePanel.tileSize / 16 * 14;
         solidArea.height = 62;
         solidAreaDefaultY = solidArea.y;
         solidAreaDefaultX = solidArea.x;
         getImages();
-        goBackToSpawnMaxDistance = 10 * gp.tileSize;
+        goBackToSpawnMaxDistance = 10 * GamePanel.tileSize;
         attackSoundReferenceNumber = 62;
         sleeping = true;
 
@@ -33,14 +33,14 @@ public class MON_Skeleton extends Fighter {
         attackChanceWhenAvailable = 99;
         attackDamage = 25;
         defaultSpeed = 1;
-        meleeAttackRange =  (int) (0.95 * gp.tileSize);
+        meleeAttackRange =  (int) (0.95 * GamePanel.tileSize);
         maxLife = 250;
         experienceValue = 100;
 
         attackFramePoint1 = 50;
         attackFramePoint2 = 100;
-        aggroAtThisDistance = 15 * gp.tileSize;
-        shouldTryToAttackRange = (int) (2.5 * gp.tileSize);
+        aggroAtThisDistance = 15 * GamePanel.tileSize;
+        shouldTryToAttackRange = (int) (2.5 * GamePanel.tileSize);
 
         ///
         life = maxLife;
@@ -53,42 +53,40 @@ public class MON_Skeleton extends Fighter {
 
     public void attackImageCorrection(){
         switch (attackDirection) {
-            case "up":
+            case "up" -> {
                 screenX = screenX - 48;
-                screenY = screenY - 44 ;
-                break;
-            case "right":
-                screenY = screenY - gp.tileSize;
-                break;
-            case "down":
+                screenY = screenY - 44;
+            }
+            case "right" -> screenY = screenY - GamePanel.tileSize;
+            case "down" -> {
                 screenX = screenX - 20;
                 screenY = screenY - 26;
-                break;
-            case "left":
-                screenX = screenX -  gp.tileSize;
-                screenY = screenY -  gp.tileSize;
-                break;
+            }
+            case "left" -> {
+                screenX = screenX - GamePanel.tileSize;
+                screenY = screenY - GamePanel.tileSize;
+            }
         }
     }
 
     public void walkImageCorrection(){
         switch (direction) {
-            case "up":
+            case "up" -> {
                 screenX = screenX - 52;
                 screenY = screenY - 34;
-                break;
-            case "right":
+            }
+            case "right" -> {
                 screenX = screenX - 16;
                 screenY = screenY - 32;
-                break;
-            case "down":
+            }
+            case "down" -> {
                 screenX = screenX - 8;
                 screenY = screenY - 32;
-                break;
-            case "left":
+            }
+            case "left" -> {
                 screenX = screenX - 50;
                 screenY = screenY - 32;
-                break;
+            }
         }
     }
 
@@ -101,8 +99,8 @@ public class MON_Skeleton extends Fighter {
         /**int framesPerSprite = 60 / 10; // 60 frames divided by 10 sprites*/
         int deathSprite = Math.min(deathTimeCounter / 12, 4);
         image = dying[deathSprite];
-        screenX = screenX - gp.tileSize;
-        screenY = screenY - gp.tileSize;
+        screenX = screenX - GamePanel.tileSize;
+        screenY = screenY - GamePanel.tileSize;
     }
 
     public void playDeathSound(){
@@ -139,8 +137,8 @@ public class MON_Skeleton extends Fighter {
                     targetEntity = null;
                     isGoingBackToSpawn = true;
                     speed = defaultSpeed * 2;
-                    goalCol = spawnX / gp.tileSize;
-                    goalRow = spawnY / gp.tileSize;
+                    goalCol = spawnX / GamePanel.tileSize;
+                    goalRow = spawnY / GamePanel.tileSize;
                 }
             }
 
@@ -182,7 +180,7 @@ public class MON_Skeleton extends Fighter {
                 if (50 < i && i <= 75) {
                     direction = "left";
                 }
-                if (75 < i && i <= 100) {
+                if (75 < i) {
                     direction = "right";
                 }
             }
@@ -214,12 +212,12 @@ public class MON_Skeleton extends Fighter {
         goBackCheckCounter ++;
         if(goBackCheckCounter >=  20) {
             if (targetEntity != null) {
-                if (targetEntity.middleDistance(this) > 12 * gp.tileSize) {
+                if (targetEntity.middleDistance(this) > 12 * GamePanel.tileSize) {
                     targetEntity = null;
                     speed = defaultSpeed * 2;
                     isGoingBackToSpawn = true;
-                    goalCol = spawnX / gp.tileSize;
-                    goalRow = spawnY / gp.tileSize;
+                    goalCol = spawnX / GamePanel.tileSize;
+                    goalRow = spawnY / GamePanel.tileSize;
                     goBackCheckCounter = 0;
                 }
             }
@@ -231,8 +229,8 @@ public class MON_Skeleton extends Fighter {
                 targetEntity = null;
                 isGoingBackToSpawn = true;
                 speed = defaultSpeed * 2;
-                goalCol = spawnX / gp.tileSize;
-                goalRow = spawnY / gp.tileSize;
+                goalCol = spawnX / GamePanel.tileSize;
+                goalRow = spawnY / GamePanel.tileSize;
                 goBackCheckCounter = 20;
             }
         }

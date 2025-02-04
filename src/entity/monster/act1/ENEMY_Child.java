@@ -3,9 +3,7 @@ package entity.monster.act1;
 import entity.Entity;
 import entity.Fighter;
 import entity.attacks.projectile.CHILD_Arrow;
-import entity.attacks.projectile.MON_FireBall;
 import entity.npc.NPC_ArrowChild;
-import entity.npc.NPC_Child1;
 import main.GamePanel;
 
 import java.awt.*;
@@ -27,14 +25,14 @@ public class ENEMY_Child extends Fighter {
         drawHpBar = false;
         collisionEntity = false;
         name = "annoying child";
-        solidArea.x = gp.tileSize / 16 * 1;
-        solidArea.y = gp.tileSize / 16 * 4;
-        solidArea.width = gp.tileSize / 16 * 14;
-        solidArea.height = gp.tileSize / 16 * 12;
+        solidArea.x = GamePanel.tileSize / 16;
+        solidArea.y = GamePanel.tileSize / 16 * 4;
+        solidArea.width = GamePanel.tileSize / 16 * 14;
+        solidArea.height = GamePanel.tileSize / 16 * 12;
         solidAreaDefaultY = solidArea.y;
         solidAreaDefaultX = solidArea.x;
         getImages();
-        goBackToSpawnMaxDistance = 20 * gp.tileSize;
+        goBackToSpawnMaxDistance = 20 * GamePanel.tileSize;
 
         //Balance:
         level = 1;
@@ -42,14 +40,14 @@ public class ENEMY_Child extends Fighter {
         attackChanceWhenAvailable = 90;
         attackDamage = 1;
         defaultSpeed = 0;
-        meleeAttackRange =  (int) (0.85 * gp.tileSize);
+        meleeAttackRange =  (int) (0.85 * GamePanel.tileSize);
         maxLife = 1;
         experienceValue = 1;
 
         attackFramePoint1 = 40;
         attackFramePoint2 = 80;
-        aggroAtThisDistance = 12 * gp.tileSize;
-        shouldTryToAttackRange = (int) (7 * gp.tileSize);
+        aggroAtThisDistance = 12 * GamePanel.tileSize;
+        shouldTryToAttackRange = 7 * GamePanel.tileSize;
 
         ///
         life = maxLife;
@@ -60,8 +58,8 @@ public class ENEMY_Child extends Fighter {
         attackDown = new BufferedImage[maxAttackImage];
         walkDown = new BufferedImage[maxWalkImage];
         for (int i = 0; i < maxWalkImage; i++) {
-            attackDown[i] = setupSheet("/entity/monster/act1/kid/bow", i * 128,0,128, 128, gp.tileSize, gp.tileSize);
-            walkDown[i] = setupSheet("/entity/monster/act1/kid/walkdown", i * 128,0,128, 128, gp.tileSize, gp.tileSize);
+            attackDown[i] = setupSheet("/entity/monster/act1/kid/bow", i * 128,0,128, 128, GamePanel.tileSize, GamePanel.tileSize);
+            walkDown[i] = setupSheet("/entity/monster/act1/kid/walkdown", i * 128,0,128, 128, GamePanel.tileSize, GamePanel.tileSize);
         }
     }
 
@@ -132,10 +130,10 @@ public class ENEMY_Child extends Fighter {
         screenX = worldX - gp.player.worldX + gp.player.screenX;
         screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
+        if(worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
 
             if(!isDying && !currentlyAttacking) {
                 getWalkingImage();
@@ -145,12 +143,6 @@ public class ENEMY_Child extends Fighter {
             else if(currentlyAttacking && !isDying){
                 getAttackImage();
                 attackImageCorrection();
-            }
-
-            // DEATH IMAGES:
-            if(isDying){
-                //drawDying();
-                //dyingImageCorrection();
             }
 
             //DRAW IMAGE:

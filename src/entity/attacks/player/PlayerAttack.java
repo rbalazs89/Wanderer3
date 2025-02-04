@@ -30,7 +30,7 @@ public class PlayerAttack extends MeleeAttack {
         if (attackType == 1) {
             myRectangle.height = (GamePanel.tileSize * 5/4) + gp.player.attackRangeIncrease;
             myRectangle.width = (GamePanel.tileSize * 3/2);
-            myRectangle.x = gp.player.worldX - GamePanel.tileSize * 1/4;
+            myRectangle.x = gp.player.worldX - GamePanel.tileSize /4;
             myRectangle.y = gp.player.worldY - GamePanel.tileSize * 3/4 - gp.player.attackRangeIncrease;
         }
         else if (attackType == 2) {
@@ -43,7 +43,7 @@ public class PlayerAttack extends MeleeAttack {
             myRectangle.height = (GamePanel.tileSize * 3/2);
             myRectangle.width = (GamePanel.tileSize * 5/4) + gp.player.attackRangeIncrease;
             myRectangle.x = gp.player.worldX + GamePanel.tileSize * 2/4;
-            myRectangle.y = gp.player.worldY - GamePanel.tileSize * 1/4;
+            myRectangle.y = gp.player.worldY - GamePanel.tileSize /4;
         }
         else if (attackType == 4) {
             myRectangle.height = (GamePanel.tileSize * 5/4) + (int)(gp.player.attackRangeIncrease * 0.7);
@@ -54,7 +54,7 @@ public class PlayerAttack extends MeleeAttack {
         else if (attackType == 5) {
             myRectangle.height = (GamePanel.tileSize * 5/4) + gp.player.attackRangeIncrease;
             myRectangle.width = (GamePanel.tileSize * 3/2);
-            myRectangle.x = gp.player.worldX - GamePanel.tileSize * 1/4;
+            myRectangle.x = gp.player.worldX - GamePanel.tileSize /4;
             myRectangle.y = gp.player.worldY + GamePanel.tileSize * 2/4;
         }
         else if (attackType == 6) {
@@ -67,7 +67,7 @@ public class PlayerAttack extends MeleeAttack {
             myRectangle.height = (GamePanel.tileSize * 3/2);
             myRectangle.width = (GamePanel.tileSize * 5/4) + gp.player.attackRangeIncrease;
             myRectangle.x = gp.player.worldX - GamePanel.tileSize * 3/4 - gp.player.attackRangeIncrease;
-            myRectangle.y = gp.player.worldY - GamePanel.tileSize * 1/4;
+            myRectangle.y = gp.player.worldY - GamePanel.tileSize /4;
         }
         else if (attackType == 8) {
             myRectangle.height = (GamePanel.tileSize * 5/4) + (int)(gp.player.attackRangeIncrease * 0.7);

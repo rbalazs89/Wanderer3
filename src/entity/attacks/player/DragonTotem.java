@@ -13,23 +13,24 @@ public class DragonTotem extends Spells{
         life = 10;
         maxLife = life;
         for (int i = 0; i < gp.spells.size(); i++) {
-            if(gp.spells.get(i)instanceof DragonTotem){
-                gp.spells.remove(i);
+            Entity currentSpell = gp.spells.get(i);
+            if(currentSpell instanceof DragonTotem){
+                gp.spells.remove(currentSpell);
             }
         }
         gp.playSE(40);
         image = setup("/spell/totem/totem");
         gp.spells.add(this);
-        worldX = gp.mouseH.mouseX - gp.tileSize / 2 - gp.player.screenX + gp.player.worldX;
-        worldY = gp.mouseH.mouseY - gp.tileSize / 2 - gp.player.screenY + gp.player.worldY;
+        worldX = gp.mouseH.mouseX - GamePanel.tileSize / 2 - gp.player.screenX + gp.player.worldX;
+        worldY = gp.mouseH.mouseY - GamePanel.tileSize / 2 - gp.player.screenY + gp.player.worldY;
         if(worldX < 0){
             worldX = 0;
-        } else if(worldX > gp.currentMapMaxCol * gp.tileSize)
-            worldX = (gp.currentMapMaxCol - 1) * gp. tileSize;
+        } else if(worldX > gp.currentMapMaxCol * GamePanel.tileSize)
+            worldX = (gp.currentMapMaxCol - 1) * GamePanel. tileSize;
         if(worldY < 0){
             worldY = 0;
-        } else if(worldY > gp.currentMapMaxRow * gp.tileSize)
-            worldY = (gp.currentMapMaxRow - 1) * gp. tileSize;
+        } else if(worldY > gp.currentMapMaxRow * GamePanel.tileSize)
+            worldY = (gp.currentMapMaxRow - 1) * GamePanel. tileSize;
     }
 
     public void update(){
@@ -37,7 +38,7 @@ public class DragonTotem extends Spells{
         if (counter > 60){
             counter = 0;
             int middleDistance;
-            int smallestDistance = 9 * gp.tileSize;
+            int smallestDistance = 9 * GamePanel.tileSize;
             int smallestDistanceIndex = -1;
             for (int i = 0; i < gp.allFightingEntities.size(); i++) {
                 Entity currentEntity = gp.allFightingEntities.get(i);

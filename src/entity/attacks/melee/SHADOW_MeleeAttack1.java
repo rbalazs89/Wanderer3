@@ -12,7 +12,7 @@ public class SHADOW_MeleeAttack1 extends Entity {
     Rectangle attackRectangle = new Rectangle();
     Entity originEntity;
     int damageType;
-    BufferedImage images[] = new BufferedImage[8];
+    BufferedImage[] images = new BufferedImage[8];
     BufferedImage image2;
     int multiplier;
     public SHADOW_MeleeAttack1(GamePanel gp, int Melee_AttackDirection, int Melee_attackRange, Entity originEntity){
@@ -30,30 +30,30 @@ public class SHADOW_MeleeAttack1 extends Entity {
         damageType = 0; //physical
 
         switch (Melee_AttackDirection) {
-            case 0:
-                attackRectangle.x = middleX - gp.tileSize;
-                attackRectangle.y = middleY - gp.tileSize / 2 - Melee_attackRange;
-                attackRectangle.width = gp.tileSize * 2;
-                attackRectangle.height = gp.tileSize / 2 + Melee_attackRange;
-                break;
-            case 1:
+            case 0 -> {
+                attackRectangle.x = middleX - GamePanel.tileSize;
+                attackRectangle.y = middleY - GamePanel.tileSize / 2 - Melee_attackRange;
+                attackRectangle.width = GamePanel.tileSize * 2;
+                attackRectangle.height = GamePanel.tileSize / 2 + Melee_attackRange;
+            }
+            case 1 -> {
                 attackRectangle.x = middleX;
-                attackRectangle.y = middleY - gp.tileSize;
-                attackRectangle.width = gp.tileSize / 2 + Melee_attackRange;
-                attackRectangle.height = gp.tileSize * 2;
-                break;
-            case 2:
-                attackRectangle.x = middleX - gp.tileSize;
+                attackRectangle.y = middleY - GamePanel.tileSize;
+                attackRectangle.width = GamePanel.tileSize / 2 + Melee_attackRange;
+                attackRectangle.height = GamePanel.tileSize * 2;
+            }
+            case 2 -> {
+                attackRectangle.x = middleX - GamePanel.tileSize;
                 attackRectangle.y = middleY;
-                attackRectangle.width = gp.tileSize * 2;
-                attackRectangle.height = gp.tileSize / 2 + Melee_attackRange;
-                break;
-            case 3:
-                attackRectangle.x = middleX - gp.tileSize/2 - Melee_attackRange;
-                attackRectangle.y = middleY - gp.tileSize;
-                attackRectangle.width = gp.tileSize / 2 + Melee_attackRange;
-                attackRectangle.height = gp.tileSize * 2;
-                break;
+                attackRectangle.width = GamePanel.tileSize * 2;
+                attackRectangle.height = GamePanel.tileSize / 2 + Melee_attackRange;
+            }
+            case 3 -> {
+                attackRectangle.x = middleX - GamePanel.tileSize / 2 - Melee_attackRange;
+                attackRectangle.y = middleY - GamePanel.tileSize;
+                attackRectangle.width = GamePanel.tileSize / 2 + Melee_attackRange;
+                attackRectangle.height = GamePanel.tileSize * 2;
+            }
         }
         worldX = attackRectangle.x - gp.player.screenX + gp.player.worldX;
         worldY = attackRectangle.y - gp.player.screenY + gp.player.worldY;

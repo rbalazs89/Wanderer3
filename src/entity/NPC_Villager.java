@@ -23,19 +23,11 @@ public class NPC_Villager extends NPC {
     }
 
     public void speak() {
-        switch(gp.player.direction) {
-            case "up":
-                direction = "down";
-                break;
-            case "down":
-                direction = "up";
-                break;
-            case "right":
-                direction = "left";
-                break;
-            case "left":
-                direction = "right";
-                break;
+        switch (gp.player.direction) {
+            case "up" -> direction = "down";
+            case "down" -> direction = "up";
+            case "right" -> direction = "left";
+            case "left" -> direction = "right";
         }
         if(dialogues[dialogueIndex] == null){
             dialogueIndex = 0;

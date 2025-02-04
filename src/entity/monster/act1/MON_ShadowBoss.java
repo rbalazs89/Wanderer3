@@ -31,9 +31,6 @@ public class MON_ShadowBoss extends Fighter {
     private boolean castingProjectile = false;
     private boolean meleeAttack1 = false;
     private boolean meleeAttack2 = false;
-    private boolean canCastOrAttack = true;
-
-    private boolean fullMad = false;
     private int speedRandomizerCounter = 0;
     private static final int daggersCooldown = 2100;
     private static final int meleeAttacksCoolDown = 480;
@@ -50,7 +47,6 @@ public class MON_ShadowBoss extends Fighter {
     private int actionLockCounter3 = 0;
     private int previousActionLockCounter3 = 0;
     private static final int actionLock3Point = 40;
-    boolean steppedIntoFreeMovement = false;
     private boolean shouldTryToDoFreeMovement = true;
     private int hpRegenCounter = 0;
     private static final int hpRegenPoint = 60;
@@ -63,10 +59,10 @@ public class MON_ShadowBoss extends Fighter {
         drawHpBar = true;
         collisionEntity = false;
         name = "Wraith boss";
-        solidArea.x = gp.tileSize / 16 * 1;
-        solidArea.y = gp.tileSize / 16 * 4;
-        solidArea.width = gp.tileSize / 16 * 14;
-        solidArea.height = gp.tileSize / 16 * 12;
+        solidArea.x = GamePanel.tileSize / 16;
+        solidArea.y = GamePanel.tileSize / 16 * 4;
+        solidArea.width = GamePanel.tileSize / 16 * 14;
+        solidArea.height = GamePanel.tileSize / 16 * 12;
 
         solidAreaDefaultY = solidArea.y;
         solidAreaDefaultX = solidArea.x;
@@ -83,11 +79,11 @@ public class MON_ShadowBoss extends Fighter {
         damageOnContactValue = 1;
         attackDamage = 35;
         defaultSpeed = 0;
-        meleeAttackRange =  (int) (0.85 * gp.tileSize);
+        meleeAttackRange =  (int) (0.85 * GamePanel.tileSize);
         maxLife = 850;
         experienceValue = 100;
-        aggroAtThisDistance = 6 * gp.tileSize;
-        shouldTryToAttackRange = (int) (3 * gp.tileSize);
+        aggroAtThisDistance = 6 * GamePanel.tileSize;
+        shouldTryToAttackRange = 3 * GamePanel.tileSize;
         frozenResistance = 1;
         resist[1] = 60;
         resist[2] = 55;
@@ -165,8 +161,8 @@ public class MON_ShadowBoss extends Fighter {
                 validTileFound = false;
                 findPositionComparedToTargetIfCasting();
                 if(validTileFound){
-                    goalCol = spawnX / gp.tileSize;
-                    goalRow = spawnY / gp.tileSize;
+                    goalCol = spawnX / GamePanel.tileSize;
+                    goalRow = spawnY / GamePanel.tileSize;
                 }
             }
             if(validTileFound) {
@@ -182,8 +178,8 @@ public class MON_ShadowBoss extends Fighter {
                 //System.out.println("tempint" + tempInt);
                 if (tempInt != 0 && shouldTryToDoFreeMovement && targetEntity != null){
                     tempOnPath = true;
-                    goalCol = targetEntity.worldMiddleX() / gp.tileSize;
-                    goalRow = targetEntity.worldMiddleY() / gp.tileSize;
+                    goalCol = targetEntity.worldMiddleX() / GamePanel.tileSize;
+                    goalRow = targetEntity.worldMiddleY() / GamePanel.tileSize;
                 }
             }
             if(tempOnPath && actionLockCounter3 <= actionLock3Point){
@@ -277,7 +273,7 @@ public class MON_ShadowBoss extends Fighter {
 
     private void determineAttackIfAny() {
 
-        if(middleDistance(targetEntity) < 10 * gp.tileSize && !daggersIsOnCooldown){
+        if(middleDistance(targetEntity) < 10 * GamePanel.tileSize && !daggersIsOnCooldown){
             castingDagger = true;
             daggersIsOnCooldown = true;
             canAttack = false;
@@ -288,7 +284,7 @@ public class MON_ShadowBoss extends Fighter {
         if(!isMeleeAttackOnCooldown){
             int tempRandom = random.nextInt(100);
             if(tempRandom == 0){
-                if(middleDistance(targetEntity) < 3 * gp.tileSize){
+                if(middleDistance(targetEntity) < 3 * GamePanel.tileSize){
                     screaming = true;
                     attackDirection = decideMeleeAttackDirection();
                     canAttack = false;
@@ -297,7 +293,7 @@ public class MON_ShadowBoss extends Fighter {
                 }
             }
             else if (tempRandom == 1){
-                if(middleDistance(targetEntity) < 3 * gp.tileSize) {
+                if(middleDistance(targetEntity) < 3 * GamePanel.tileSize) {
                     meleeAttack2 = true;
                     canAttack = false;
                     attackDirection = decideMeleeAttackDirection();
@@ -310,7 +306,7 @@ public class MON_ShadowBoss extends Fighter {
         if(!isSpellCastingOnCooldown){
             int tempRandom = random.nextInt(100);
             if(tempRandom == 0) {
-                if (middleDistance(targetEntity) < 8 * gp.tileSize) {
+                if (middleDistance(targetEntity) < 8 * GamePanel.tileSize) {
                     castingProjectile = true;
                     canAttack = false;
                     attackDirection = decideMeleeAttackDirection();
@@ -319,7 +315,7 @@ public class MON_ShadowBoss extends Fighter {
                 }
             }
             if(tempRandom == 1){
-                if(middleDistance(targetEntity) < 8 * gp.tileSize){
+                if(middleDistance(targetEntity) < 8 * GamePanel.tileSize){
                     castingDragon = true;
                     canAttack = false;
                     attackDirection = decideMeleeAttackDirection();
@@ -414,45 +410,22 @@ public class MON_ShadowBoss extends Fighter {
         }
         if(attackFrameCounter < 10){
             speed = 9;
-            switch (attackDirection){
-                case 0:{
-                    direction = "down";
-                    break;
-                }
-                case 1:{
-                    direction = "left";
-                    break;
-                }
-                case 2:{
-                    direction = "up";
-                    break;
-                }
-                case 3:{
-                    direction = "right";
-                    break;
-                }
+            switch (attackDirection) {
+                case 0 -> direction = "down";
+                case 1 -> direction = "left";
+                case 2 -> direction = "up";
+                case 3 -> direction = "right";
             }
         }
         //original 10...30
         if(attackFrameCounter >= 10 && attackFrameCounter < 60){
             speed = 3;
-            switch (attackDirection){
-                case 0:{
-                    direction = "up";
-                    break;
-                }
-                case 1:{
-                    direction = "right";
-                    break;
-                }
-                case 2:{
-                    direction = "down";
-                    break;
-                }
-                case 3:{
-                    direction = "left";
-                    break;
-                }
+            switch (attackDirection) {
+                case 0 -> direction = "up";
+                case 1 -> direction = "right";
+                case 2 -> direction = "down";
+                case 3 -> direction = "left";
+
             }
         }
 
@@ -500,10 +473,10 @@ public class MON_ShadowBoss extends Fighter {
         screenX = worldX - gp.player.worldX + gp.player.screenX;
         screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
+        if(worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
 
             if(canAttack) {
                 drawGetWalkingImage();
@@ -581,19 +554,11 @@ public class MON_ShadowBoss extends Fighter {
             attackSpriteNum = Math.min((((attackFrameCounter - 80) / ((100 - 80) / 9)) + 3), 8);
         }
 
-        switch (attackDirection){
-            case 0:
-                image = attackUp[attackSpriteNum];
-                break;
-            case 1:
-                image = attackRight[attackSpriteNum];
-                break;
-            case 2:
-                image = attackDown[attackSpriteNum];
-                break;
-            case 3:
-                image = attackLeft[attackSpriteNum];
-                break;
+        switch (attackDirection) {
+            case 0 -> image = attackUp[attackSpriteNum];
+            case 1 -> image = attackRight[attackSpriteNum];
+            case 2 -> image = attackDown[attackSpriteNum];
+            case 3 -> image = attackLeft[attackSpriteNum];
         }
     }
 
@@ -616,19 +581,11 @@ public class MON_ShadowBoss extends Fighter {
             attackSpriteNum = Math.min((((attackFrameCounter - 120) / ((140 - 120) / 9)) + 3), 8);
         }
 
-        switch (attackDirection){
-            case 0:
-                image = attackUp[attackSpriteNum];
-                break;
-            case 1:
-                image = attackRight[attackSpriteNum];
-                break;
-            case 2:
-                image = attackDown[attackSpriteNum];
-                break;
-            case 3:
-                image = attackLeft[attackSpriteNum];
-                break;
+        switch (attackDirection) {
+            case 0 -> image = attackUp[attackSpriteNum];
+            case 1 -> image = attackRight[attackSpriteNum];
+            case 2 -> image = attackDown[attackSpriteNum];
+            case 3 -> image = attackLeft[attackSpriteNum];
         }
     }
 
@@ -651,36 +608,20 @@ public class MON_ShadowBoss extends Fighter {
         }
 
 
-        switch (attackDirection){
-            case 0:
-                image = attackUp[attackSpriteNum];
-                break;
-            case 1:
-                image = attackRight[attackSpriteNum];
-                break;
-            case 2:
-                image = attackDown[attackSpriteNum];
-                break;
-            case 3:
-                image = attackLeft[attackSpriteNum];
-                break;
+        switch (attackDirection) {
+            case 0 -> image = attackUp[attackSpriteNum];
+            case 1 -> image = attackRight[attackSpriteNum];
+            case 2 -> image = attackDown[attackSpriteNum];
+            case 3 -> image = attackLeft[attackSpriteNum];
         }
     }
 
     private void drawScreaming(Graphics2D g2) {
-        switch (attackDirection){
-            case 0:
-                image = attackUp[0];
-                break;
-            case 1:
-                image = attackRight[0];
-                break;
-            case 2:
-                image = attackDown[0];
-                break;
-            case 3:
-                image = attackLeft[0];
-                break;
+        switch (attackDirection) {
+            case 0 -> image = attackUp[0];
+            case 1 -> image = attackRight[0];
+            case 2 -> image = attackDown[0];
+            case 3 -> image = attackLeft[0];
         }
         g2.drawImage(currentVFX, screenX - 20, screenY - 30, null);
         screenX = screenX + random.nextInt(5) - 10;
@@ -689,25 +630,22 @@ public class MON_ShadowBoss extends Fighter {
 
     public void walkImageCorrection(){
         switch (direction) {
-            case "up":
+            case "up" -> {
                 screenX -= 9;
                 screenY -= 25;
-                break;
-
-            case "right":
+            }
+            case "right" -> {
                 screenX -= 40;
                 screenY -= 10;
-                break;
-
-            case "down":
+            }
+            case "down" -> {
                 screenX -= 58;
                 screenY -= 34;
-                break;
-
-            case "left":
+            }
+            case "left" -> {
                 screenX -= 28;
                 screenY -= 10;
-                break;
+            }
         }
     }
 
@@ -715,18 +653,10 @@ public class MON_ShadowBoss extends Fighter {
     public void drawAttackImageMelee1(){
         attackSpriteNum = Math.min((attackFrameCounter%60) / (60/9), 8);
         switch (attackDirection) {
-            case 0:
-                image = attackUp[attackSpriteNum];
-                break;
-            case 1:
-                image = attackRight[attackSpriteNum];
-                break;
-            case 2:
-                image = attackDown[attackSpriteNum];
-                break;
-            case 3:
-                image = attackLeft[attackSpriteNum];
-                break;
+            case 0 -> image = attackUp[attackSpriteNum];
+            case 1 -> image = attackRight[attackSpriteNum];
+            case 2 -> image = attackDown[attackSpriteNum];
+            case 3 -> image = attackLeft[attackSpriteNum];
         }
     }
 
@@ -745,41 +675,30 @@ public class MON_ShadowBoss extends Fighter {
         }
 
         switch (attackDirection) {
-            case 0:
-                image = attackUp[attackSpriteNum];
-                break;
-            case 1:
-                image = attackRight[attackSpriteNum];
-                break;
-            case 2:
-                image = attackDown[attackSpriteNum];
-                break;
-            case 3:
-                image = attackLeft[attackSpriteNum];
-                break;
+            case 0 -> image = attackUp[attackSpriteNum];
+            case 1 -> image = attackRight[attackSpriteNum];
+            case 2 -> image = attackDown[attackSpriteNum];
+            case 3 -> image = attackLeft[attackSpriteNum];
         }
     }
     public void attackImageCorrection(){
         switch (attackDirection) {
-            case 0:
+            case 0 -> {
                 screenX -= 10;
                 screenY -= 30;
-                break;
-
-            case 1:
+            }
+            case 1 -> {
                 screenX -= 20;
                 screenY -= 34;
-                break;
-
-            case 2:
+            }
+            case 2 -> {
                 screenX -= 41;
                 screenY -= 15;
-                break;
-
-            case 3:
+            }
+            case 3 -> {
                 screenX -= 50;
                 screenY -= 36;
-                break;
+            }
         }
     }
 
@@ -913,18 +832,10 @@ public class MON_ShadowBoss extends Fighter {
 
     public void drawGetWalkingImage(){
         switch (direction) {
-            case "up":
-                image = walkUp[spriteNum];
-                break;
-            case "right":
-                image = walkRight[spriteNum];
-                break;
-            case "down":
-                image = walkDown[spriteNum];
-                break;
-            case "left":
-                image = walkLeft[spriteNum];
-                break;
+            case "up" -> image = walkUp[spriteNum];
+            case "right" -> image = walkRight[spriteNum];
+            case "down" -> image = walkDown[spriteNum];
+            case "left" -> image = walkLeft[spriteNum];
         }
     }
 
@@ -970,8 +881,8 @@ public class MON_ShadowBoss extends Fighter {
 
     public void findPositionComparedToTargetIfCasting() {
 
-        int targetCol = targetEntity.worldMiddleX() / gp.tileSize;
-        int targetRow = targetEntity.worldMiddleY() / gp.tileSize;
+        int targetCol = targetEntity.worldMiddleX() / GamePanel.tileSize;
+        int targetRow = targetEntity.worldMiddleY() / GamePanel.tileSize;
 
         String relativeDirection;
 
@@ -1017,7 +928,7 @@ public class MON_ShadowBoss extends Fighter {
                     if(!validTileFound){
                         findAvailableTileGroup(targetCol, targetRow - tryToKeepThisDistance);
                     }
-                } else if ( i == 2){
+                } else { // i = 2
                     findAvailableTileGroup(targetCol, targetRow - tryToKeepThisDistance);
                     if(!validTileFound){
                         findAvailableTileGroup(targetCol + 2, targetRow - tryToKeepThisDistance);
@@ -1044,7 +955,7 @@ public class MON_ShadowBoss extends Fighter {
                     if(!validTileFound){
                         findAvailableTileGroup(targetCol + tryToKeepThisDistance, targetRow + 2);
                     }
-                } else if ( i == 2){
+                } else { // i = 2
                     findAvailableTileGroup(targetCol + tryToKeepThisDistance, targetRow + 2);
                     if(!validTileFound){
                         findAvailableTileGroup(targetCol + tryToKeepThisDistance, targetRow - 2);
@@ -1072,7 +983,7 @@ public class MON_ShadowBoss extends Fighter {
                         findAvailableTileGroup(targetCol, targetRow + tryToKeepThisDistance);
                     }
 
-                } else if ( i == 2){
+                } else { // i = 2
                     findAvailableTileGroup(targetCol, targetRow + tryToKeepThisDistance);
                     if(!validTileFound){
                         findAvailableTileGroup(targetCol + 2, targetRow + tryToKeepThisDistance);
@@ -1100,7 +1011,7 @@ public class MON_ShadowBoss extends Fighter {
                     if(!validTileFound){
                         findAvailableTileGroup(targetCol - tryToKeepThisDistance, targetRow + 2);
                     }
-                } else if ( i == 2){
+                } else { // i = 2
                     findAvailableTileGroup(targetCol - tryToKeepThisDistance, targetRow + 2);
                     if(!validTileFound){
                         findAvailableTileGroup(targetCol - tryToKeepThisDistance, targetRow - 2);

@@ -42,7 +42,7 @@ public class MON_DaggerGlobe extends Spells {
             if(randomNumber == 600){
                 gp.playSE(71);
                 int middleDistance;
-                int smallestDistance = 9 * gp.tileSize;
+                int smallestDistance = 9 * GamePanel.tileSize;
                 int smallestDistanceIndex = -1;
                 for (int i = 0; i < gp.allFightingEntities.size(); i++) {
                     Entity currentEntity = gp.allFightingEntities.get(i);

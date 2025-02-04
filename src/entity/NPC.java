@@ -38,6 +38,7 @@ public abstract class NPC extends Entity{
         }
     }
 
+    /*
     public void draw2(Graphics2D g2){
         int screenX = worldX - gp.anchorX + GamePanel.halfWidth;
         int screenY = worldY - gp.anchorY + GamePanel.halfHeight;
@@ -50,7 +51,8 @@ public abstract class NPC extends Entity{
                 worldY - GamePanel.tileSize < gp.anchorY + GamePanel.halfHeight){
             g2.drawImage(image, screenX, screenY, null);
         }
-    }
+    }*/
+
     public void draw(Graphics2D g2){
 
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
@@ -76,14 +78,11 @@ public abstract class NPC extends Entity{
     }
 
     public void setWalkingImage(){
-        if(direction.equals("left")){
-            image = walkImages[3][walkSpriteNum];
-        } else if(direction.equals("right")) {
-            image = walkImages[1][walkSpriteNum];
-        } else if(direction.equals("up")){
-            image = walkImages[0][walkSpriteNum];
-        } else if(direction.equals("down")){
-            image = walkImages[2][walkSpriteNum];
+        switch (direction) {
+            case "left" -> image = walkImages[3][walkSpriteNum];
+            case "right" -> image = walkImages[1][walkSpriteNum];
+            case "up" -> image = walkImages[0][walkSpriteNum];
+            case "down" -> image = walkImages[2][walkSpriteNum];
         }
     }
 

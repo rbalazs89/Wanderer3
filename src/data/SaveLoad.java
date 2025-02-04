@@ -51,13 +51,9 @@ public class SaveLoad {
             }
 
             //SAVE PROGRESS:
-            for (int i = 0; i < 7; i++) {
-                ds.act1BookPickedUp[i] = gp.progress.act1BookPickedUp[i];
-            }
+            System.arraycopy(gp.progress.act1BookPickedUp, 0, ds.act1BookPickedUp, 0, 7);
 
-            for (int i = 0; i < 5; i++) {
-                ds.act1InteractedObjects[i] = gp.progress.act1InteractedObjects[i];
-            }
+            System.arraycopy(gp.progress.act1InteractedObjects, 0, ds.act1InteractedObjects, 0, 5);
 
             //SAVE INVENTORY:
             //equipped items page:

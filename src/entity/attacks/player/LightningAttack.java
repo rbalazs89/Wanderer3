@@ -11,10 +11,11 @@ import java.util.Random;
 
 public class LightningAttack extends Spells {
     private BufferedImage lightningImage = null;
-    private int startX, startY;
+    private final int startX;
+    private final int startY;
     private int endX, endY;
     private int secondX, secondY;
-    private Random random = new Random();
+    private final Random random = new Random();
     private int updateCounter = 0;
     private boolean secondTargetFound = false;
     private int firstTargetIndex = -1;

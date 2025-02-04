@@ -19,8 +19,8 @@ public abstract class Fighter extends Entity {
     public int contactGraceFrame = 30;
     public boolean drawHpBar = false;
     public int experienceValue = 1;
-    public int meleeAttackRange = gp.tileSize ;
-    public int aggroAtThisDistance = 3 * gp.tileSize;
+    public int meleeAttackRange = GamePanel.tileSize;
+    public int aggroAtThisDistance = 3 * GamePanel.tileSize;
     //draw related:
     public int frozenCounter = 0;
     public BufferedImage frozenPicture;
@@ -38,8 +38,8 @@ public abstract class Fighter extends Entity {
     public int attackFramePoint1 = 30;
     public int attackFramePoint2 = 60;
     public boolean currentlyAttacking = false;
-    public int goBackToSpawnMaxDistance = gp.tileSize * 7;
-    public int goBackAtThisTargetDistance = gp.tileSize * 7;
+    public int goBackToSpawnMaxDistance = GamePanel.tileSize * 7;
+    public int goBackAtThisTargetDistance = GamePanel.tileSize * 7;
     public Entity targetEntity;
     public String attackDirection;
     public int attackCoolDownCounter;
@@ -48,7 +48,7 @@ public abstract class Fighter extends Entity {
     // 100 = 1% chance every frame when target inside range + not on cd
     // 1 = 100% chance to attack every frame when inside range + not on cd
     public int attackChanceWhenAvailable = 100;
-    public int shouldTryToAttackRange = (int) (2.5 * gp.tileSize);
+    public int shouldTryToAttackRange = (int) (2.5 * GamePanel.tileSize);
     public static final Color transparentRed = new Color(255, 0, 0, 128);
     public int screenX, screenY;
     public int screenXWOCorrection, screenYWOCorrectionY;
@@ -129,10 +129,10 @@ public abstract class Fighter extends Entity {
         screenX = worldX - gp.player.worldX + gp.player.screenX;
         screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
+        if(worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
 
             if(!isDying && !currentlyAttacking) {
                 drawGetWalkingImage();
@@ -206,7 +206,7 @@ public abstract class Fighter extends Entity {
                 if (50 < i && i <= 75) {
                     direction = "left";
                 }
-                if (75 < i && i <= 100) {
+                if (75 < i) {
                     direction = "right";
                 }
             }
@@ -230,12 +230,12 @@ public abstract class Fighter extends Entity {
         goBackCheckCounter ++;
         if(goBackCheckCounter >=  20) {
             if (targetEntity != null) {
-                if (targetEntity.middleDistance(this) > 12 * gp.tileSize) {
+                if (targetEntity.middleDistance(this) > 12 * GamePanel.tileSize) {
                     targetEntity = null;
                     speed = defaultSpeed * 2;
                     isGoingBackToSpawn = true;
-                    goalCol = spawnX / gp.tileSize;
-                    goalRow = spawnY / gp.tileSize;
+                    goalCol = spawnX / GamePanel.tileSize;
+                    goalRow = spawnY / GamePanel.tileSize;
                     goBackCheckCounter = 0;
                 }
             }
@@ -247,8 +247,8 @@ public abstract class Fighter extends Entity {
                 targetEntity = null;
                 isGoingBackToSpawn = true;
                 speed = defaultSpeed * 2;
-                goalCol = spawnX / gp.tileSize;
-                goalRow = spawnY / gp.tileSize;
+                goalCol = spawnX / GamePanel.tileSize;
+                goalRow = spawnY / GamePanel.tileSize;
                 goBackCheckCounter = 0;
             }
         }
@@ -263,7 +263,7 @@ public abstract class Fighter extends Entity {
         for (int i = 0; i < gp.allFightingEntities.size(); i++) {
             Entity currentEntity = gp.allFightingEntities.get(i);
             if(isHostile(this,currentEntity)){
-                if(middleDistance(currentEntity) < sleepDistance * gp.tileSize){
+                if(middleDistance(currentEntity) < sleepDistance * GamePanel.tileSize){
                     sleeping = false;
                 }
             }
@@ -276,18 +276,10 @@ public abstract class Fighter extends Entity {
 
     public void drawGetWalkingImage(){
         switch (direction) {
-            case "up":
-                image = walkUp[spriteNum];
-                break;
-            case "right":
-                image = walkRight[spriteNum];
-                break;
-            case "down":
-                image = walkDown[spriteNum];
-                break;
-            case "left":
-                image = walkLeft[spriteNum];
-                break;
+            case "up" -> image = walkUp[spriteNum];
+            case "right" -> image = walkRight[spriteNum];
+            case "down" -> image = walkDown[spriteNum];
+            case "left" -> image = walkLeft[spriteNum];
         }
     }
 
@@ -318,18 +310,10 @@ public abstract class Fighter extends Entity {
         attackSpriteNum = Math.min(attackFrameCounter / (attackFramePoint2/9), 8);
 
         switch (attackDirection) {
-            case "up":
-                image = attackUp[attackSpriteNum];
-                break;
-            case "right":
-                image = attackRight[attackSpriteNum];
-                break;
-            case "down":
-                image = attackDown[attackSpriteNum];
-                break;
-            case "left":
-                image = attackLeft[attackSpriteNum];
-                break;
+            case "up" -> image = attackUp[attackSpriteNum];
+            case "right" -> image = attackRight[attackSpriteNum];
+            case "down" -> image = attackDown[attackSpriteNum];
+            case "left" -> image = attackLeft[attackSpriteNum];
         }
     }
     public void attackImageCorrection(){
@@ -362,10 +346,10 @@ public abstract class Fighter extends Entity {
         if(drawHpBar) {
             int hpBarX = worldX - gp.player.worldX + gp.player.screenX;
             int hpBarY = worldY - gp.player.worldY + gp.player.screenY;
-            double oneScale = (double) gp.tileSize / maxLife;
+            double oneScale = (double) GamePanel.tileSize / maxLife;
             double hpBarValue = oneScale * life;
             g2.setColor(new Color(35, 35, 35));
-            g2.fillRect(hpBarX - 1, hpBarY - 1, gp.tileSize + 2, 12);
+            g2.fillRect(hpBarX - 1, hpBarY - 1, GamePanel.tileSize + 2, 12);
             g2.setColor(new Color(255, 0, 30));
             g2.fillRect(hpBarX, hpBarY, (int) hpBarValue, 10);
         }
@@ -410,8 +394,8 @@ public abstract class Fighter extends Entity {
                     targetEntity = null;
                     isGoingBackToSpawn = true;
                     speed = defaultSpeed * 2;
-                    goalCol = spawnX / gp.tileSize;
-                    goalRow = spawnY / gp.tileSize;
+                    goalCol = spawnX / GamePanel.tileSize;
+                    goalRow = spawnY / GamePanel.tileSize;
                 }
             }
 
@@ -422,8 +406,8 @@ public abstract class Fighter extends Entity {
     }
 
     public void findPositionComparedToTarget() {
-        goalCol = targetEntity.worldMiddleX() / gp.tileSize;
-        goalRow = targetEntity.worldMiddleY() / gp.tileSize;
+        goalCol = targetEntity.worldMiddleX() / GamePanel.tileSize;
+        goalRow = targetEntity.worldMiddleY() / GamePanel.tileSize;
     }
 
     public void attacking(){
@@ -587,18 +571,10 @@ public abstract class Fighter extends Entity {
         //gp.cChecker.checkEntity(this, gp.fighters); // check monster with eachother
         if (!collisionOn) {
             switch (direction) {
-                case "up":
-                    worldY -= speed;
-                    break;
-                case "down":
-                    worldY += speed;
-                    break;
-                case "left":
-                    worldX -= speed;
-                    break;
-                case "right":
-                    worldX += speed;
-                    break;
+                case "up" -> worldY -= speed;
+                case "down" -> worldY += speed;
+                case "left" -> worldX -= speed;
+                case "right" -> worldX += speed;
             }
         }
     }

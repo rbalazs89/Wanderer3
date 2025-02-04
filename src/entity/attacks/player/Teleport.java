@@ -77,7 +77,7 @@ public class Teleport extends Spells {
         int x2 = (desiredScreenMiddleX - gp.player.screenX + gp.player.worldX + 20);
         int y1 = (desiredScreenMiddleY - gp.player.screenY + gp.player.worldY - 20);
         int y2 = (desiredScreenMiddleY - gp.player.screenY + gp.player.worldY + 28);
-        if(x1 < 0 || y1 < 0 || x2 > (gp.currentMapMaxCol - 1) * gp.tileSize || y2 > (gp.currentMapMaxRow - 1) * gp.tileSize ){
+        if(x1 < 0 || y1 < 0 || x2 > (gp.currentMapMaxCol - 1) * GamePanel.tileSize || y2 > (gp.currentMapMaxRow - 1) * GamePanel.tileSize){
             return false;
         }
         x1 = x1 / 64;

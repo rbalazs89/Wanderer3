@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class ColdAura extends Spells {
-    public BufferedImage images[] = new BufferedImage[20];
+    public BufferedImage[] images = new BufferedImage[20];
 
     public ColdAura (GamePanel gp, Entity originEntity) {
         super(gp);
@@ -32,7 +32,7 @@ public class ColdAura extends Spells {
 
     public void draw(Graphics2D g2){
         int screenX = originEntity.screenX() - 22 ;
-        int screenY = originEntity.screenY() + gp.tileSize / 2;
+        int screenY = originEntity.screenY() + GamePanel.tileSize / 2;
         image = images[Math.min(19,(maxLife - life) / (maxLife/20))];
         g2.drawImage(image,screenX,screenY,96,64,null);
     }

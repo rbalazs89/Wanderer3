@@ -15,10 +15,10 @@ public class MON_RedWizard extends Fighter {
         super(gp);
         this.gp = gp;
         getImages();
-        solidArea.x = gp.tileSize / 16 * 1;
-        solidArea.y = gp.tileSize / 16 * 4;
-        solidArea.width = gp.tileSize / 16 * 14;
-        solidArea.height = gp.tileSize / 16 * 12;
+        solidArea.x = GamePanel.tileSize / 16;
+        solidArea.y = GamePanel.tileSize / 16 * 4;
+        solidArea.width = GamePanel.tileSize / 16 * 14;
+        solidArea.height = GamePanel.tileSize / 16 * 12;
         solidAreaDefaultY = solidArea.y;
         solidAreaDefaultX = solidArea.x;
         entityType = 2;
@@ -44,27 +44,27 @@ public class MON_RedWizard extends Fighter {
         attackCoolDownValue = 50;
         tryToKeepThisDistance = 4;
 
-        goBackAtThisTargetDistance = gp.tileSize * 20;
-        goBackToSpawnMaxDistance = gp.tileSize * 30;
-        aggroAtThisDistance = gp.tileSize * 9;
-        shouldTryToAttackRange = gp.tileSize * 9;
+        goBackAtThisTargetDistance = GamePanel.tileSize * 20;
+        goBackToSpawnMaxDistance = GamePanel.tileSize * 30;
+        aggroAtThisDistance = GamePanel.tileSize * 9;
+        shouldTryToAttackRange = GamePanel.tileSize * 9;
         ///
         life = maxLife;
         speed = defaultSpeed;
     }
 
     public void getImages(){
-        left1 = setup("/entity/monster/act1/wizard/wizard_left_1", gp.tileSize, gp.tileSize);
-        left2 = setup("/entity/monster/act1/wizard/wizard_left_2", gp.tileSize, gp.tileSize);
-        left3 = setup("/entity/monster/act1/wizard/wizard_left_3", gp.tileSize, gp.tileSize);
-        right1 = setup("/entity/monster/act1/wizard/wizard_right_1", gp.tileSize, gp.tileSize);
-        right2 = setup("/entity/monster/act1/wizard/wizard_right_2", gp.tileSize, gp.tileSize);
-        right3 = setup("/entity/monster/act1/wizard/wizard_right_3", gp.tileSize, gp.tileSize);
-        attackLeft1 = setup("/entity/monster/act1/wizard/spell_left_1", gp.tileSize * 3 / 2, gp.tileSize);
-        attackLeft2 = setup("/entity/monster/act1/wizard/spell_left_2", gp.tileSize * 3 / 2, gp.tileSize);
-        attackRight1 = setup("/entity/monster/act1/wizard/spell_right_1", gp.tileSize * 3 / 2, gp.tileSize);
-        attackRight2 = setup("/entity/monster/act1/wizard/spell_right_2", gp.tileSize * 3 / 2, gp.tileSize);
-        death1 = setup("/entity/monster/act1/wizard/wizard_death", gp.tileSize, gp.tileSize);
+        left1 = setup("/entity/monster/act1/wizard/wizard_left_1", GamePanel.tileSize, GamePanel.tileSize);
+        left2 = setup("/entity/monster/act1/wizard/wizard_left_2", GamePanel.tileSize, GamePanel.tileSize);
+        left3 = setup("/entity/monster/act1/wizard/wizard_left_3", GamePanel.tileSize, GamePanel.tileSize);
+        right1 = setup("/entity/monster/act1/wizard/wizard_right_1", GamePanel.tileSize, GamePanel.tileSize);
+        right2 = setup("/entity/monster/act1/wizard/wizard_right_2", GamePanel.tileSize, GamePanel.tileSize);
+        right3 = setup("/entity/monster/act1/wizard/wizard_right_3", GamePanel.tileSize, GamePanel.tileSize);
+        attackLeft1 = setup("/entity/monster/act1/wizard/spell_left_1", GamePanel.tileSize * 3 / 2, GamePanel.tileSize);
+        attackLeft2 = setup("/entity/monster/act1/wizard/spell_left_2", GamePanel.tileSize * 3 / 2, GamePanel.tileSize);
+        attackRight1 = setup("/entity/monster/act1/wizard/spell_right_1", GamePanel.tileSize * 3 / 2, GamePanel.tileSize);
+        attackRight2 = setup("/entity/monster/act1/wizard/spell_right_2", GamePanel.tileSize * 3 / 2, GamePanel.tileSize);
+        death1 = setup("/entity/monster/act1/wizard/wizard_death", GamePanel.tileSize, GamePanel.tileSize);
     }
 
     public void attacking(){
@@ -125,8 +125,8 @@ public class MON_RedWizard extends Fighter {
                         validTileFound = false;
                     }
                     if(!validTileFound && actionLockCounter == 1){
-                        goalCol = spawnX / gp.tileSize;
-                        goalRow = spawnY / gp.tileSize;
+                        goalCol = spawnX / GamePanel.tileSize;
+                        goalRow = spawnY / GamePanel.tileSize;
                         speed = defaultSpeed * 2;
                         winLife( 30);
                     }
@@ -144,7 +144,7 @@ public class MON_RedWizard extends Fighter {
                     if (50 < i && i <= 75) {
                         direction = "left";
                     }
-                    if (75 < i && i <= 100) {
+                    if (75 < i) {
                         direction = "right";
                     }
                 }
@@ -165,12 +165,12 @@ public class MON_RedWizard extends Fighter {
             goBackCheckCounter ++;
             if(goBackCheckCounter >=  20) {
                 if (targetEntity != null) {
-                    if (targetEntity.middleDistance(this) > goBackAtThisTargetDistance * gp.tileSize) {
+                    if (targetEntity.middleDistance(this) > goBackAtThisTargetDistance * GamePanel.tileSize) {
                         targetEntity = null;
                         speed = defaultSpeed * 2;
                         isGoingBackToSpawn = true;
-                        goalCol = spawnX / gp.tileSize;
-                        goalRow = spawnY / gp.tileSize;
+                        goalCol = spawnX / GamePanel.tileSize;
+                        goalRow = spawnY / GamePanel.tileSize;
                         goBackCheckCounter = 0;
                     }
                 }
@@ -183,8 +183,8 @@ public class MON_RedWizard extends Fighter {
                     targetEntity = null;
                     isGoingBackToSpawn = true;
                     speed = defaultSpeed * 2;
-                    goalCol = spawnX / gp.tileSize;
-                    goalRow = spawnY / gp.tileSize;
+                    goalCol = spawnX / GamePanel.tileSize;
+                    goalRow = spawnY / GamePanel.tileSize;
                     goBackCheckCounter = 20;
                 }
             }
@@ -219,8 +219,8 @@ public class MON_RedWizard extends Fighter {
                     targetEntity = null;
                     isGoingBackToSpawn = true;
                     speed = defaultSpeed * 2;
-                    goalCol = spawnX / gp.tileSize;
-                    goalRow = spawnY / gp.tileSize;
+                    goalCol = spawnX / GamePanel.tileSize;
+                    goalRow = spawnY / GamePanel.tileSize;
                 }
             }
 
@@ -240,8 +240,8 @@ public class MON_RedWizard extends Fighter {
 
     public void findPositionComparedToTarget() {
 
-        int targetCol = targetEntity.worldMiddleX() / gp.tileSize;
-        int targetRow = targetEntity.worldMiddleY() / gp.tileSize;
+        int targetCol = targetEntity.worldMiddleX() / GamePanel.tileSize;
+        int targetRow = targetEntity.worldMiddleY() / GamePanel.tileSize;
 
         String relativeDirection;
 
@@ -287,7 +287,7 @@ public class MON_RedWizard extends Fighter {
                     if(!validTileFound){
                         findAvailableTileGroup(targetCol, targetRow - tryToKeepThisDistance);
                     }
-                } else if ( i == 2){
+                } else { // i == 2
                     findAvailableTileGroup(targetCol, targetRow - tryToKeepThisDistance);
                     if(!validTileFound){
                         findAvailableTileGroup(targetCol + 2, targetRow - tryToKeepThisDistance);
@@ -314,7 +314,7 @@ public class MON_RedWizard extends Fighter {
                     if(!validTileFound){
                         findAvailableTileGroup(targetCol + tryToKeepThisDistance, targetRow + 2);
                     }
-                } else if ( i == 2){
+                } else { // i == 2
                     findAvailableTileGroup(targetCol + tryToKeepThisDistance, targetRow + 2);
                     if(!validTileFound){
                         findAvailableTileGroup(targetCol + tryToKeepThisDistance, targetRow - 2);
@@ -342,7 +342,7 @@ public class MON_RedWizard extends Fighter {
                         findAvailableTileGroup(targetCol, targetRow + tryToKeepThisDistance);
                     }
 
-                } else if ( i == 2){
+                } else { // i == 2
                     findAvailableTileGroup(targetCol, targetRow + tryToKeepThisDistance);
                     if(!validTileFound){
                         findAvailableTileGroup(targetCol + 2, targetRow + tryToKeepThisDistance);
@@ -370,7 +370,7 @@ public class MON_RedWizard extends Fighter {
                     if(!validTileFound){
                         findAvailableTileGroup(targetCol - tryToKeepThisDistance, targetRow + 2);
                     }
-                } else if ( i == 2){
+                } else { // i == 2
                     findAvailableTileGroup(targetCol - tryToKeepThisDistance, targetRow + 2);
                     if(!validTileFound){
                         findAvailableTileGroup(targetCol - tryToKeepThisDistance, targetRow - 2);
@@ -386,40 +386,28 @@ public class MON_RedWizard extends Fighter {
     public void drawAttackImageMelee1(){
         if(attackFrameCounter <= attackFramePoint1){
             switch (attackDirection) {
-                case "right":
-                    image = attackRight1;
-                    break;
-                case "left":
-                    image = attackLeft1;
-                    break;
+                case "right" -> image = attackRight1;
+                case "left" -> image = attackLeft1;
             }
         }
         else{
             switch (attackDirection) {
-                case "right":
-                    image = attackRight2;
-                    break;
-                case "left":
-                    image = attackLeft2;
-                    break;
+                case "right" -> image = attackRight2;
+                case "left" -> image = attackLeft2;
             }
         }
         //image correction:
         switch (attackDirection) {
-            case "up":
-                screenX = screenX - (image.getWidth()/2 - gp.tileSize/2);
-                screenY = screenY - (image.getHeight() - gp.tileSize);
-                break;
-            case "right":
-                screenY = screenY - (image.getHeight()/2 - gp.tileSize/2);
-                break;
-            case "down":
-                screenX = screenX - (image.getWidth()/2 - gp.tileSize/2);
-                break;
-            case "left":
-                screenX = screenX - (image.getWidth() - gp.tileSize);
-                screenY = screenY - (image.getHeight()/2 - gp.tileSize/2);
-                break;
+            case "up" -> {
+                screenX = screenX - (image.getWidth() / 2 - GamePanel.tileSize / 2);
+                screenY = screenY - (image.getHeight() - GamePanel.tileSize);
+            }
+            case "right" -> screenY = screenY - (image.getHeight() / 2 - GamePanel.tileSize / 2);
+            case "down" -> screenX = screenX - (image.getWidth() / 2 - GamePanel.tileSize / 2);
+            case "left" -> {
+                screenX = screenX - (image.getWidth() - GamePanel.tileSize);
+                screenY = screenY - (image.getHeight() / 2 - GamePanel.tileSize / 2);
+            }
         }
     }
     public void drawGetWalkSpriteNumber(){
@@ -435,7 +423,7 @@ public class MON_RedWizard extends Fighter {
         for (int i = 0; i < gp.allFightingEntities.size(); i++) {
             Entity currentEntity = gp.allFightingEntities.get(i);
             if(isHostile(this,currentEntity)){
-                if(middleDistance(currentEntity) < sleepDistance * gp.tileSize){
+                if(middleDistance(currentEntity) < sleepDistance * GamePanel.tileSize){
                     sleeping = false;
                 }
             }
@@ -485,6 +473,7 @@ public class MON_RedWizard extends Fighter {
         return false;
     }
 
+    /*
     public void findAvailableTileGroup2(int col, int row){
         if(findAvailableTile(col - 1, row - 1)){
             return;
@@ -511,8 +500,10 @@ public class MON_RedWizard extends Fighter {
             return;
         }
         if(findAvailableTile(col + 1, row + 1)){
+            return;
         }
     }
+    */
 
     public void findAvailableTileGroup(int col, int row) {
         ArrayList<int[]> tileCoordinates = new ArrayList<>();

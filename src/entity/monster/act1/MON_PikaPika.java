@@ -4,8 +4,6 @@ import entity.Fighter;
 import entity.attacks.projectile.MON_PikaLightning;
 import main.GamePanel;
 
-import java.awt.image.BufferedImage;
-
 public class MON_PikaPika extends Fighter {
 
     public MON_PikaPika(GamePanel gp){
@@ -15,14 +13,14 @@ public class MON_PikaPika extends Fighter {
         drawHpBar = true;
         collisionEntity = false;
         name = "Yellow bunny";
-        solidArea.x = gp.tileSize / 16 * 1;
-        solidArea.y = gp.tileSize / 16 * 4;
-        solidArea.width = gp.tileSize / 16 * 14;
-        solidArea.height = gp.tileSize / 16 * 12;
+        solidArea.x = GamePanel.tileSize / 16;
+        solidArea.y = GamePanel.tileSize / 16 * 4;
+        solidArea.width = GamePanel.tileSize / 16 * 14;
+        solidArea.height = GamePanel.tileSize / 16 * 12;
         solidAreaDefaultY = solidArea.y;
         solidAreaDefaultX = solidArea.x;
         getImages();
-        goBackToSpawnMaxDistance = 10 * gp.tileSize;
+        goBackToSpawnMaxDistance = 10 * GamePanel.tileSize;
         sleepDistance = 4;
         sleeping = true;
 
@@ -38,8 +36,8 @@ public class MON_PikaPika extends Fighter {
 
         attackFramePoint1 = 60;
         attackFramePoint2 = 70;
-        aggroAtThisDistance = 4 * gp.tileSize;
-        shouldTryToAttackRange = (int) (5 * gp.tileSize);
+        aggroAtThisDistance = 4 * GamePanel.tileSize;
+        shouldTryToAttackRange = 5 * GamePanel.tileSize;
 
         ///
         life = maxLife;
@@ -78,7 +76,7 @@ public class MON_PikaPika extends Fighter {
                 if (50 < i && i <= 75) {
                     direction = "left";
                 }
-                if (75 < i && i <= 100) {
+                if (75 < i) {
                     direction = "right";
                 }
             }
@@ -101,12 +99,12 @@ public class MON_PikaPika extends Fighter {
         goBackCheckCounter ++;
         if(goBackCheckCounter >=  20) {
             if (targetEntity != null) {
-                if (targetEntity.middleDistance(this) > 12 * gp.tileSize) {
+                if (targetEntity.middleDistance(this) > 12 * GamePanel.tileSize) {
                     targetEntity = null;
                     speed = defaultSpeed * 2;
                     isGoingBackToSpawn = true;
-                    goalCol = spawnX / gp.tileSize;
-                    goalRow = spawnY / gp.tileSize;
+                    goalCol = spawnX / GamePanel.tileSize;
+                    goalRow = spawnY / GamePanel.tileSize;
                     goBackCheckCounter = 0;
                 }
             }
@@ -118,8 +116,8 @@ public class MON_PikaPika extends Fighter {
                 targetEntity = null;
                 isGoingBackToSpawn = true;
                 speed = defaultSpeed * 2;
-                goalCol = spawnX / gp.tileSize;
-                goalRow = spawnY / gp.tileSize;
+                goalCol = spawnX / GamePanel.tileSize;
+                goalRow = spawnY / GamePanel.tileSize;
                 goBackCheckCounter = 20;
             }
         }

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+@SuppressWarnings("IntegerDivisionInFloatingPointContext")
 public class Entity {
     public Font talkingFont = new Font("Calibri", Font.PLAIN, 13);
     public BufferedImage[] walkUp;
@@ -82,7 +83,7 @@ public class Entity {
     //public String name; //not used for now
     //public boolean collisionTiles = true; // always true
     public boolean collisionEntity = false; // better false for npcs ? collision with other entities
-    public String dialogues[] = new String[20];
+    public String[] dialogues = new String[20];
 
     public int dialogueIndex = 0;
     public String name; //for debug only
@@ -99,7 +100,7 @@ public class Entity {
     public int contactGraceFrame = 30;
     public int life;
     public int maxLife;
-    public int resist[] = new int[4];
+    public int[] resist = new int[4];
     public int armor = 0;
     public double spellDmgModifier = 1;
     public int aiBehaviourNumber = 0;
@@ -112,10 +113,10 @@ public class Entity {
         this.gp = gp;
         direction = "down";
         speed = 1;
-        solidArea = new Rectangle(3 * gp.tileSize / 16,
-                gp.tileSize * 5/ 16,
-                gp.tileSize * 10 / 16,
-                gp.tileSize * 11 / 16);
+        solidArea = new Rectangle(3 * GamePanel.tileSize / 16,
+                GamePanel.tileSize * 5/ 16,
+                GamePanel.tileSize * 10 / 16,
+                GamePanel.tileSize * 11 / 16);
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
     }
@@ -145,65 +146,49 @@ public class Entity {
         setActionAI();
         checkCollision();
         moveIfNoCollision();
-        /*if (!collisionOn) {
-            switch (direction) {
-                case "up":
-                    worldY -= speed;
-                    break;
-                case "down":
-                    worldY += speed;
-                    break;
-                case "left":
-                    worldX -= speed;
-                    break;
-                case "right":
-                    worldX += speed;
-                    break;
-            }
-        }*/
     }
 
     public void draw(Graphics2D g2){
         BufferedImage image = null;
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
-        if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
-            switch(direction) {
-                case "left":
+        if(worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
+            switch (direction) {
+                case "left" -> {
                     if (spriteNum == 1) {
                         image = left1;
                     }
                     if (spriteNum == 2) {
                         image = left2;
                     }
-                    break;
-                case "right":
+                }
+                case "right" -> {
                     if (spriteNum == 1) {
                         image = right1;
                     }
                     if (spriteNum == 2) {
                         image = right2;
                     }
-                    break;
-                case "up":
+                }
+                case "up" -> {
                     if (spriteNum == 1) {
                         image = up1;
                     }
                     if (spriteNum == 2) {
                         image = up2;
                     }
-                    break;
-                case "down":
+                }
+                case "down" -> {
                     if (spriteNum == 1) {
                         image = down1;
                     }
                     if (spriteNum == 2) {
                         image = down2;
                     }
-                    break;
+                }
             }
             if (gp.gameState == gp.playState) {
                 spriteCounter++;
@@ -227,18 +212,10 @@ public class Entity {
     public void moveIfNoCollision(){
         if (!collisionOn) {
             switch (direction) {
-                case "up":
-                    worldY -= speed;
-                    break;
-                case "down":
-                    worldY += speed;
-                    break;
-                case "left":
-                    worldX -= speed;
-                    break;
-                case "right":
-                    worldX += speed;
-                    break;
+                case "up" -> worldY -= speed;
+                case "down" -> worldY += speed;
+                case "left" -> worldX -= speed;
+                case "right" -> worldX += speed;
             }
         }
     }
@@ -363,14 +340,14 @@ public class Entity {
     }
 
     public int auraRadius() { // used for hit detection
-        int radius = (int) Math.sqrt(Math.pow(solidArea.width / 2, 2) + Math.pow(solidArea.height/2, 2));
-        return radius;
+        return (int) Math.sqrt(Math.pow(solidArea.width / 2, 2) + Math.pow(solidArea.height/2, 2));
     }
 
     public int middleDistance(Entity entity){
         return (int) Math.sqrt(Math.pow(worldMiddleX() - entity.worldMiddleX(), 2) + Math.pow(worldMiddleY() - entity.worldMiddleY(), 2));
     }
 
+    /*
     public Rectangle worldSolidRectangle(){
         Rectangle entityWorldRectangle;
         entityWorldRectangle = new Rectangle();
@@ -379,7 +356,7 @@ public class Entity {
         entityWorldRectangle.width = solidArea.width;
         entityWorldRectangle.height = solidArea.height;
         return entityWorldRectangle;
-    }
+    }*/
 
     public Rectangle screenSolidRectangle(){
         Rectangle entityScreenRectangle = new Rectangle();
@@ -455,24 +432,23 @@ public class Entity {
     //ENTITY AI & REACTION:
     public void drawHoverGuide(String text, int x, int y, int width, Graphics2D g2) {
         int padding = 10;
-        int fixedWidth = width;
 
         // Get font metrics for the current font
         FontMetrics fm = g2.getFontMetrics();
         int textHeight = fm.getHeight();
 
         // Split text into lines
-        ArrayList<String> lines = splitTextIntoLines(text, fm, fixedWidth - 2 * padding);
+        ArrayList<String> lines = splitTextIntoLines(text, fm, width - 2 * padding);
         int boxHeight = textHeight * lines.size() + 2 * padding;
 
         // Draw the semi-transparent black box
         g2.setColor(new Color(0, 0, 0, 200));
-        g2.fillRoundRect(x, y, fixedWidth, boxHeight, 10, 10);
+        g2.fillRoundRect(x, y, width, boxHeight, 10, 10);
 
         // Draw the silver border
         g2.setColor(new Color(192, 192, 192));
         g2.setStroke(new BasicStroke(2));
-        g2.drawRoundRect(x, y, fixedWidth, boxHeight, 10, 10);
+        g2.drawRoundRect(x, y, width, boxHeight, 10, 10);
 
         // Draw the text
         g2.setColor(Color.WHITE);
@@ -485,7 +461,6 @@ public class Entity {
 
     public void drawHoverGuide(ArrayList<String> lines, int x, int y, int width, Graphics2D g2) {
         int padding = 10;
-        int fixedWidth = width;
 
         // Get font metrics for the current font
         FontMetrics fm = g2.getFontMetrics();
@@ -496,12 +471,12 @@ public class Entity {
 
         // Draw the semi-transparent black box
         g2.setColor(new Color(0, 0, 0, 200));
-        g2.fillRoundRect(x, y, fixedWidth, boxHeight, 10, 10);
+        g2.fillRoundRect(x, y, width, boxHeight, 10, 10);
 
         // Draw the silver border
         g2.setColor(new Color(192, 192, 192));
         g2.setStroke(new BasicStroke(2));
-        g2.drawRoundRect(x, y, fixedWidth, boxHeight, 10, 10);
+        g2.drawRoundRect(x, y, width, boxHeight, 10, 10);
 
         // Draw the text
         g2.setColor(Color.WHITE);
@@ -548,27 +523,27 @@ public class Entity {
 
     public void searchPath(int goalCol, int goalRow, boolean stopAtEnd){
 
-        int startCol = (worldX + solidArea.x) / gp.tileSize;
-        int startRow = (worldY + solidArea.y) / gp.tileSize;
+        int startCol = (worldX + solidArea.x) / GamePanel.tileSize;
+        int startRow = (worldY + solidArea.y) / GamePanel.tileSize;
 
         gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow);
 
-        if(gp.pFinder.search() == true) {
+        if(gp.pFinder.search()) {
 
-            int nextX = gp.pFinder.pathList.get(0).col * gp.tileSize;
-            int nextY = gp.pFinder.pathList.get(0).row * gp.tileSize;
+            int nextX = gp.pFinder.pathList.get(0).col * GamePanel.tileSize;
+            int nextY = gp.pFinder.pathList.get(0).row * GamePanel.tileSize;
 
             int enLeftX = worldX + solidArea.x;
             int enRightX = worldX + solidArea.x + solidArea.width;
             int enTopY = worldY + solidArea.y;
             int enBottomY = worldY + solidArea.y + solidArea.height;
 
-            if (enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.tileSize) {
+            if (enTopY > nextY && enLeftX >= nextX && enRightX < nextX + GamePanel.tileSize) {
                 direction = "up";
-            } else if (enTopY < nextY && enLeftX >= nextX && enRightX < nextX + gp.tileSize) {
+            } else if (enTopY < nextY && enLeftX >= nextX && enRightX < nextX + GamePanel.tileSize) {
                 direction = "down";
 
-            } else if (enTopY >= nextY && enBottomY < nextY + gp.tileSize) {
+            } else if (enTopY >= nextY && enBottomY < nextY + GamePanel.tileSize) {
                 if (enLeftX > nextX) {
                     direction = "left";
                 }
@@ -578,13 +553,13 @@ public class Entity {
             } else if (enTopY > nextY && enLeftX > nextX) {
                 direction = "up";
                 checkCollision();
-                if (collisionOn == true) {
+                if (collisionOn) {
                     direction = "left";
                 }
             } else if (enTopY > nextY && enLeftX < nextX) {
                 direction = "up";
                 checkCollision();
-                if (collisionOn == true) {
+                if (collisionOn) {
                     direction = "right";
                 }
             } else if (enTopY < nextY && enLeftX > nextX) {
@@ -619,27 +594,27 @@ public class Entity {
     }
 
     public boolean searchPathBoolean(int goalCol, int goalRow, boolean stopAtEnd){
-        int startCol = (worldX + solidArea.x) / gp.tileSize;
-        int startRow = (worldY + solidArea.y) / gp.tileSize;
+        int startCol = (worldX + solidArea.x) / GamePanel.tileSize;
+        int startRow = (worldY + solidArea.y) / GamePanel.tileSize;
 
         gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow);
 
         if(gp.pFinder.search()) {
 
-            int nextX = gp.pFinder.pathList.get(0).col * gp.tileSize;
-            int nextY = gp.pFinder.pathList.get(0).row * gp.tileSize;
+            int nextX = gp.pFinder.pathList.get(0).col * GamePanel.tileSize;
+            int nextY = gp.pFinder.pathList.get(0).row * GamePanel.tileSize;
 
             int enLeftX = worldX + solidArea.x;
             int enRightX = worldX + solidArea.x + solidArea.width;
             int enTopY = worldY + solidArea.y;
             int enBottomY = worldY + solidArea.y + solidArea.height;
 
-            if (enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.tileSize) {
+            if (enTopY > nextY && enLeftX >= nextX && enRightX < nextX + GamePanel.tileSize) {
                 direction = "up";
-            } else if (enTopY < nextY && enLeftX >= nextX && enRightX < nextX + gp.tileSize) {
+            } else if (enTopY < nextY && enLeftX >= nextX && enRightX < nextX + GamePanel.tileSize) {
                 direction = "down";
 
-            } else if (enTopY >= nextY && enBottomY < nextY + gp.tileSize) {
+            } else if (enTopY >= nextY && enBottomY < nextY + GamePanel.tileSize) {
                 if (enLeftX > nextX) {
                     direction = "left";
                 }
@@ -649,13 +624,13 @@ public class Entity {
             } else if (enTopY > nextY && enLeftX > nextX) {
                 direction = "up";
                 checkCollision();
-                if (collisionOn == true) {
+                if (collisionOn) {
                     direction = "left";
                 }
             } else if (enTopY > nextY && enLeftX < nextX) {
                 direction = "up";
                 checkCollision();
-                if (collisionOn == true) {
+                if (collisionOn) {
                     direction = "right";
                 }
             } else if (enTopY < nextY && enLeftX > nextX) {
@@ -713,7 +688,7 @@ public class Entity {
             if (50 < i && i <= 75) {
                 direction = "left";
             }
-            if (75 < i && i <= 100) {
+            if (75 < i) {
                 direction = "right";
             }
             actionLockCounter = 0;
@@ -722,7 +697,7 @@ public class Entity {
 
     // dont forget to set up null area separately
     public void setBoundAreaNPC(int x1Tile, int y1Tile, int x2Tile, int y2Tile){
-        if (worldX < x1Tile * gp.tileSize || worldY < y1Tile * gp.tileSize || worldX > x2Tile * gp.tileSize || worldY > y2Tile * gp.tileSize){
+        if (worldX < x1Tile * GamePanel.tileSize || worldY < y1Tile * GamePanel.tileSize || worldX > x2Tile * GamePanel.tileSize || worldY > y2Tile * GamePanel.tileSize){
             targetPathFollowed = true;
         }
     }

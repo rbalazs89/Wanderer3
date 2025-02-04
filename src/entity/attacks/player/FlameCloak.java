@@ -1,5 +1,6 @@
 package entity.attacks.player;
 
+import entity.Entity;
 import main.GamePanel;
 
 import java.awt.*;
@@ -11,8 +12,9 @@ public class FlameCloak extends Spells{
         image = setup("/spell/firecloak/firecloak");
         gp.playSE(35);
         for (int i = 0; i < gp.spells.size(); i++) {
-            if(gp.spells.get(i)instanceof FlameCloak){
-                gp.spells.remove(i);
+            Entity currentSpell = gp.spells.get(i);
+            if(currentSpell instanceof FlameCloak){
+                gp.spells.remove(currentSpell);
                 removeBuff();
             }
         }

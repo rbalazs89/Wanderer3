@@ -1,5 +1,6 @@
 package entity.attacks.player;
 
+import entity.Entity;
 import main.GamePanel;
 
 import java.awt.*;
@@ -12,8 +13,9 @@ public class EnergyShield extends Spells {
         maxLife = life;
         image = setup("/spell/energyshield/energyshield");
         for (int i = 0; i < gp.spells.size(); i++) {
-            if(gp.spells.get(i)instanceof EnergyShield){
-                gp.spells.remove(i);
+            Entity currentSpell = gp.spells.get(i);
+            if(currentSpell instanceof EnergyShield){
+                gp.spells.remove(currentSpell);
                 removeBuff();
             }
         }

@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 
+@SuppressWarnings("IntegerDivisionInFloatingPointContext")
 public class IceBolt extends Spells{
 
     public IceBolt(GamePanel gp){
@@ -115,10 +116,10 @@ public class IceBolt extends Spells{
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
+        if(worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
             g2.drawImage(op.filter(image, null), screenX, screenY, null);
         }
 
@@ -138,7 +139,7 @@ public class IceBolt extends Spells{
     public void collision(){
         gp.cChecker.checkTile(this);
 
-        if(worldX < 0 || worldY < 0 || worldX > gp.currentMapMaxCol * gp.tileSize -  1.1 * gp.tileSize || worldY > gp.currentMapMaxRow * gp.tileSize - 1.5 * gp.tileSize){
+        if(worldX < 0 || worldY < 0 || worldX > gp.currentMapMaxCol * GamePanel.tileSize -  1.1 * GamePanel.tileSize || worldY > gp.currentMapMaxRow * GamePanel.tileSize - 1.5 * GamePanel.tileSize){
             life = 0;
         }
 

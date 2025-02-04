@@ -15,8 +15,8 @@ public class TileManager {
 
     GamePanel gp;
     public Tile[] tile;
-    public int mapTileNum[][];
-    public boolean drawPath = true;
+    public int[][] mapTileNum;
+    public boolean drawPath = false;
     public BufferedImage tileSheetImage;
 
     public TileManager(GamePanel gp){
@@ -246,7 +246,7 @@ public class TileManager {
         try {
             tile[index] = new Tile();
             tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imagePath +".png"));
-            tile[index].image = uTool.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);
+            tile[index].image = uTool.scaleImage(tile[index].image, GamePanel.tileSize, GamePanel.tileSize);
             tile[index].collision = collision;
         } catch (IOException e){
             e.printStackTrace();
@@ -290,7 +290,7 @@ public class TileManager {
             while (col < gp.currentMapMaxCol && row < gp.currentMapMaxRow){
                 String line = br.readLine();
                 while(col < gp.currentMapMaxCol) {
-                    String numbers[] = line.split(" ");
+                    String[] numbers = line.split(" ");
 
                     int num = Integer.parseInt(numbers[col]);
 
@@ -316,15 +316,15 @@ public class TileManager {
         while(worldCol < gp.currentMapMaxCol && worldRow < gp.currentMapMaxRow){
 
             int tileNum = mapTileNum[worldCol][worldRow];
-            int worldX = worldCol * gp.tileSize;
-            int worldY = worldRow * gp.tileSize;
+            int worldX = worldCol * GamePanel.tileSize;
+            int worldY = worldRow * GamePanel.tileSize;
             int screenX = worldX - gp.player.worldX + gp.player.screenX;
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-            if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                    worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                    worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                    worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
+            if(worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                    worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                    worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                    worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
                 g2.drawImage(tile[tileNum].image, screenX, screenY, null);
             }
             worldCol++;
@@ -336,11 +336,11 @@ public class TileManager {
         if(drawPath){
             g2.setColor(new Color(255,0,0,70));
             for(int i = 0; i < gp.pFinder.pathList.size(); i ++){
-                int worldX = gp.pFinder.pathList.get(i).col * gp.tileSize;
-                int worldY = gp.pFinder.pathList.get(i).row * gp.tileSize;
+                int worldX = gp.pFinder.pathList.get(i).col * GamePanel.tileSize;
+                int worldY = gp.pFinder.pathList.get(i).row * GamePanel.tileSize;
                 int screenX = worldX - gp.player.worldX + gp.player.screenX;
                 int screenY = worldY - gp.player.worldY + gp.player.screenY;
-                g2.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
+                g2.fillRect(screenX, screenY, GamePanel.tileSize, GamePanel.tileSize);
             }
         }
     }

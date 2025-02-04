@@ -18,8 +18,8 @@ public class MON_MimicDoor extends Fighter {
 
         solidArea.x = 0;
         solidArea.y = 0;
-        solidArea.width = gp.tileSize;
-        solidArea.height = gp.tileSize;
+        solidArea.width = GamePanel.tileSize;
+        solidArea.height = GamePanel.tileSize;
         solidAreaDefaultY = solidArea.y;
         solidAreaDefaultX = solidArea.x;
         collisionEntity = true;
@@ -80,11 +80,11 @@ public class MON_MimicDoor extends Fighter {
             image = up4;
         }
 
-        if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
-            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize,null);
+        if(worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
+            g2.drawImage(image, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize,null);
         }
 
         drawHpBar(g2);
@@ -98,7 +98,7 @@ public class MON_MimicDoor extends Fighter {
         for (int i = 0; i < gp.allFightingEntities.size(); i++) {
             Entity currentEntity = gp.allFightingEntities.get(i);
             if(currentEntity != this){
-                if(middleDistance(currentEntity) < sleepDistance * gp.tileSize){
+                if(middleDistance(currentEntity) < sleepDistance * GamePanel.tileSize){
                     sleeping = false;
                 }
             }

@@ -7,6 +7,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.util.Random;
 
+@SuppressWarnings("IntegerDivisionInFloatingPointContext")
 public class CHILD_Arrow extends MON_ProjectilesWithSprite {
 
     // accuracy = 0 -> accurate, accuracy = 10 -> 0...45 degree miss randomly generated

@@ -32,10 +32,10 @@ public class MON_GreenSlime extends Fighter {
         speed = 0;
         maxLife = 80;
         life = maxLife;
-        solidArea.x = gp.tileSize / 16 * 4;
-        solidArea.y = gp.tileSize / 16 * 9;
-        solidArea.width = gp.tileSize / 16 * 8;
-        solidArea.height = gp.tileSize / 16 * 7;
+        solidArea.x = GamePanel.tileSize / 16 * 4;
+        solidArea.y = GamePanel.tileSize / 16 * 9;
+        solidArea.width = GamePanel.tileSize / 16 * 8;
+        solidArea.height = GamePanel.tileSize / 16 * 7;
         solidAreaDefaultY = solidArea.y;
         solidAreaDefaultX = solidArea.x;
         getImage();
@@ -47,7 +47,7 @@ public class MON_GreenSlime extends Fighter {
     }
 
     public void getImage(){
-        int tileSize = gp.tileSize;
+        int tileSize = GamePanel.tileSize;
 
         up1 = setup("/entity/monster/act1/slime/slime_1", tileSize, tileSize);
         up2 = setup("/entity/monster/act1/slime/slime_2", tileSize, tileSize);
@@ -82,7 +82,7 @@ public class MON_GreenSlime extends Fighter {
                 if (50 < i && i <= 75) {
                     direction = "right";
                 }
-                if (75 < i && i <= 100) {
+                if (75 < i) {
                     direction = "left";
                 }
                 actionLockCounter = 0;
@@ -94,10 +94,10 @@ public class MON_GreenSlime extends Fighter {
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
+        if(worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
 
             if(!isDying) {
                 if (spriteNum == 0) {
@@ -129,27 +129,27 @@ public class MON_GreenSlime extends Fighter {
                 int multiplier = 5;
                 if(deathTimeCounter <= multiplier){
                     image = death1;
-                } else if(deathTimeCounter > multiplier && deathTimeCounter < multiplier * 2){
+                } else if(deathTimeCounter < multiplier * 2){
                     image = death2;
-                } else if (deathTimeCounter >= multiplier * 2 && deathTimeCounter < multiplier * 3){
+                } else if (deathTimeCounter < multiplier * 3){
                     image = death3;
-                } else if (deathTimeCounter >= multiplier * 3 && deathTimeCounter < multiplier * 4){
+                } else if (deathTimeCounter < multiplier * 4){
                     image = death4;
-                } else if (deathTimeCounter >= multiplier * 4 && deathTimeCounter < multiplier * 5){
+                } else if (deathTimeCounter < multiplier * 5){
                     image = death5;
-                } else if (deathTimeCounter >= multiplier * 5 && deathTimeCounter < multiplier * 6){
+                } else if (deathTimeCounter < multiplier * 6){
                     image = death6;
-                } else if (deathTimeCounter >= multiplier * 6 && deathTimeCounter < multiplier * 7){
+                } else if (deathTimeCounter < multiplier * 7){
                     image = death7;
                 }
             }
         }
 
         if(drawHpBar) {
-            double oneScale = (double) gp.tileSize / maxLife;
+            double oneScale = (double) GamePanel.tileSize / maxLife;
             double hpBarValue = oneScale * life;
             g2.setColor(new Color(35, 35, 35));
-            g2.fillRect(screenX - 1, screenY - 1, gp.tileSize + 2, 12);
+            g2.fillRect(screenX - 1, screenY - 1, GamePanel.tileSize + 2, 12);
             g2.setColor(new Color(255, 0, 30));
             g2.fillRect(screenX, screenY, (int) hpBarValue, 10);
         }
@@ -173,18 +173,10 @@ public class MON_GreenSlime extends Fighter {
 
         if (!collisionOn) {
             switch (direction) {
-                case "up":
-                    worldY -= speed;
-                    break;
-                case "down":
-                    worldY += speed;
-                    break;
-                case "left":
-                    worldX -= speed;
-                    break;
-                case "right":
-                    worldX += speed;
-                    break;
+                case "up" -> worldY -= speed;
+                case "down" -> worldY += speed;
+                case "left" -> worldX -= speed;
+                case "right" -> worldX += speed;
             }
         }
 

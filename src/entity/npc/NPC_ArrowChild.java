@@ -12,8 +12,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class NPC_ArrowChild extends NPC {
     private boolean fallingPhase = true;
     private int fallingCounter = 0;
-    private int fallingSpriteNumber = 0;
-    private int cryingSpriteNumber = 0;
     private static final int fallDistanceToRight = 3 * GamePanel.tileSize;
     private static final int fallingDistanceToDown = 5 * GamePanel.tileSize;
     private static final int stopFallingAtThisFrame = 100;
@@ -118,9 +116,8 @@ public class NPC_ArrowChild extends NPC {
             }
         }
 
-
-        for (int i = 0; i < particles.size(); i++) {
-            particles.get(i).draw(g2);
+        for (TearParticle particle : particles) {
+            particle.draw(g2);
         }
     }
 
@@ -169,17 +166,18 @@ public class NPC_ArrowChild extends NPC {
         }
 
         if(!isSoundPlaying){
-            if(random.nextInt(100) + 1 == 100){
-                if(Math.abs(worldX - gp.player.worldX) < GamePanel.tileSize * 4 && Math.abs(worldY - gp.player.worldY) < GamePanel.tileSize * 4 )
-                gp.playSE(85 + random.nextInt(3));
-                isSoundPlaying = true;
+            if(random.nextInt(100) + 1 == 100) {
+                if (Math.abs(worldX - gp.player.worldX) < GamePanel.tileSize * 4 && Math.abs(worldY - gp.player.worldY) < GamePanel.tileSize * 4){
+                    gp.playSE(85 + random.nextInt(3));
+                    isSoundPlaying = true;
+                }
             }
         }
     }
 
     public void updateParticles(){
-        for (int i = 0; i < particles.size(); i++) {
-            particles.get(i).update();
+        for (TearParticle particle : particles) {
+            particle.update();
         }
         for (int i = 0; i < particles.size(); i++) {
             if(particles.get(i).age > particles.get(i).lifespan){

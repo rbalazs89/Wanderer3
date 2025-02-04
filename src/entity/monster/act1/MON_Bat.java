@@ -15,14 +15,14 @@ public class MON_Bat extends Fighter {
         drawHpBar = true;
         collisionEntity = false;
         name = "One-eyed bat";
-        solidArea.x = gp.tileSize / 16 * 1;
-        solidArea.y = gp.tileSize / 16 * 4;
-        solidArea.width = gp.tileSize / 16 * 14;
-        solidArea.height = gp.tileSize / 16 * 12;
+        solidArea.x = GamePanel.tileSize / 16;
+        solidArea.y = GamePanel.tileSize / 16 * 4;
+        solidArea.width = GamePanel.tileSize / 16 * 14;
+        solidArea.height = GamePanel.tileSize / 16 * 12;
         solidAreaDefaultY = solidArea.y;
         solidAreaDefaultX = solidArea.x;
         getImages();
-        goBackToSpawnMaxDistance = 20 * gp.tileSize;
+        goBackToSpawnMaxDistance = 20 * GamePanel.tileSize;
 
         //Balance:
         level = 5;
@@ -31,14 +31,14 @@ public class MON_Bat extends Fighter {
         attackChanceWhenAvailable = 20;
         attackDamage = 15;
         defaultSpeed = 4;
-        meleeAttackRange =  (int) (0.85 * gp.tileSize);
+        meleeAttackRange =  (int) (0.85 * GamePanel.tileSize);
         maxLife = 170;
         experienceValue = 250;
 
         attackFramePoint1 = 40;
         attackFramePoint2 = 80;
-        aggroAtThisDistance = 3 * gp.tileSize;
-        shouldTryToAttackRange = (int) (2 * gp.tileSize);
+        aggroAtThisDistance = 3 * GamePanel.tileSize;
+        shouldTryToAttackRange = 2 * GamePanel.tileSize;
 
         ///
         life = maxLife;

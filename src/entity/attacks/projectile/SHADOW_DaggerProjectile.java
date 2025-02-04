@@ -2,7 +2,6 @@ package entity.attacks.projectile;
 
 import entity.Entity;
 import main.GamePanel;
-import tool.DamageNumber;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -10,6 +9,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+@SuppressWarnings("IntegerDivisionInFloatingPointContext")
 public class SHADOW_DaggerProjectile extends MON_ProjectilesWithSprite {
 
     public BufferedImage[] images = new BufferedImage[11];
@@ -150,7 +150,7 @@ public class SHADOW_DaggerProjectile extends MON_ProjectilesWithSprite {
         if(life > 60){
             spriteNum = 1;
             image = imageCarried;
-        } else if (life <= 60){
+        } else {
             spriteNum = 1 + (60 - life) * 11 / 60;
             image = images[Math.min(10,spriteNum)];
         }
@@ -158,10 +158,10 @@ public class SHADOW_DaggerProjectile extends MON_ProjectilesWithSprite {
 
 
 
-        if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
+        if(worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
             g2.drawImage(op.filter(image, null), screenX, screenY, null);
         }
 
@@ -176,7 +176,7 @@ public class SHADOW_DaggerProjectile extends MON_ProjectilesWithSprite {
         if (life > 60){
             gp.cChecker.checkTile(this);
 
-            if(worldX < 0 || worldY < 0 || worldX > gp.currentMapMaxCol * gp.tileSize -  1.1 * gp.tileSize || worldY > gp.currentMapMaxRow * gp.tileSize - 1.5 * gp.tileSize){
+            if(worldX < 0 || worldY < 0 || worldX > gp.currentMapMaxCol * GamePanel.tileSize -  1.1 * GamePanel.tileSize || worldY > gp.currentMapMaxRow * GamePanel.tileSize - 1.5 * GamePanel.tileSize){
                 life = 60;
             }
 

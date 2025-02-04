@@ -7,6 +7,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.util.Random;
 
+@SuppressWarnings("IntegerDivisionInFloatingPointContext")
 public class MON_PikaLightning extends MON_ProjectilesWithSprite{
 
     public MON_PikaLightning (GamePanel gp, Entity originEntity, Entity targetEntity, int accuracy, int damage, int attackStunStrength){

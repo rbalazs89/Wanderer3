@@ -21,8 +21,8 @@ public class MON_Totem extends Fighter {
         name = "Totem";
         sleepDistance = 4;
         solidArea.x = 5;
-        solidArea.y = gp.tileSize / 16 * 1;
-        solidArea.width = gp.tileSize / 16 * 14;
+        solidArea.y = GamePanel.tileSize / 16;
+        solidArea.width = GamePanel.tileSize / 16 * 14;
         solidArea.height = 128;
         solidAreaDefaultY = solidArea.y;
         solidAreaDefaultX = solidArea.x;
@@ -39,7 +39,7 @@ public class MON_Totem extends Fighter {
 
         attackFramePoint1 = 10;
         attackFramePoint2 = 20;
-        aggroAtThisDistance = 10 * gp.tileSize;
+        aggroAtThisDistance = 10 * GamePanel.tileSize;
 
         ///
         life = maxLife;
@@ -54,10 +54,10 @@ public class MON_Totem extends Fighter {
         screenX = worldX - gp.player.worldX + gp.player.screenX;
         screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        if(worldX + 3 * gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX -  3 * gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY + 3 * gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - 3 * gp.tileSize < gp.player.worldY + gp.player.screenY){
+        if(worldX + 3 * GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX -  3 * GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + 3 * GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - 3 * GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
 
             //DRAW IMAGE:
             imageCorrection();
@@ -75,7 +75,7 @@ public class MON_Totem extends Fighter {
     }
 
     public void imageCorrection(){
-        screenX = screenX - gp.tileSize/2;
+        screenX = screenX - GamePanel.tileSize /2;
     }
 
 
@@ -106,7 +106,9 @@ public class MON_Totem extends Fighter {
             if (closestFightingEnemy != null){
                 targetEntity = closestFightingEnemy;
 
-            } else targetEntity = null;
+            } else {
+                targetEntity = null;
+            }
         }
 
         if(targetEntity != null){
@@ -137,7 +139,7 @@ public class MON_Totem extends Fighter {
         for (int i = 0; i < gp.allFightingEntities.size(); i++) {
             Entity currentEntity = gp.allFightingEntities.get(i);
             if(isHostile(this,currentEntity)){
-                if(middleDistance(currentEntity) < sleepDistance * gp.tileSize){
+                if(middleDistance(currentEntity) < sleepDistance * GamePanel.tileSize){
                     sleeping = false;
                 }
             }

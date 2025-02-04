@@ -77,8 +77,8 @@ public class PlayerTalents {
     }
 
     public void updateTalentList() {
-        for (int i = 0; i < talentList.length; i++) {
-            talentList[i].finalValue = talentList[i].currentPointsOnTalent * talentList[i].oneLevelValue;
+        for (Talent talent : talentList) {
+            talent.finalValue = talent.currentPointsOnTalent * talent.oneLevelValue;
             talentDescription();
         }
     }
@@ -140,7 +140,7 @@ public class PlayerTalents {
             switch (i){
                 case 0:
                     talentList[i].description =  "Life increase\nEach point increases life by 1%." +
-                            "\n\nBase life: " + player.baseMaxLife +
+                            "\n\nBase life: " + Player.baseMaxLife +
                             "\nLife from level up: " + player.maxLifeFromUp +
                             "\nLife from items: " + player.maxLifeFromItem +
                             "\nLife from endurance: " + (int)((player.endurance) * 1.2) +
@@ -149,7 +149,7 @@ public class PlayerTalents {
                     break;
                 case 1:
                     talentList[i].description = "Mana increase\nEach point increases mana by 1%." +
-                            "\n\nBase mana: " + player.baseMaxMana +
+                            "\n\nBase mana: " + Player.baseMaxMana +
                             "\nMana from level up: " + player.maxManaFromUp +
                             "\nMana from items: " + player.maxManaFromItem +
                             "\nMana from intelligence: " + (int)((player.intelligence) * 2) +
@@ -182,12 +182,12 @@ public class PlayerTalents {
                 case 5:
                     talentList[i].description = "Faster spell cast speed" +
                             "\nThis means the time that passes between pressing skill button and the actual spell appearing." +
-                            "\n\nBase cast time: " + String.format(Locale.US, "%.2f", (double)player.baseCastPoint1 / 60) + " sec" +
+                            "\n\nBase cast time: " + String.format(Locale.US, "%.2f", (double) Player.baseCastPoint1 / 60) + " sec" +
                             "\nCurrent cast time: " + String.format(Locale.US, "%.2f", (double)player.castPoint1 / 60) + " sec";
                     break;
                 case 6:
                     talentList[i].description = "Lower spell cooldown" +
-                            "\n\nBase cooldown time " + String.format(Locale.US, "%.2f", (double)player.baseCastPoint2/ 60) + " sec" +
+                            "\n\nBase cooldown time " + String.format(Locale.US, "%.2f", (double) Player.baseCastPoint2 / 60) + " sec" +
                             "\nCurrent cooldown time: " + String.format(Locale.US, "%.2f", (double)player.castPoint2/ 60) + " sec";
                     break;
             }

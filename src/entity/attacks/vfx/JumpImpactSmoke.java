@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 public class JumpImpactSmoke extends Spells {
 
-    public BufferedImage images[] = new BufferedImage[24];
+    public BufferedImage[] images = new BufferedImage[24];
 
     public JumpImpactSmoke(GamePanel gp, Entity originEntity){
         super(gp);

@@ -2,7 +2,6 @@ package entity;
 
 import entity.attacks.MON_DaggerGlobe;
 import entity.attacks.MON_DragonHead;
-import entity.attacks.player.Spells;
 import entity.attacks.projectile.SHADOW_DaggerProjectile;
 import entity.attacks.projectile.SHADOW_Projectile;
 import entity.attacks.vfx.ColdAura;
@@ -15,8 +14,6 @@ import tool.UtilityTool;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import static object.SuperObject.adjustTransparency;
 
@@ -95,36 +92,36 @@ public class EntityImageLoader {
             glitterImages[i] = adjustTransparency(glitterImages[i]);
         }
         //ogre:
-        up1Ogre = setup("/entity/monster/act1/ogre/orc_up_1", gp.tileSize, gp.tileSize);
-        up2Ogre = setup("/entity/monster/act1/ogre/orc_up_2", gp.tileSize, gp.tileSize);
-        down1Ogre = setup("/entity/monster/act1/ogre/orc_down_1", gp.tileSize, gp.tileSize);
-        down2Ogre = setup("/entity/monster/act1/ogre/orc_down_2", gp.tileSize, gp.tileSize);
-        right1Ogre = setup("/entity/monster/act1/ogre/orc_right_1", gp.tileSize, gp.tileSize);
-        right2Ogre = setup("/entity/monster/act1/ogre/orc_right_2", gp.tileSize, gp.tileSize);
-        left1Ogre = setup("/entity/monster/act1/ogre/orc_left_1", gp.tileSize, gp.tileSize);
-        left2Ogre = setup("/entity/monster/act1/ogre/orc_left_2", gp.tileSize, gp.tileSize);
+        up1Ogre = setup("/entity/monster/act1/ogre/orc_up_1", GamePanel.tileSize, GamePanel.tileSize);
+        up2Ogre = setup("/entity/monster/act1/ogre/orc_up_2", GamePanel.tileSize, GamePanel.tileSize);
+        down1Ogre = setup("/entity/monster/act1/ogre/orc_down_1", GamePanel.tileSize, GamePanel.tileSize);
+        down2Ogre = setup("/entity/monster/act1/ogre/orc_down_2", GamePanel.tileSize, GamePanel.tileSize);
+        right1Ogre = setup("/entity/monster/act1/ogre/orc_right_1", GamePanel.tileSize, GamePanel.tileSize);
+        right2Ogre = setup("/entity/monster/act1/ogre/orc_right_2", GamePanel.tileSize, GamePanel.tileSize);
+        left1Ogre = setup("/entity/monster/act1/ogre/orc_left_1", GamePanel.tileSize, GamePanel.tileSize);
+        left2Ogre = setup("/entity/monster/act1/ogre/orc_left_2", GamePanel.tileSize, GamePanel.tileSize);
 
-        attackUp1Ogre = setup("/entity/monster/act1/ogre/orc_attack_up_1", gp.tileSize, gp.tileSize * 2);
-        attackUp2Ogre = setup("/entity/monster/act1/ogre/orc_attack_up_2", gp.tileSize, gp.tileSize * 2);
-        attackDown1Ogre = setup("/entity/monster/act1/ogre/orc_attack_down_1", gp.tileSize, gp.tileSize * 2);
-        attackDown2Ogre = setup("/entity/monster/act1/ogre/orc_attack_down_2", gp.tileSize, gp.tileSize * 2);
-        attackRight1Ogre = setup("/entity/monster/act1/ogre/orc_attack_right_1", gp.tileSize * 2, gp.tileSize);
-        attackRight2Ogre = setup("/entity/monster/act1/ogre/orc_attack_right_2", gp.tileSize * 2, gp.tileSize);
-        attackLeft1Ogre = setup("/entity/monster/act1/ogre/orc_attack_left_1", gp.tileSize * 2, gp.tileSize);
-        attackLeft2Ogre = setup("/entity/monster/act1/ogre/orc_attack_left_2", gp.tileSize * 2, gp.tileSize);
+        attackUp1Ogre = setup("/entity/monster/act1/ogre/orc_attack_up_1", GamePanel.tileSize, GamePanel.tileSize * 2);
+        attackUp2Ogre = setup("/entity/monster/act1/ogre/orc_attack_up_2", GamePanel.tileSize, GamePanel.tileSize * 2);
+        attackDown1Ogre = setup("/entity/monster/act1/ogre/orc_attack_down_1", GamePanel.tileSize, GamePanel.tileSize * 2);
+        attackDown2Ogre = setup("/entity/monster/act1/ogre/orc_attack_down_2", GamePanel.tileSize, GamePanel.tileSize * 2);
+        attackRight1Ogre = setup("/entity/monster/act1/ogre/orc_attack_right_1", GamePanel.tileSize * 2, GamePanel.tileSize);
+        attackRight2Ogre = setup("/entity/monster/act1/ogre/orc_attack_right_2", GamePanel.tileSize * 2, GamePanel.tileSize);
+        attackLeft1Ogre = setup("/entity/monster/act1/ogre/orc_attack_left_1", GamePanel.tileSize * 2, GamePanel.tileSize);
+        attackLeft2Ogre = setup("/entity/monster/act1/ogre/orc_attack_left_2", GamePanel.tileSize * 2, GamePanel.tileSize);
 
         //bat:
         tempImage = setupImage("/entity/monster/act1/bat/batSheet");
         for (int i = 0; i < 9; i++) {
-            dyingBat[i] = setupSheet3(tempImage, i * 88,0,88, 88, gp.tileSize, gp.tileSize);
-            walkUpBat[i] = setupSheet3(tempImage, i * 88,88 *1,88, 88, gp.tileSize, gp.tileSize);
-            walkRightBat[i] = setupSheet3(tempImage, i * 88, 88 * 2,88, 88, gp.tileSize, gp.tileSize);
-            walkDownBat[i] = setupSheet3(tempImage, i * 88, 88 * 3,88, 88, gp.tileSize, gp.tileSize);
-            walkLeftBat[i] = setupSheet3(tempImage, i * 88, 88 * 4,88, 88, gp.tileSize, gp.tileSize);
-            attackUpBat[i] = setupSheet3(tempImage, i * 88, 88 * 5,88, 88, gp.tileSize, gp.tileSize);
-            attackRightBat[i] = setupSheet3(tempImage, i * 88, 88 * 6,88, 88, gp.tileSize, gp.tileSize);
-            attackDownBat[i] = setupSheet3(tempImage, i * 88,88 * 7,88, 88, gp.tileSize, gp.tileSize);
-            attackLeftBat[8-i] = setupSheet3(tempImage, i * 88,88 * 8,88, 88, gp.tileSize, gp.tileSize);
+            dyingBat[i] = setupSheet3(tempImage, i * 88,0,88, 88, GamePanel.tileSize, GamePanel.tileSize);
+            walkUpBat[i] = setupSheet3(tempImage, i * 88, 88,88, 88, GamePanel.tileSize, GamePanel.tileSize);
+            walkRightBat[i] = setupSheet3(tempImage, i * 88, 88 * 2,88, 88, GamePanel.tileSize, GamePanel.tileSize);
+            walkDownBat[i] = setupSheet3(tempImage, i * 88, 88 * 3,88, 88, GamePanel.tileSize, GamePanel.tileSize);
+            walkLeftBat[i] = setupSheet3(tempImage, i * 88, 88 * 4,88, 88, GamePanel.tileSize, GamePanel.tileSize);
+            attackUpBat[i] = setupSheet3(tempImage, i * 88, 88 * 5,88, 88, GamePanel.tileSize, GamePanel.tileSize);
+            attackRightBat[i] = setupSheet3(tempImage, i * 88, 88 * 6,88, 88, GamePanel.tileSize, GamePanel.tileSize);
+            attackDownBat[i] = setupSheet3(tempImage, i * 88,88 * 7,88, 88, GamePanel.tileSize, GamePanel.tileSize);
+            attackLeftBat[8-i] = setupSheet3(tempImage, i * 88,88 * 8,88, 88, GamePanel.tileSize, GamePanel.tileSize);
             //hurtBat[i] = setupSheet("/entity/monster/act1/bat/hurts", i * 88,0,88, 88, gp.tileSize, gp.tileSize); not used for now
         }
 
@@ -260,9 +257,7 @@ public class EntityImageLoader {
     }
 
     public void matchDaggerProjectile(SHADOW_DaggerProjectile daggerProjectile){
-        for (int i = 0; i < 11; i++) {
-            daggerProjectile.images[i] = daggerImages[i+1];
-        }
+        System.arraycopy(daggerImages, 1, daggerProjectile.images, 0, 11);
     }
 
     public void matchFireDragonImages(MON_DragonHead dragonHead){

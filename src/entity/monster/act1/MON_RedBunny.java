@@ -19,14 +19,14 @@ public class MON_RedBunny extends Fighter {
         drawHpBar = true;
         collisionEntity = false;
         name = "Red bunny";
-        solidArea.x = gp.tileSize / 16 * 1;
-        solidArea.y = gp.tileSize / 16 * 4;
-        solidArea.width = gp.tileSize / 16 * 14;
-        solidArea.height = gp.tileSize / 16 * 12;
+        solidArea.x = GamePanel.tileSize / 16;
+        solidArea.y = GamePanel.tileSize / 16 * 4;
+        solidArea.width = GamePanel.tileSize / 16 * 14;
+        solidArea.height = GamePanel.tileSize / 16 * 12;
         solidAreaDefaultY = solidArea.y;
         solidAreaDefaultX = solidArea.x;
         getImages();
-        goBackToSpawnMaxDistance = 10 * gp.tileSize;
+        goBackToSpawnMaxDistance = 10 * GamePanel.tileSize;
         sleepDistance = 4;
         sleeping = true;
 
@@ -37,15 +37,15 @@ public class MON_RedBunny extends Fighter {
         attackChanceWhenAvailable = 1;
         attackDamage = 15;
         defaultSpeed = 1;
-        meleeAttackRange =  (int) (0.75 * gp.tileSize);
+        meleeAttackRange =  (int) (0.75 * GamePanel.tileSize);
         maxLife = 610;
         experienceValue = 950;
         attackStunStrength = 20;
 
         attackFramePoint1 = 60;
         attackFramePoint2 = 70;
-        aggroAtThisDistance = 4 * gp.tileSize;
-        shouldTryToAttackRange = (int) (5 * gp.tileSize);
+        aggroAtThisDistance = 4 * GamePanel.tileSize;
+        shouldTryToAttackRange = 5 * GamePanel.tileSize;
 
         ///
         life = maxLife;
@@ -82,7 +82,7 @@ public class MON_RedBunny extends Fighter {
         for (int i = 0; i < gp.allFightingEntities.size(); i++) {
             Entity currentEntity = gp.allFightingEntities.get(i);
             if(isHostile(this,currentEntity)){
-                if(middleDistance(currentEntity) < sleepDistance * gp.tileSize){
+                if(middleDistance(currentEntity) < sleepDistance * GamePanel.tileSize){
                     sleeping = false;
                 }
             }

@@ -19,7 +19,6 @@ public abstract class Spells extends Entity {
     public  Entity originEntity;
     public  boolean soundPlayed = false;
     public  boolean hitAnEnemy = false;
-    public int manaCost = 0;
     public int roundedDeltaX1;
     public int roundedDeltaY1;
     public AffineTransformOp op;
@@ -32,7 +31,6 @@ public abstract class Spells extends Entity {
 
     public Spells(GamePanel gp){
         super(gp);
-        this.gp = gp;
     }
 
     protected Spells() {

@@ -24,7 +24,7 @@ public class A_Brother extends Fighter {
         solidArea.height = 54;
         solidAreaDefaultY = solidArea.y;
         solidAreaDefaultX = solidArea.x;
-        goBackToSpawnMaxDistance = 10 * gp.tileSize;
+        goBackToSpawnMaxDistance = 10 * GamePanel.tileSize;
         sleepDistance = 4;
         sleeping = true;
         damageOnContactValue = 0;
@@ -36,15 +36,15 @@ public class A_Brother extends Fighter {
         attackChanceWhenAvailable = 100;
         attackDamage = 25;
         defaultSpeed = 1;
-        meleeAttackRange =  (int) (1.3 * gp.tileSize);
+        meleeAttackRange =  (int) (1.3 * GamePanel.tileSize);
         maxLife = 200;
         experienceValue = 100;
         attackStunStrength = 20;
 
         attackFramePoint1 = 30;
         attackFramePoint2 = 60;
-        aggroAtThisDistance = 4 * gp.tileSize;
-        shouldTryToAttackRange = (int) (2.5 * gp.tileSize);
+        aggroAtThisDistance = 4 * GamePanel.tileSize;
+        shouldTryToAttackRange = (int) (2.5 * GamePanel.tileSize);
 
         ///
         life = maxLife;
@@ -86,26 +86,25 @@ public class A_Brother extends Fighter {
 
     public void walkImageCorrection(){
         switch (direction) {
-            case "up" :
+            case "up" -> {
                 screenX = screenX - 16;
                 screenY = screenY - 10;
-                break;
-            case "right" :
+            }
+            case "right" -> {
                 screenX = screenX - 5;
                 screenY = screenY - 16;
-                break;
-            case "down" :
+            }
+            case "down" -> {
                 screenX = screenX - 16;
                 screenY = screenY - 18;
-                break;
-            case "left" :
+            }
+            case "left" -> {
                 screenX = screenX - 30;
                 screenY = screenY - 20;
-                break;
+            }
         }
     }
     public void attackImageCorrection(){
-
         switch (attackDirection) {
             case "up":
                 screenX = screenX - 10;
@@ -209,7 +208,7 @@ public class A_Brother extends Fighter {
         for (int i = 0; i < gp.allFightingEntities.size(); i++) {
             Entity currentEntity = gp.allFightingEntities.get(i);
             if(isHostile(this,currentEntity)){
-                if(middleDistance(currentEntity) < sleepDistance * gp.tileSize){
+                if(middleDistance(currentEntity) < sleepDistance * GamePanel.tileSize){
                     sleeping = false;
                 }
             }
@@ -219,7 +218,7 @@ public class A_Brother extends Fighter {
             sleeping = false;
         }
 
-        if(middleDistance(gp.player) < (int)(1.5 * gp.tileSize)) {
+        if(middleDistance(gp.player) < (int)(1.5 * GamePanel.tileSize)) {
             sleeping = false;
             actionWhenNear1 = true;
         }
@@ -284,7 +283,7 @@ public class A_Brother extends Fighter {
                 if (50 < i && i <= 75) {
                     direction = "left";
                 }
-                if (75 < i && i <= 100) {
+                if (75 < i) {
                     direction = "right";
                 }
             }

@@ -15,21 +15,21 @@ public class MON_Ghost extends Fighter {
         drawHpBar = true;
         collisionEntity = false;
         name = "Cemetery ghost";
-        solidArea.x = gp.tileSize / 16 * 1;
-        solidArea.y = gp.tileSize / 16 * 4;
-        solidArea.width = gp.tileSize / 16 * 14;
-        solidArea.height = gp.tileSize / 16 * 12;
+        solidArea.x = GamePanel.tileSize / 16;
+        solidArea.y = GamePanel.tileSize / 16 * 4;
+        solidArea.width = GamePanel.tileSize / 16 * 14;
+        solidArea.height = GamePanel.tileSize / 16 * 12;
         solidAreaDefaultY = solidArea.y;
         solidAreaDefaultX = solidArea.x;
         getImages();
-        goBackToSpawnMaxDistance = 6 * gp.tileSize;
+        goBackToSpawnMaxDistance = 6 * GamePanel.tileSize;
         movementSpritesNumber = 3;
         resist[0] = 90;
 
         //Balance:
         damageOnContactValue = 1;
         defaultSpeed = 1;
-        meleeAttackRange =  (int) (0.75 * gp.tileSize);
+        meleeAttackRange =  (int) (0.75 * GamePanel.tileSize);
         maxLife = 200;
         level = 30;
         experienceValue = 10;
@@ -45,18 +45,18 @@ public class MON_Ghost extends Fighter {
         walkRight = new BufferedImage[3];
         walkDown = new BufferedImage[3];
         walkLeft = new BufferedImage[3];
-        walkUp[0] = setup("/entity/monster/act1/ghost/up1", gp.tileSize, gp.tileSize);
-        walkUp[1] = setup("/entity/monster/act1/ghost/up2", gp.tileSize, gp.tileSize);
-        walkUp[2] = setup("/entity/monster/act1/ghost/up3", gp.tileSize, gp.tileSize);
-        walkRight[0] = setup("/entity/monster/act1/ghost/right1", gp.tileSize, gp.tileSize);
-        walkRight[1] = setup("/entity/monster/act1/ghost/right2", gp.tileSize, gp.tileSize);
-        walkRight[2] = setup("/entity/monster/act1/ghost/right3", gp.tileSize, gp.tileSize);
-        walkDown[0] = setup("/entity/monster/act1/ghost/down1", gp.tileSize, gp.tileSize);
-        walkDown[1] = setup("/entity/monster/act1/ghost/down2", gp.tileSize, gp.tileSize);
-        walkDown[2] = setup("/entity/monster/act1/ghost/down3", gp.tileSize, gp.tileSize);
-        walkLeft[0] = setup("/entity/monster/act1/ghost/left1", gp.tileSize, gp.tileSize);
-        walkLeft[1] = setup("/entity/monster/act1/ghost/left2", gp.tileSize, gp.tileSize);
-        walkLeft[2] = setup("/entity/monster/act1/ghost/left3", gp.tileSize, gp.tileSize);
+        walkUp[0] = setup("/entity/monster/act1/ghost/up1", GamePanel.tileSize, GamePanel.tileSize);
+        walkUp[1] = setup("/entity/monster/act1/ghost/up2", GamePanel.tileSize, GamePanel.tileSize);
+        walkUp[2] = setup("/entity/monster/act1/ghost/up3", GamePanel.tileSize, GamePanel.tileSize);
+        walkRight[0] = setup("/entity/monster/act1/ghost/right1", GamePanel.tileSize, GamePanel.tileSize);
+        walkRight[1] = setup("/entity/monster/act1/ghost/right2", GamePanel.tileSize, GamePanel.tileSize);
+        walkRight[2] = setup("/entity/monster/act1/ghost/right3", GamePanel.tileSize, GamePanel.tileSize);
+        walkDown[0] = setup("/entity/monster/act1/ghost/down1", GamePanel.tileSize, GamePanel.tileSize);
+        walkDown[1] = setup("/entity/monster/act1/ghost/down2", GamePanel.tileSize, GamePanel.tileSize);
+        walkDown[2] = setup("/entity/monster/act1/ghost/down3", GamePanel.tileSize, GamePanel.tileSize);
+        walkLeft[0] = setup("/entity/monster/act1/ghost/left1", GamePanel.tileSize, GamePanel.tileSize);
+        walkLeft[1] = setup("/entity/monster/act1/ghost/left2", GamePanel.tileSize, GamePanel.tileSize);
+        walkLeft[2] = setup("/entity/monster/act1/ghost/left3", GamePanel.tileSize, GamePanel.tileSize);
     }
 
     public void setActionAI(){
@@ -71,8 +71,8 @@ public class MON_Ghost extends Fighter {
             if (Math.abs(worldX - spawnX) > goBackToSpawnMaxDistance || Math.abs(worldY - spawnY) > goBackToSpawnMaxDistance) {
                 isGoingBackToSpawn = true;
                 speed = defaultSpeed;
-                goalCol = spawnX / gp.tileSize;
-                goalRow = spawnY / gp.tileSize;
+                goalCol = spawnX / GamePanel.tileSize;
+                goalRow = spawnY / GamePanel.tileSize;
             }
         }
 

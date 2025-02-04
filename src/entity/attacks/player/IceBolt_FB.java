@@ -11,21 +11,20 @@ import java.awt.geom.Path2D;
 import java.util.Random;
 
 
+@SuppressWarnings("IntegerDivisionInFloatingPointContext")
 public class IceBolt_FB extends Spells {
     //this class is only used by FrozenOrb spell entity
-    private int endWorldX, endWorldY, startWorldX, startWorldY;
-    private int speed;
+    private final int endWorldX;
+    private final int endWorldY;
+    private final int startWorldX;
+    private final int startWorldY;
+    private final int speed;
     private float progress; // to track the animation progress
-    private float angle; // to track the angle of the bolt
-    private int boltLength = 30;
-    private double angleInRadians;
+    private final double angleInRadians;
     private int currentX, currentY, middleX, middleY;
-    private int blue = 139;
-    private int alpha = 255;
 
     public IceBolt_FB(GamePanel gp, Entity originEntity) {
         super(gp);
-        this.gp = gp;
 
         this.originEntity = originEntity;
         startWorldX = originEntity.worldX;
@@ -40,7 +39,8 @@ public class IceBolt_FB extends Spells {
         }
 
         //Random random = new Random();
-        this.angle = random.nextInt(360);
+        // to track the angle of the bolt
+        float angle = random.nextInt(360);
         int distance = 700;
         angleInRadians = Math.toRadians(angle);
         endWorldX = (int) (startWorldX + distance * Math.cos(angleInRadians));
@@ -63,6 +63,7 @@ public class IceBolt_FB extends Spells {
             currentX = worldX + gp.player.screenX - gp.player.worldX;
             currentY = worldY + gp.player.screenY - gp.player.worldY;
 
+            int boltLength = 30;
             middleX = (int) (currentX + (boltLength / 2) * Math.cos(angleInRadians));
             middleY = (int) (currentY + (boltLength / 2) * Math.sin(angleInRadians));
 
@@ -106,9 +107,9 @@ public class IceBolt_FB extends Spells {
         int boltWidth = 10; // Example width of the ice bolt
 
         Path2D iceBolt = new Path2D.Double();
-        iceBolt.moveTo(0, -boltWidth / 2);
+        iceBolt.moveTo(0, -boltWidth / 2.0);
         iceBolt.lineTo(boltLength, 0);
-        iceBolt.lineTo(0, boltWidth / 2);
+        iceBolt.lineTo(0, boltWidth / 2.0);
         iceBolt.closePath();
 
         AffineTransform old = g2.getTransform();
@@ -116,7 +117,8 @@ public class IceBolt_FB extends Spells {
         g2.rotate(angleInRadians);
 
 
-
+        int alpha = 255;
+        int blue = 139;
         GradientPaint gradient = new GradientPaint(
                 0, -boltWidth / 2,
                 new Color(173, 216, 230),

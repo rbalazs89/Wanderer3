@@ -10,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class FireAura extends Spells {
 
-    BufferedImage images[] = new BufferedImage[20];
+    BufferedImage[] images = new BufferedImage[20];
 
     public FireAura (GamePanel gp, Entity originEntity) {
         super(gp);
@@ -37,7 +37,7 @@ public class FireAura extends Spells {
 
     public void draw(Graphics2D g2){
         int screenX = originEntity.screenX() - 22 ;
-        int screenY = originEntity.screenY() + gp.tileSize / 2;
+        int screenY = originEntity.screenY() + GamePanel.tileSize / 2;
         image = images[Math.min(19,(maxLife - life) / 4)];
         g2.drawImage(image,screenX,screenY,null);
     }
