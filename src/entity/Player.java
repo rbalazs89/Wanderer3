@@ -654,8 +654,10 @@ public class Player extends Entity {
         attackDownLeft2 = setup("/entity/updatedplayer/attack/attack_downleft_2", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 19/12));
         attackLeft1 = setup("/entity/updatedplayer/attack/attack_left_1", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 4/3));
         attackLeft2 = setup("/entity/updatedplayer/attack/attack_left_2", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 4/3));
-        attackUpLeft1 = setup("/entity/updatedplayer/attack/attack_upleft_1", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 19/12));
-        attackUpLeft2 = setup("/entity/updatedplayer/attack/attack_upleft_2", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 19/12));
+        //attackUpLeft1 = setup("/entity/updatedplayer/attack/attack_upleft_1", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 19/12));
+        //attackUpLeft2 = setup("/entity/updatedplayer/attack/attack_upleft_2", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 19/12));
+        attackUpLeft1 = setup("/entity/updatedplayer/attack/attack_upleft_1", (int)(GamePanel.tileSize * 19/12), (int)(GamePanel.tileSize * 16/12));
+        attackUpLeft2 = setup("/entity/updatedplayer/attack/attack_upleft_2", (int)(GamePanel.tileSize * 19/12), (int)(GamePanel.tileSize * 16/12));
     }
 
     public void update() {
@@ -1050,9 +1052,21 @@ public class Player extends Entity {
                 }
                 direction = "left";
                 break;
+                /*
             case 8:
                 tempScreenX = screenX - gp.tileSize * 4/6;
                 tempScreenY = screenY - gp.tileSize * 6/12;
+                if(attackSpriteNum == 1) {
+                    image = attackUpLeft1;
+                }
+                if(attackSpriteNum == 2) {
+                    image = attackUpLeft2;
+                }
+                direction = "up";
+                break;*/
+            case 8:
+                tempScreenX = screenX - GamePanel.tileSize * 4/6;
+                tempScreenY = screenY - GamePanel.tileSize * 7/12;
                 if(attackSpriteNum == 1) {
                     image = attackUpLeft1;
                 }
