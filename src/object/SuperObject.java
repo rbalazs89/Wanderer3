@@ -1,4 +1,5 @@
 package object;
+import entity.Entity;
 import item.Item;
 
 import main.GamePanel;
@@ -20,18 +21,26 @@ public class SuperObject {
     public String name = "ok";
     public boolean collision = false;
     public int worldX, worldY;
-    public Rectangle solidArea = new Rectangle(0,0,gp.tileSize/2, gp.tileSize/2);
+    public Rectangle solidArea = new Rectangle(0,0, GamePanel.tileSize /2, GamePanel.tileSize /2);
     UtilityTool uTool = new UtilityTool();
     public ArrayList<Glitter> glitters = new ArrayList<>();
-    public BufferedImage glitterImages[] = new BufferedImage[8];
+    public BufferedImage[] glitterImages = new BufferedImage[8];
     private boolean createdGlitters = false;
     public boolean showGlitter = false; // if entity shouldShowGlitter + player in interactable range
-    public boolean shouldShowGlitter = true;
+    public boolean shouldShowGlitter = true; // if interactable but i dont want it to be telegraphed for some reason
     public int distanceFromPlayer;
     public int heroXAtGlitterCreation = 0;
     public int heroYAtGlitterCreation = 0;
     public ArrayList<SuperObject> interactThisList = new ArrayList<>();
     public int interactSoundNumber;
+    public boolean currentlyInteracting = false;
+    public String textToShow;
+
+    public Color transparentBlack = new Color(0,0,0, 125);
+    public Color silver = new Color(192,192,192);
+
+    public BasicStroke threeWideStroke = new BasicStroke(3);
+    Font titleFont = new Font("Calibri", Font.PLAIN, 16);
 
     public SuperObject(GamePanel gp){
         this.gp = gp;
@@ -42,15 +51,16 @@ public class SuperObject {
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        if(worldX +  gp.tileSize  > gp.player.worldX - gp.player.screenX &&
-                worldX -  gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY +  gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY -  gp.tileSize < gp.player.worldY + gp.player.screenY){
-            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize,null);
+        if(worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
+            g2.drawImage(image, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize,null);
 
             if(showGlitter && shouldShowGlitter){
                 drawInteractableGlitter(g2);
             }
+            drawSpecial(g2);
         }
     }
 
@@ -103,18 +113,16 @@ public class SuperObject {
         return worldY - gp.player.worldY + gp.player.screenY + solidArea.y + solidArea.height/2;
     }
 
-    public int middleX() {
+    public int worldMiddleX() {
         return worldX + solidArea.x + solidArea.width / 2;
     }
 
-    public int middleY() {
+    public int worldMiddleY() {
         return worldY + solidArea.y + solidArea.height / 2;
     }
 
     public void getGlitterImages(){
-        for (int i = 0; i < 8 ; i++) {
-            glitterImages[i] = gp.entityImageLoader.glitterImages[i];
-        }
+        System.arraycopy(gp.entityImageLoader.glitterImages, 0, glitterImages, 0, 8);
     }
 
     public void itemDrop(int dropLevel, int minimumTier, boolean isThisABoss){
@@ -160,6 +168,18 @@ public class SuperObject {
         return image;
     }
 
+    public BufferedImage setup(String imageName, int width, int height) {
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image = null;
+        try{
+            image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
+            image = uTool.scaleImage(image, width, height);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return image;
+    }
+
     public static BufferedImage adjustTransparency(BufferedImage original) {
         int width = original.getWidth();
         int height = original.getHeight();
@@ -169,8 +189,7 @@ public class SuperObject {
             for (int x = 0; x < width; x++) {
                 int rgba = original.getRGB(x, y);
                 Color color = new Color(rgba, true);
-                int blackness = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
-                int alpha = blackness;
+                int alpha = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
                 Color newColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha);
                 result.setRGB(x, y, newColor.getRGB());
             }
@@ -198,17 +217,126 @@ public class SuperObject {
     public void progressInteract() {
 
     }
+
     public int worldMiddleXForDrop(){
         if(image != null){
             return worldX + image.getWidth() / 2;
         }
-        else return 32;
+        else return GamePanel.tileSize / 2;
     }
 
     public int worldMiddleYForDrop(){
         if(image != null){
             return worldY + image.getHeight() / 2;
         }
-        else return 32;
+        else return GamePanel.tileSize / 2;
     }
+
+    public void drawSpecial(Graphics2D g2){
+
+    }
+
+    /*public void drawBookTextScreen(Graphics2D g2) {
+        int x = 2 * GamePanel.tileSize;
+        int y = GamePanel.tileSize * 3/2;
+        int width = gp.screenWidth - ( 4 * GamePanel.tileSize);
+        int height = setLinesFromTextAndGetHeight();
+
+        drawSubWindow(x, y, width, height, g2);
+
+        x += GamePanel.tileSize / 2;
+        y += GamePanel.tileSize;
+
+        g2.setFont(titleFont); //Font("Calibri", Font.PLAIN, 13);
+        for(String line : textToShow.split("/n")){
+            g2.drawString(line, x, y);
+            y += 30; //is 30 good? probably not
+        }
+    }
+
+    public void drawSubWindow(int x, int y, int width, int height, Graphics2D g2){
+
+        g2.setColor(transparentBlack);
+        g2.fillRoundRect(x, y , width, height, 35, 35);
+
+        g2.setColor(Color.white);
+        g2.setStroke (threeWideStroke);
+        g2.drawRoundRect(x + 1, y + 1, width - 3, height - 3, 25, 25);
+    }
+
+    public int setLinesFromTextAndGetHeight(){
+        textToShow = textToShow; // need to transform it to have "/n"s
+
+        //get height from text values
+        int height = 0;
+        return height;
+    }*/
+
+    public void drawBookTextScreen(Graphics2D g2) {
+        int x = 2 * GamePanel.tileSize;
+        int y = GamePanel.tileSize * 3 / 2;
+        int width = gp.screenWidth - (4 * GamePanel.tileSize);
+        int height = setLinesFromTextAndGetHeight(g2, width);
+
+        drawSubWindow(x, y, width, height, g2);
+
+        x += GamePanel.tileSize / 2;
+        y += GamePanel.tileSize;
+
+        g2.setFont(titleFont);
+        g2.setColor(Color.white);
+
+        for (String line : formattedLines) {
+            g2.drawString(line, x, y);
+            y += g2.getFontMetrics().getHeight(); // Dynamically adjust line spacing
+        }
+    }
+
+    public void drawSubWindow(int x, int y, int width, int height, Graphics2D g2) {
+        g2.setColor(transparentBlack);
+        g2.fillRoundRect(x, y, width, height, 35, 35);
+
+        g2.setColor(Color.white);
+        g2.setStroke(threeWideStroke);
+        g2.drawRoundRect(x + 1, y + 1, width - 3, height - 3, 25, 25);
+    }
+
+    private ArrayList<String> formattedLines = new ArrayList<>();
+
+    public int setLinesFromTextAndGetHeight(Graphics2D g2, int width) {
+        formattedLines.clear();
+
+        FontMetrics fm = g2.getFontMetrics(titleFont);
+        int lineHeight = fm.getHeight();
+        int maxWidth = width - GamePanel.tileSize; // Padding for text
+
+        // Replace "/n" with actual newlines
+        String[] paragraphs = textToShow.split("/n");
+
+        for (String paragraph : paragraphs) {
+            String[] words = paragraph.split(" ");
+            StringBuilder currentLine = new StringBuilder();
+
+            for (String word : words) {
+                if (fm.stringWidth(currentLine + word) > maxWidth) {
+                    formattedLines.add(currentLine.toString());
+                    currentLine = new StringBuilder(word);
+                } else {
+                    if (!currentLine.isEmpty()) currentLine.append(" ");
+                    currentLine.append(word);
+                }
+            }
+            if (!currentLine.isEmpty()) formattedLines.add(currentLine.toString());
+
+            // Add a blank line for paragraph separation
+            formattedLines.add("");
+        }
+
+        return formattedLines.size() * lineHeight + GamePanel.tileSize; // Add padding
+    }
+
+    public int middleDistance(Entity entity){
+        return (int) Math.sqrt(Math.pow(worldMiddleX() - entity.worldMiddleX(), 2) + Math.pow(worldMiddleY() - entity.worldMiddleY(), 2));
+    }
+
 }

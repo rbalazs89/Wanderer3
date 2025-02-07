@@ -17,7 +17,7 @@ public class DamageNumber {
     int screenY;
     Random random = new Random();
     int value;
-    private Font baseFont = new Font("SansSerif", Font.BOLD, 20);
+    private final Font baseFont = new Font("SansSerif", Font.BOLD, 20);
 
     public DamageNumber(int value, Entity originEntity, Entity attackedEntity, boolean isContactDamage, GamePanel gp){
         this.gp = gp;
@@ -65,7 +65,7 @@ public class DamageNumber {
         // Scale the size: Grow initially (1.0 to 1.5), then shrink (1.5 to 0.8)
         float scale;
         if (progress < 0.5f) {
-            scale = 1.0f + 1.0f * progress; // Grow from 1.0 to 1.5
+            scale = 1.0f + progress; // Grow from 1.0 to 1.5
         } else {
             scale = 1.5f - 0.7f * (progress - 0.5f) * 2; // Shrink from 1.5 to 0.8
         }

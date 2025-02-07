@@ -123,7 +123,7 @@ public class NPC_CaravanBro extends Entity {
 
     public void followBehaviourAct1(){
 
-        setActionWhenNear();
+        decideIfPlayerNear();
         setBoundAreaNPC(7,0,50,7);
 
         if(targetPathFollowed){

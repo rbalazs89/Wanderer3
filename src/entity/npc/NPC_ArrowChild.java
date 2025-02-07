@@ -94,31 +94,29 @@ public class NPC_ArrowChild extends NPC {
     }
 
     public void draw(Graphics2D g2){
+        int screenX;
+        int screenY;
         if(fallingPhase){
-            int screenX = worldX + addXFromFall - gp.player.worldX + gp.player.screenX;
-            int screenY = worldY + addYFromFall - gp.player.worldY + gp.player.screenY;
-            if(worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
-                    worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
-                    worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
-                    worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
-
-                g2.drawImage(image, screenX, screenY,null);
-            }
+            screenX = worldX + addXFromFall - gp.player.worldX + gp.player.screenX;
+            screenY = worldY + addYFromFall - gp.player.worldY + gp.player.screenY;
         } else {
-            int screenX = worldX - gp.player.worldX + gp.player.screenX;
-            int screenY = worldY - gp.player.worldY + gp.player.screenY;
-            if(worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
-                    worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
-                    worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
-                    worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY) {
+            screenX = worldX - gp.player.worldX + gp.player.screenX;
+            screenY = worldY - gp.player.worldY + gp.player.screenY;
+        }
+        if(worldX + 5 * GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - 5 * GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + 5 * GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - 5 * GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
 
-                g2.drawImage(image, screenX, screenY, null);
+            g2.drawImage(image, screenX, screenY,null);
+            for (TearParticle particle : particles) {
+                particle.draw(g2);
             }
         }
 
-        for (TearParticle particle : particles) {
+        /*for (TearParticle particle : particles) {
             particle.draw(g2);
-        }
+        }*/
     }
 
     public void getFallingSprite(){

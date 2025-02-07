@@ -3,7 +3,6 @@ package object;
 import main.GamePanel;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.io.IOException;
 
 public class OBJ_A1Ending extends SuperObject{
@@ -17,7 +16,7 @@ public class OBJ_A1Ending extends SuperObject{
         solidArea.height = 17;
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/nullimage.png"));
-            uTool.scaleImage(image, gp.tileSize, gp.tileSize);
+            uTool.scaleImage(image, GamePanel.tileSize, GamePanel.tileSize);
         } catch (IOException e){
             e.printStackTrace();
         }

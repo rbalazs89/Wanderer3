@@ -17,8 +17,8 @@ public class Map{
     }
 
     public void createMapScreenImage() {
-        int worldMapWidth = gp.tileSize * gp.currentMapMaxCol;
-        int worldMapHeight = gp.tileSize * gp.currentMapMaxRow;
+        int worldMapWidth = GamePanel.tileSize * gp.currentMapMaxCol;
+        int worldMapHeight = GamePanel.tileSize * gp.currentMapMaxRow;
 
         worldMap = new BufferedImage(worldMapWidth, worldMapHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D)worldMap.createGraphics();
@@ -27,8 +27,8 @@ public class Map{
 
         while(col < gp.currentMapMaxCol && row < gp.currentMapMaxRow){
             int tileNum = gp.tileM.mapTileNum[col][row];
-            int x = gp.tileSize * col;
-            int y = gp.tileSize * row;
+            int x = GamePanel.tileSize * col;
+            int y = GamePanel.tileSize * row;
             g2.drawImage(gp.tileM.tile[tileNum].image, x, y, null);
             col ++;
                     if(col == gp.currentMapMaxCol){
@@ -64,8 +64,8 @@ public class Map{
         for (int i = 0; i < gp.mapBlockManager.mapBlock.length; i++) {
             MapBlock currentMapBlock = gp.mapBlockManager.mapBlock[i];
             if (currentMapBlock != null) {
-                int blockX = (int) ((currentMapBlock.worldX / (float) (gp.currentMapMaxCol * gp.tileSize)) * scaledWidth);
-                int blockY = (int) ((currentMapBlock.worldY / (float) (gp.currentMapMaxRow * gp.tileSize)) * scaledHeight);
+                int blockX = (int) ((currentMapBlock.worldX / (float) (gp.currentMapMaxCol * GamePanel.tileSize)) * scaledWidth);
+                int blockY = (int) ((currentMapBlock.worldY / (float) (gp.currentMapMaxRow * GamePanel.tileSize)) * scaledHeight);
                 int blockWidth = (int) (currentMapBlock.image.getWidth() * ((float) scaledWidth / worldMap.getWidth()));
                 int blockHeight = (int) (currentMapBlock.image.getHeight() * ((float) scaledHeight / worldMap.getHeight()));
 
@@ -77,8 +77,8 @@ public class Map{
                 SuperObject currentObject = gp.obj[gp.currentMap][i];
                 if (currentObject != null) {
                     if(currentObject.image != null){
-                        int objX = (int) ((currentObject.worldX / (float) (gp.currentMapMaxCol * gp.tileSize)) * scaledWidth);
-                        int objY = (int) ((currentObject.worldY / (float) (gp.currentMapMaxRow * gp.tileSize)) * scaledHeight);
+                        int objX = (int) ((currentObject.worldX / (float) (gp.currentMapMaxCol * GamePanel.tileSize)) * scaledWidth);
+                        int objY = (int) ((currentObject.worldY / (float) (gp.currentMapMaxRow * GamePanel.tileSize)) * scaledHeight);
                         int objWidth = (int) (currentObject.image.getWidth() * ((float) scaledWidth / worldMap.getWidth()));
                         int objHeight = (int) (currentObject.image.getHeight() * ((float) scaledHeight / worldMap.getHeight()));
                         g2.drawImage(currentObject.image, x + objX, y + objY, objWidth, objHeight, null);
@@ -87,8 +87,8 @@ public class Map{
             }
         }
 
-        int playerX = (int) ((gp.player.worldMiddleX() / (float)(gp.currentMapMaxCol * gp.tileSize)) * scaledWidth);
-        int playerY = (int) ((gp.player.worldMiddleY() / (float)(gp.currentMapMaxRow * gp.tileSize)) * scaledHeight);
+        int playerX = (int) ((gp.player.worldMiddleX() / (float)(gp.currentMapMaxCol * GamePanel.tileSize)) * scaledWidth);
+        int playerY = (int) ((gp.player.worldMiddleY() / (float)(gp.currentMapMaxRow * GamePanel.tileSize)) * scaledHeight);
         int playerSize = 64;
         g2.drawImage(gp.player.idleDown1, x + playerX - playerSize / 2, y + playerY - playerSize / 2, playerSize, playerSize,null);
 
@@ -104,8 +104,8 @@ public class Map{
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.65f));
             g2.drawImage(worldMap, x, y, width, height, null);
 
-            double scaleX = (double) (gp.tileSize * gp.currentMapMaxCol) / width;
-            double scaleY = (double) (gp.tileSize * gp.currentMapMaxRow) / height;
+            double scaleX = (double) (GamePanel.tileSize * gp.currentMapMaxCol) / width;
+            double scaleY = (double) (GamePanel.tileSize * gp.currentMapMaxRow) / height;
 
             // Draw the player
             int playerX = (int) (x + gp.player.worldMiddleX() / scaleX);

@@ -52,7 +52,6 @@ public class InventoryPage {
                 slots[i][j] = new InventorySlot();
             }
         }
-        //TODO fill slots from save file
     }
 
 

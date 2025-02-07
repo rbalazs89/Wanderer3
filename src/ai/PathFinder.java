@@ -21,13 +21,14 @@ public class PathFinder {
     }
 
     public void instantiateNodes(){
+        // if first map loaded has low col numbers, this method can fail?
 
-        node = new Node[gp.currentMapMaxCol][gp.currentMapMaxCol];
+        node = new Node[gp.currentMapMaxCol][gp.currentMapMaxRow];
 
         int col = 0;
         int row = 0;
 
-        while(col < gp.currentMapMaxCol && row < gp.currentMapMaxCol) {
+        while(col < gp.currentMapMaxCol && row < gp.currentMapMaxRow) {
             node[col][row] = new Node(col, row);
 
             col ++;
@@ -167,5 +168,4 @@ public class PathFinder {
             current = current.parent;
         }
     }
-
 }

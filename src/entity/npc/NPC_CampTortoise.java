@@ -68,7 +68,7 @@ public class NPC_CampTortoise extends NPC {
             goalRow = 10;
         }
         tortoiseSpeed();
-        setActionWhenNear();
+        decideIfPlayerNear();
         if(!tellMeJoke && !targetPathFollowed){
             setDirectionFromRandomMovement();
         } else if (targetPathFollowed && !tellMeJoke){
@@ -88,7 +88,7 @@ public class NPC_CampTortoise extends NPC {
         }
     }
 
-    public void setActionWhenNear() {
+    public void decideIfPlayerNear() {
         if(!playerIsNear){
             if(middleDistance(gp.player) < GamePanel.tileSize * 3 / 2){
                 playerIsNear = true;

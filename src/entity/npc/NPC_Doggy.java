@@ -92,7 +92,7 @@ public class NPC_Doggy extends Entity {
 
 
     public void setActionAI() {
-        setActionWhenNear();
+        decideIfPlayerNear();
         setDirectionFromRandomMovement();
     }
 }

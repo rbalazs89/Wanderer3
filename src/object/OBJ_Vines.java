@@ -4,17 +4,16 @@ import main.GamePanel;
 
 import java.awt.*;
 
-public class OBJ_DroppedTalentBook extends SuperObject{
+public class OBJ_Vines extends SuperObject{
 
-    public OBJ_DroppedTalentBook(GamePanel gp){
+    public OBJ_Vines(GamePanel gp) {
         super(gp);
-        interactable = true;
-        image = setup("/objects/pickables/talentbook");
-        solidArea.x = 16;
-        solidArea.y = 16;
-        solidArea.width = 32;
-        solidArea.height = 32;
-        getGlitterImages();
+        image = setup("/objects/wall/vines",GamePanel.tileSize * 2,GamePanel.tileSize);
+        collision = true;
+        solidArea.x = 0;
+        solidArea.y = 0;
+        solidArea.width = 64 * 2;
+        solidArea.height = 64;
     }
 
     public void draw(Graphics2D g2, GamePanel gp) {
@@ -26,17 +25,12 @@ public class OBJ_DroppedTalentBook extends SuperObject{
                 worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
                 worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
                 worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
-            g2.drawImage(image, screenX, screenY,null);
-        }
+            g2.drawImage(image, screenX, screenY, null);
 
-        if(showGlitter && shouldShowGlitter){
-            drawInteractableGlitter(g2);
+            if(showGlitter && shouldShowGlitter){
+                drawInteractableGlitter(g2);
+            }
+            drawSpecial(g2);
         }
-    }
-
-    public void interact(){
-        gp.player.pickUpTalentBook();
-        gp.interactObjects.remove(this);
-        gp.progress.setTalentBook(gp.currentMap, -1);
     }
 }

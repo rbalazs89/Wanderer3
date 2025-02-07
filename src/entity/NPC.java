@@ -22,15 +22,23 @@ public abstract class NPC extends Entity{
     public int heroXAtNoteCreation = gp.player.worldX;
     public int heroYAtNoteCreation = gp.player.worldY;
     public int speedCounter = 0;
+    public boolean stopWhenPlayerNear = false;
 
     public NPC(GamePanel gp){
         super(gp);
     }
 
     public void update() {
-        setActionAI();
+        setActionAI(); // special stuff for subclass
+
+        decideIfPlayerNear();
+
+        if(actionWhenNear1){
+            actionIfPlayerNear();
+        }
 
         if(walking){
+            setDirectionFromRandomMovement();
             checkCollision();
             moveIfNoCollision();
             setWalkingSpriteNumber();
@@ -86,23 +94,28 @@ public abstract class NPC extends Entity{
         }
     }
 
-    public void setActionWhenNear(){
-        if(middleDistance(gp.player) < GamePanel.tileSize * 3 / 2){
-            actionWhenNear1 = true;
+    public void decideIfPlayerNear(){
+        int distance = middleDistance(gp.player);
+
+        if(!actionWhenNear1){
+            if(distance < GamePanel.tileSize * 3 / 2){
+                actionWhenNear1 = true;
+                getNearHeadDialogue();
+            }
         }
 
-        if(actionWhenNearCounter > 300){
+        if(actionWhenNearCounter > 60 && distance >= 2 * GamePanel.tileSize){
             actionWhenNearCounter = 0;
             actionWhenNear1 = false;
+            if(stopWhenPlayerNear){
+                walking = true;
+            }
         }
-
-        actionWhenNearCounter++;
+        if(actionWhenNear1){
+            actionWhenNearCounter++;
+        }
     }
 
-    public void setActionAI(){
-        setDirectionFromRandomMovement();
-        setActionWhenNear();
-    }
 
     public void drawSpecial(Graphics2D g2){
         /*
@@ -159,4 +172,15 @@ public abstract class NPC extends Entity{
     public void executeIfPathReached(){
 
     }
+
+    public void actionIfPlayerNear(){
+        if(stopWhenPlayerNear){
+            walking = false;
+        }
+    }
+
+    public void getNearHeadDialogue(){
+
+    }
+
 }

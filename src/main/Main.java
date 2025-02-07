@@ -31,6 +31,7 @@ public class Main {
         gamePanel.setupGame();
         gamePanel.startGameThread();
 
-        //window.createBufferStrategy(3); // Create the buffer strategy for the JFrame, result looks somewhat worse, stupid chatgpt
+        //window.createBufferStrategy(3); // Create the buffer strategy for the JFrame, result looks somewhat worse
+        //
     }
 }

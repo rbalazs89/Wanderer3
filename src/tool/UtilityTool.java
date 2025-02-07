@@ -301,8 +301,7 @@ public class    UtilityTool {
                 int rgba = original.getRGB(x, y);
                 Color color = new Color(rgba, true);
                 int blackness = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
-                int alpha = blackness;
-                Color newColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha);
+                Color newColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), blackness);
                 result.setRGB(x, y, newColor.getRGB());
             }
         }

@@ -10,7 +10,6 @@ public class OBJ_DroppedGold extends SuperObject{
 
     public OBJ_DroppedGold(GamePanel gp) {
         super(gp);
-        this.gp = gp;
         interactable = true;
         image = setup("/items/pouch4");
         solidArea.x = 16;

@@ -26,21 +26,17 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
     public int dashSpeed = 10;
-    public boolean gracedCollision = true; //player only, no collision during graced time with monsters
     public boolean attacking = false;
     public boolean canMove = true;
     public boolean canAttack = true;
     public boolean canCast = true;
     public boolean canCastFromCoolDown = true;
-    public boolean canCastFromStun = true;
     public boolean casting = false;
     public boolean haveWaveCloak = false;
     public boolean damageAbsorbAvailable;
     public int currentlyCastingSpellSlot; //
     //public int[] spellSlots = new int[6];
     public int castFrameCounter = 0;
-    public int castSpriteNum = 0;
-    public String directionAtSpellInstance;
     public int attackDirection = 1;
     // 1 = north | 2 = northeast | 3 = east .... 8 = northwest || based on angle.
     public int lifeRegenCounter;
@@ -61,12 +57,10 @@ public class Player extends Entity {
     public boolean dashing = false;
     public int dashingCounter = 0;
     public int dashingCoolDownCounter = 0;
-    //public static final int stopDashingAt = 20;
     public static final int dashingCoolDown = 120;
     public boolean canDashFromCoolDown = true; // dash not on cd
     public boolean canStartDash = true; // not attacking or casting or stunned
     boolean diagonalMoveToggle = false;
-    boolean movingAvailable = true;
     public boolean currentlyMoving = false;
     public int idleActivationCounter = 0;
     public boolean isCurrentlyIdle = true;
@@ -144,7 +138,7 @@ public class Player extends Entity {
     public BufferedImage[] hurtRight = new BufferedImage[9];
     public BufferedImage[] hurtDown = new BufferedImage[9];
     public BufferedImage[] hurtLeft = new BufferedImage[9];
-    private boolean hasHalfSpeed = false; // determine half speedd by items
+    private boolean hasHalfSpeed = false; // determine half speed by items
     private int halfSpeedCounter = 0;
     public int diedToA1Boss = 0;
     public BufferedImage testImage;
@@ -161,9 +155,10 @@ public class Player extends Entity {
     private int speedWithoutDashing;
     public MomoJuice momoJuice = new MomoJuice(this);
     private int diagonalCounter = 0;
-    public double uiSpeed = 0;
     public boolean areEnemiesNearby = false;
     public int checkNearbyCounter = 0;
+    public float speedFromMushroom = 0;
+    public int mushroomCounter = 0;
     public Player(GamePanel gp, KeyHandler keyH){
         super(gp);
         defaultSpeed = 2;
@@ -246,8 +241,8 @@ public class Player extends Entity {
         }
         equippedSpellList[5] = allSpellList.allPlayerAvailableSpells[0];
 
-        worldX = 47 * gp.tileSize;
-        worldY = 5 * gp.tileSize;
+        worldX = 47 * GamePanel.tileSize;
+        worldY = 5 * GamePanel.tileSize;
         direction = "down";
 
         haveWaveCloak = false;
@@ -400,10 +395,10 @@ public class Player extends Entity {
 
         playerTalents.updatePlayerStatsFromTalent();
 
-        speed = defaultSpeed + (int)(speedFromItems);
+        speed = defaultSpeed + (int)(speedFromItems) + (int)speedFromMushroom;
         speedWithoutDashing = speed;
 
-        if(speedFromItems % 1 == 0.5){
+        if(speedFromItems + speedFromMushroom % 1 == 0.5){
             hasHalfSpeed = true;
         } else hasHalfSpeed = false;
 
@@ -438,13 +433,9 @@ public class Player extends Entity {
         attackRangeIncrease = swordAttackRangeFromItems + swordAttackRangeFromTalent + getAttackRangeFromDex();
         momoJuice.maxCharge = momoJuice.baseMaxCharge + juiceChargeFromItems;
 
-        if(checkIfShatterRemoved()){
-            haveImageShatter = true;
-        } else haveImageShatter = false;
+        haveImageShatter = checkIfShatterRemoved();
 
-        if(checkIfWaveCloakRemoved()){
-            haveWaveCloak = true;
-        } else haveWaveCloak = false;
+        haveWaveCloak = checkIfWaveCloakRemoved();
     }
 
     public int getAttackRangeFromDex(){
@@ -505,46 +496,46 @@ public class Player extends Entity {
     }
 
     public void getCastPlayerImage(){
-        int downimages = GamePanel.tileSize;
-        castUp1 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 ,40,196, 196, gp.tileSize, gp.tileSize);
-        castUp2 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256 * 1,40,196, 196, gp.tileSize, gp.tileSize);
-        castUp3 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256 * 2,40,196, 196, gp.tileSize, gp.tileSize);
-        castUp4 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256 * 3,40,196, 196, gp.tileSize, gp.tileSize);
-        castUp5 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256 * 4,40,196, 196, gp.tileSize, gp.tileSize);
-        castUp6 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256 * 5,40,196, 196, gp.tileSize, gp.tileSize);
-        castUp7 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256 * 6,40,196, 196, gp.tileSize, gp.tileSize);
-        castUp8 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256 * 7,40,196, 196, gp.tileSize, gp.tileSize);
-        castUp9 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256 * 8,40,196, 196, gp.tileSize, gp.tileSize);
+        int downImages = GamePanel.tileSize;
+        castUp1 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 ,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castUp2 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castUp3 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256 * 2,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castUp4 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256 * 3,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castUp5 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256 * 4,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castUp6 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256 * 5,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castUp7 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256 * 6,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castUp8 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256 * 7,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castUp9 = setupSheet("/entity/updatedplayer/cast/castsheet_up", 30 + 256 * 8,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
 
-        castRight1 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 ,40,196, 196, gp.tileSize, gp.tileSize);
-        castRight2 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 + 256 * 1,40,196, 196, gp.tileSize, gp.tileSize);
-        castRight3 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 + 256 * 2,40,196, 196, gp.tileSize, gp.tileSize);
-        castRight4 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 + 256 * 3,40,196, 196, gp.tileSize, gp.tileSize);
-        castRight5 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 + 256 * 4,40,196, 196, gp.tileSize, gp.tileSize);
-        castRight6 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 + 256 * 5,40,196, 196, gp.tileSize, gp.tileSize);
-        castRight7 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 + 256 * 6,40,196, 196, gp.tileSize, gp.tileSize);
-        castRight8 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 + 256 * 7,40,196, 196, gp.tileSize, gp.tileSize);
-        castRight9 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 + 256 * 8,40,196, 196, gp.tileSize, gp.tileSize);
+        castRight1 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 ,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castRight2 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 + 256,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castRight3 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 + 256 * 2,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castRight4 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 + 256 * 3,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castRight5 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 + 256 * 4,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castRight6 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 + 256 * 5,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castRight7 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 + 256 * 6,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castRight8 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 + 256 * 7,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castRight9 = setupSheet("/entity/updatedplayer/cast/castsheet_right", 30 + 256 * 8,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
 
-        castDown1 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 ,40,196, 216, gp.tileSize, downimages);
-        castDown2 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 + 256 * 1,40,196, 216, gp.tileSize, downimages);
-        castDown3 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 + 256 * 2,40,196, 216, gp.tileSize, downimages);
-        castDown4 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 + 256 * 3,40,196, 216, gp.tileSize, downimages);
-        castDown5 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 + 256 * 4,40,196, 216, gp.tileSize, downimages);
-        castDown6 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 + 256 * 5,40,196, 216, gp.tileSize, downimages);
-        castDown7 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 + 256 * 6,40,196, 216, gp.tileSize, downimages);
-        castDown8 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 + 256 * 7,40,196, 216, gp.tileSize, downimages);
-        castDown9 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 + 256 * 8,40,196, 216, gp.tileSize, downimages);
+        castDown1 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 ,40,196, 216, GamePanel.tileSize, downImages);
+        castDown2 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 + 256,40,196, 216, GamePanel.tileSize, downImages);
+        castDown3 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 + 256 * 2,40,196, 216, GamePanel.tileSize, downImages);
+        castDown4 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 + 256 * 3,40,196, 216, GamePanel.tileSize, downImages);
+        castDown5 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 + 256 * 4,40,196, 216, GamePanel.tileSize, downImages);
+        castDown6 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 + 256 * 5,40,196, 216, GamePanel.tileSize, downImages);
+        castDown7 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 + 256 * 6,40,196, 216, GamePanel.tileSize, downImages);
+        castDown8 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 + 256 * 7,40,196, 216, GamePanel.tileSize, downImages);
+        castDown9 = setupSheet("/entity/updatedplayer/cast/castsheet_down", 30 + 256 * 8,40,196, 216, GamePanel.tileSize, downImages);
 
-        castLeft9 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 ,40,196, 196, gp.tileSize, gp.tileSize);
-        castLeft8 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 + 256 * 1,40,196, 196, gp.tileSize, gp.tileSize);
-        castLeft7 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 + 256 * 2,40,196, 196, gp.tileSize, gp.tileSize);
-        castLeft6 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 + 256 * 3,40,196, 196, gp.tileSize, gp.tileSize);
-        castLeft5 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 + 256 * 4,40,196, 196, gp.tileSize, gp.tileSize);
-        castLeft4 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 + 256 * 5,40,196, 196, gp.tileSize, gp.tileSize);
-        castLeft3 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 + 256 * 6,40,196, 196, gp.tileSize, gp.tileSize);
-        castLeft2 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 + 256 * 7,40,196, 196, gp.tileSize, gp.tileSize);
-        castLeft1 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 + 256 * 8,40,196, 196, gp.tileSize, gp.tileSize);
+        castLeft9 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 ,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castLeft8 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 + 256,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castLeft7 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 + 256 * 2,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castLeft6 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 + 256 * 3,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castLeft5 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 + 256 * 4,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castLeft4 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 + 256 * 5,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castLeft3 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 + 256 * 6,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castLeft2 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 + 256 * 7,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
+        castLeft1 = setupSheet("/entity/updatedplayer/cast/castsheet_left", 30 + 256 * 8,40,196, 196, GamePanel.tileSize, GamePanel.tileSize);
     }
 
     public void getPlayerImage() {
@@ -640,24 +631,24 @@ public class Player extends Entity {
     }
 
     public void getPlayerAttackImage() {
-        attackUp1 = setup("/entity/updatedplayer/attack/attack_up_1", (int)(GamePanel.tileSize * 4/3), (int)(GamePanel.tileSize * 19/12));
-        attackUp2 = setup("/entity/updatedplayer/attack/attack_up_2", (int)(GamePanel.tileSize * 4/3), (int)(GamePanel.tileSize * 19/12));
-        attackUpRight1 = setup("/entity/updatedplayer/attack/attack_upright_1", (int)(gp.tileSize * 19/12), (int)(GamePanel.tileSize * 19/12));
-        attackUpRight2 = setup("/entity/updatedplayer/attack/attack_upright_2", (int)(gp.tileSize * 19/12), (int)(GamePanel.tileSize * 19/12));
-        attackRight1 = setup("/entity/updatedplayer/attack/attack_right_1", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 4/3));
-        attackRight2 = setup("/entity/updatedplayer/attack/attack_right_2", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 4/3));
-        attackDown1 = setup("/entity/updatedplayer/attack/attack_down_1", (int)(gp.tileSize * 4/3), (int)(gp.tileSize * 19/12));
-        attackDown2 = setup("/entity/updatedplayer/attack/attack_down_2", (int)(gp.tileSize * 4/3), (int)(gp.tileSize * 19/12));
-        attackDownRight1 = setup("/entity/updatedplayer/attack/attack_downright_1", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 19/12));
-        attackDownRight2 = setup("/entity/updatedplayer/attack/attack_downright_2", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 19/12));
-        attackDownLeft1 = setup("/entity/updatedplayer/attack/attack_downleft_1", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 19/12));
-        attackDownLeft2 = setup("/entity/updatedplayer/attack/attack_downleft_2", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 19/12));
-        attackLeft1 = setup("/entity/updatedplayer/attack/attack_left_1", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 4/3));
-        attackLeft2 = setup("/entity/updatedplayer/attack/attack_left_2", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 4/3));
+        attackUp1 = setup("/entity/updatedplayer/attack/attack_up_1", (GamePanel.tileSize * 4/3), (GamePanel.tileSize * 19/12));
+        attackUp2 = setup("/entity/updatedplayer/attack/attack_up_2", (GamePanel.tileSize * 4/3), (GamePanel.tileSize * 19/12));
+        attackUpRight1 = setup("/entity/updatedplayer/attack/attack_upright_1", (GamePanel.tileSize * 19/12), (GamePanel.tileSize * 19/12));
+        attackUpRight2 = setup("/entity/updatedplayer/attack/attack_upright_2", (GamePanel.tileSize * 19/12), (GamePanel.tileSize * 19/12));
+        attackRight1 = setup("/entity/updatedplayer/attack/attack_right_1", (GamePanel.tileSize * 19/12), (GamePanel.tileSize * 4/3));
+        attackRight2 = setup("/entity/updatedplayer/attack/attack_right_2", (GamePanel.tileSize * 19/12), (GamePanel.tileSize * 4/3));
+        attackDown1 = setup("/entity/updatedplayer/attack/attack_down_1", (GamePanel.tileSize * 4/3), (GamePanel.tileSize * 19/12));
+        attackDown2 = setup("/entity/updatedplayer/attack/attack_down_2", (GamePanel.tileSize * 4/3), (GamePanel.tileSize * 19/12));
+        attackDownRight1 = setup("/entity/updatedplayer/attack/attack_downright_1", (GamePanel.tileSize * 19/12), (GamePanel.tileSize * 19/12));
+        attackDownRight2 = setup("/entity/updatedplayer/attack/attack_downright_2", (GamePanel.tileSize * 19/12), (GamePanel.tileSize * 19/12));
+        attackDownLeft1 = setup("/entity/updatedplayer/attack/attack_downleft_1", (GamePanel.tileSize * 19/12), (GamePanel.tileSize * 19/12));
+        attackDownLeft2 = setup("/entity/updatedplayer/attack/attack_downleft_2", (GamePanel.tileSize * 19/12), (GamePanel.tileSize * 19/12));
+        attackLeft1 = setup("/entity/updatedplayer/attack/attack_left_1", (GamePanel.tileSize * 19/12), (GamePanel.tileSize * 4/3));
+        attackLeft2 = setup("/entity/updatedplayer/attack/attack_left_2", (GamePanel.tileSize * 19/12), (GamePanel.tileSize * 4/3));
         //attackUpLeft1 = setup("/entity/updatedplayer/attack/attack_upleft_1", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 19/12));
         //attackUpLeft2 = setup("/entity/updatedplayer/attack/attack_upleft_2", (int)(gp.tileSize * 19/12), (int)(gp.tileSize * 19/12));
-        attackUpLeft1 = setup("/entity/updatedplayer/attack/attack_upleft_1", (int)(GamePanel.tileSize * 19/12), (int)(GamePanel.tileSize * 16/12));
-        attackUpLeft2 = setup("/entity/updatedplayer/attack/attack_upleft_2", (int)(GamePanel.tileSize * 19/12), (int)(GamePanel.tileSize * 16/12));
+        attackUpLeft1 = setup("/entity/updatedplayer/attack/attack_upleft_1", (GamePanel.tileSize * 19/12), (GamePanel.tileSize * 16/12));
+        attackUpLeft2 = setup("/entity/updatedplayer/attack/attack_upleft_2", (GamePanel.tileSize * 19/12), (GamePanel.tileSize * 16/12));
     }
 
     public void update() {
@@ -737,9 +728,9 @@ public class Player extends Entity {
 
                 // Alternate between moving in X and Y directions
                 if (diagonalMoveToggle) {
-                    worldX += (keyH.leftPressed && !keyH.rightPressed) ? -speed : (keyH.rightPressed && !keyH.leftPressed) ? speed : 0;
+                    worldX += keyH.leftPressed && !keyH.rightPressed ? -speed : !keyH.leftPressed ? speed : 0;
                 } else {
-                    worldY += (keyH.upPressed && !keyH.downPressed) ? -speed : (keyH.downPressed && !keyH.upPressed) ? speed : 0;
+                    worldY += keyH.upPressed && !keyH.downPressed ? -speed : !keyH.upPressed ? speed : 0;
                 }
                 diagonalMoveToggle = !diagonalMoveToggle;
 
@@ -795,16 +786,8 @@ public class Player extends Entity {
         int objIndex = gp.cChecker.checkObject(this, true);
         pickupObject(objIndex);
 
-        //CHECK NPC COLLISION
-        int npcIndex = gp.cChecker.checkEntity(this, gp.npc); // no collision but needed for interaction
-        //interactNPC(npcIndex); //maybe do with obj instead
-
-        // CHECK EVENTS
-        //gp.eHandler.checkEvent(); //TOBE done with objects for now? I see no benefit to handle this with new class event
-        //gp.keyH.enterPressed = false;
-
         // COLLISION MONSTER
-        int monsterIndex = gp.cChecker.checkEntity(this, gp.fighters);
+        //int monsterIndex = gp.cChecker.checkEntity(this, gp.fighters);
         //contactMonster(monsterIndex);
     }
 
@@ -848,18 +831,10 @@ public class Player extends Entity {
         canCast = false;
         if (!keyH.downPressed && !keyH.upPressed && !keyH.leftPressed && !keyH.rightPressed) {
             switch (direction) {
-                case "up":
-                    keyH.upPressed = true;
-                    break;
-                case "right":
-                    keyH.rightPressed = true;
-                    break;
-                case "down":
-                    keyH.downPressed = true;
-                    break;
-                case "left":
-                    keyH.leftPressed = true;
-                    break;
+                case "up" -> keyH.upPressed = true;
+                case "right" -> keyH.rightPressed = true;
+                case "down" -> keyH.downPressed = true;
+                case "left" -> keyH.leftPressed = true;
             }
         }
         if (dashingCounter > 20) {
@@ -939,119 +914,91 @@ public class Player extends Entity {
             gp.obj[gp.currentMap][i].pickup();
         }
     }
-
-    public void interactNPC(int i) {
-        if( i != 999){
-            if(gp.keyH.enterPressed) {
-                gp.gameState = gp.dialogueState;
-                gp.npc[gp.currentMap][i].speak();
-            }
-        }
-    }
-    public void interactDistanceNPC(int i){
-        if (i != 999){
-            gp.npc[gp.currentMap][i].dialogueIndex = 1;
-        }
-    }
-
-
-    //dont use, only used from monster class
-    public void contactMonster(int i) {
-        if(i != 999){
-            if(((Fighter)gp.fighters[gp.currentMap][i]).contactGraced == false){
-                life = life - gp.fighters[gp.currentMap][i].damageOnContactValue;
-                ((Fighter)gp.fighters[gp.currentMap][i]).contactGraced = true;
-            }
-        }
-    }
     public void drawDashing(){
-        if(direction.equals("left")){
-            image = dashLeft;
-        } else if(direction.equals("right")) {
-            image = dashRight;
-        } else if(direction.equals("up")){
-            image = dashUp;
-        } else if(direction.equals("down")){
-            image = dashDown;
+        switch (direction) {
+            case "left" -> image = dashLeft;
+            case "right" -> image = dashRight;
+            case "up" -> image = dashUp;
+            case "down" -> image = dashDown;
         }
     }
 
     public void drawAttacking(){
         switch (attackDirection) {
-            case 1:
-                tempScreenX = screenX - gp.tileSize * 1/6;
-                tempScreenY = screenY - gp.tileSize * 8/12;
-                if(attackSpriteNum == 1) {
+            case 1 -> {
+                tempScreenX = screenX - GamePanel.tileSize / 6;
+                tempScreenY = screenY - GamePanel.tileSize * 8 / 12;
+                if (attackSpriteNum == 1) {
                     image = attackUp1;
                 }
-                if(attackSpriteNum == 2) {
+                if (attackSpriteNum == 2) {
                     image = attackUp2;
                 }
                 direction = "up";
-                break;
-            case 2:
-                tempScreenX = screenX - gp.tileSize * 1/12;
-                tempScreenY = screenY - gp.tileSize * 8/12;
-                if(attackSpriteNum == 1) {
+            }
+            case 2 -> {
+                tempScreenX = screenX - GamePanel.tileSize / 12;
+                tempScreenY = screenY - GamePanel.tileSize * 8 / 12;
+                if (attackSpriteNum == 1) {
                     image = attackUpRight1;
                 }
-                if(attackSpriteNum == 2) {
+                if (attackSpriteNum == 2) {
                     image = attackUpRight2;
                 }
                 direction = "up";
-                break;
-            case 3:
-                tempScreenY = screenY - gp.tileSize * 1/6;
-                if(attackSpriteNum == 1) {
+            }
+            case 3 -> {
+                tempScreenY = screenY - GamePanel.tileSize / 6;
+                if (attackSpriteNum == 1) {
                     image = attackRight1;
                 }
-                if(attackSpriteNum == 2) {
+                if (attackSpriteNum == 2) {
                     image = attackRight2;
                 }
                 direction = "right";
-                break;
-            case 4:
-                if(attackSpriteNum == 1) {
+            }
+            case 4 -> {
+                if (attackSpriteNum == 1) {
                     image = attackDownRight1;
                 }
-                if(attackSpriteNum == 2) {
+                if (attackSpriteNum == 2) {
                     image = attackDownRight2;
                 }
                 direction = "down";
-                break;
-            case 5:
-                tempScreenX = screenX - gp.tileSize * 1/4;
-                tempScreenY = screenY - gp.tileSize * 1/12;
-                if(attackSpriteNum == 1) {
+            }
+            case 5 -> {
+                tempScreenX = screenX - GamePanel.tileSize / 4;
+                tempScreenY = screenY - GamePanel.tileSize / 12;
+                if (attackSpriteNum == 1) {
                     image = attackDown1;
                 }
-                if(attackSpriteNum == 2) {
+                if (attackSpriteNum == 2) {
                     image = attackDown2;
                 }
                 direction = "down";
-                break;
-            case 6:
-                tempScreenX = screenX - gp.tileSize * 4/6;
-                tempScreenY = screenY - gp.tileSize * 1/12;
-                if(attackSpriteNum == 1) {
+            }
+            case 6 -> {
+                tempScreenX = screenX - GamePanel.tileSize * 4 / 6;
+                tempScreenY = screenY - GamePanel.tileSize / 12;
+                if (attackSpriteNum == 1) {
                     image = attackDownLeft1;
                 }
-                if(attackSpriteNum == 2) {
+                if (attackSpriteNum == 2) {
                     image = attackDownLeft2;
                 }
                 direction = "down";
-                break;
-            case 7:
-                tempScreenX = screenX - gp.tileSize * 4/6;
-                tempScreenY = screenY - gp.tileSize * 1/6;
-                if(attackSpriteNum == 1) {
+            }
+            case 7 -> {
+                tempScreenX = screenX - GamePanel.tileSize * 4 / 6;
+                tempScreenY = screenY - GamePanel.tileSize / 6;
+                if (attackSpriteNum == 1) {
                     image = attackLeft1;
                 }
-                if(attackSpriteNum == 2) {
+                if (attackSpriteNum == 2) {
                     image = attackLeft2;
                 }
                 direction = "left";
-                break;
+            }
                 /*
             case 8:
                 tempScreenX = screenX - gp.tileSize * 4/6;
@@ -1064,17 +1011,17 @@ public class Player extends Entity {
                 }
                 direction = "up";
                 break;*/
-            case 8:
-                tempScreenX = screenX - GamePanel.tileSize * 4/6;
-                tempScreenY = screenY - GamePanel.tileSize * 7/12;
-                if(attackSpriteNum == 1) {
+            case 8 -> {
+                tempScreenX = screenX - GamePanel.tileSize * 4 / 6;
+                tempScreenY = screenY - GamePanel.tileSize * 7 / 12;
+                if (attackSpriteNum == 1) {
                     image = attackUpLeft1;
                 }
-                if(attackSpriteNum == 2) {
+                if (attackSpriteNum == 2) {
                     image = attackUpLeft2;
                 }
                 direction = "up";
-                break;
+            }
         }
     }
 
@@ -1084,23 +1031,15 @@ public class Player extends Entity {
             stunnedSprite = 9;
             stunnedCounter = 0;
         }
-        switch (direction){
-            case "up":{
+        switch (direction) {
+            case "up" ->
                 image = hurtUp[stunnedSprite - 1];
-                break;
-            }
-            case "right":{
+            case "right" ->
                 image = hurtRight[stunnedSprite - 1];
-                break;
-            }
-            case "down":{
+            case "down" ->
                 image = hurtDown[stunnedSprite - 1];
-                break;
-            }
-            case "left":{
+            case "left" ->
                 image = hurtLeft[stunnedSprite - 1];
-                break;
-            }
         }
     }
 
@@ -1139,294 +1078,236 @@ public class Player extends Entity {
             castSprite = 9;
         }
 
-        switch (direction){
-            case "up": {
-                if(castSprite == 1){
+        switch (direction) {
+            case "up" -> {
+                if (castSprite == 1) {
                     image = castUp1;
-                } else if (castSprite == 2){
+                } else if (castSprite == 2) {
                     image = castUp2;
-                } else if (castSprite == 3){
+                } else if (castSprite == 3) {
                     image = castUp3;
-                } else if (castSprite == 4){
+                } else if (castSprite == 4) {
                     image = castUp4;
-                } else if (castSprite == 5){
+                } else if (castSprite == 5) {
                     image = castUp5;
-                } else if (castSprite == 6){
+                } else if (castSprite == 6) {
                     image = castUp6;
-                } else if (castSprite == 7){
+                } else if (castSprite == 7) {
                     image = castUp7;
-                } else if (castSprite == 8){
+                } else if (castSprite == 8) {
                     image = castUp8;
-                } else if (castSprite == 9){
+                } else if (castSprite == 9) {
                     image = castUp9;
                 }
-                break;
             }
-            case "right": {
-                if(castSprite == 1){
+            case "right" -> {
+                if (castSprite == 1) {
                     image = castRight1;
-                } else if (castSprite == 2){
+                } else if (castSprite == 2) {
                     image = castRight2;
-                } else if (castSprite == 3){
+                } else if (castSprite == 3) {
                     image = castRight3;
-                } else if (castSprite == 4){
+                } else if (castSprite == 4) {
                     image = castRight4;
-                } else if (castSprite == 5){
+                } else if (castSprite == 5) {
                     image = castRight5;
-                } else if (castSprite == 6){
+                } else if (castSprite == 6) {
                     image = castRight6;
-                } else if (castSprite == 7){
+                } else if (castSprite == 7) {
                     image = castRight7;
-                } else if (castSprite == 8){
+                } else if (castSprite == 8) {
                     image = castRight8;
-                } else if (castSprite == 9){
+                } else if (castSprite == 9) {
                     image = castRight9;
                 }
-                break;
             }
-            case "down": {
-                if(castSprite == 1){
+            case "down" -> {
+                if (castSprite == 1) {
                     image = castDown1;
-                } else if (castSprite == 2){
+                } else if (castSprite == 2) {
                     image = castDown2;
-                } else if (castSprite == 3){
+                } else if (castSprite == 3) {
                     image = castDown3;
-                } else if (castSprite == 4){
+                } else if (castSprite == 4) {
                     image = castDown4;
-                } else if (castSprite == 5){
+                } else if (castSprite == 5) {
                     image = castDown5;
-                } else if (castSprite == 6){
+                } else if (castSprite == 6) {
                     image = castDown6;
-                } else if (castSprite == 7){
+                } else if (castSprite == 7) {
                     image = castDown7;
-                } else if (castSprite == 8){
+                } else if (castSprite == 8) {
                     image = castDown8;
-                } else if (castSprite == 9){
+                } else if (castSprite == 9) {
                     image = castDown9;
                 }
-                break;
             }
-            case "left": {
-                if(castSprite == 1){
+            case "left" -> {
+                if (castSprite == 1) {
                     image = castLeft1;
-                } else if (castSprite == 2){
+                } else if (castSprite == 2) {
                     image = castLeft2;
-                } else if (castSprite == 3){
+                } else if (castSprite == 3) {
                     image = castLeft3;
-                } else if (castSprite == 4){
+                } else if (castSprite == 4) {
                     image = castLeft4;
-                } else if (castSprite == 5){
+                } else if (castSprite == 5) {
                     image = castLeft5;
-                } else if (castSprite == 6){
+                } else if (castSprite == 6) {
                     image = castLeft6;
-                } else if (castSprite == 7){
+                } else if (castSprite == 7) {
                     image = castLeft7;
-                } else if (castSprite == 8){
+                } else if (castSprite == 8) {
                     image = castLeft8;
-                } else if (castSprite == 9){
+                } else if (castSprite == 9) {
                     image = castLeft9;
                 }
-                break;
             }
         }
     }
 
     public void drawIdle() {
         if (idleSpriteNum == 0){
-            if(direction.equals("left")){
-                image = idleLeft1;
-            } else if(direction.equals("right")) {
-                image = idleRight1;
-            } else if(direction.equals("up")){
-                image = idleUp1;
-            } else if(direction.equals("down")){
-                image = idleDown1;
+            switch (direction) {
+                case "left" -> image = idleLeft1;
+                case "right" -> image = idleRight1;
+                case "up" -> image = idleUp1;
+                case "down" -> image = idleDown1;
             }
         } else if (idleSpriteNum == 1){
-            if(direction.equals("left")){
-                image = idleLeft2;
-            } else if(direction.equals("right")) {
-                image = idleRight2;
-            } else if(direction.equals("up")){
-                image = idleUp2;
-            }  else if(direction.equals("down")){
-                image = idleDown2;
+            switch (direction) {
+                case "left" -> image = idleLeft2;
+                case "right" -> image = idleRight2;
+                case "up" -> image = idleUp2;
+                case "down" -> image = idleDown2;
             }
         } else if (idleSpriteNum == 2){
-            if(direction.equals("left")){
-                image = idleLeft3;
-            } else if(direction.equals("right")) {
-                image = idleRight3;
-            } else if(direction.equals("up")){
-                image = idleUp3;
-            } else if(direction.equals("down")){
-                image = idleDown3;
+            switch (direction) {
+                case "left" -> image = idleLeft3;
+                case "right" -> image = idleRight3;
+                case "up" -> image = idleUp3;
+                case "down" -> image = idleDown3;
             }
 
         } else if (idleSpriteNum == 3){
-            if(direction.equals("left")){
-                image = idleLeft4;
-            } else if(direction.equals("right")) {
-                image = idleRight4;
-            } else if(direction.equals("up")){
-                image = idleUp4;
-            } else if(direction.equals("down")){
-                image = idleDown4;
+            switch (direction) {
+                case "left" -> image = idleLeft4;
+                case "right" -> image = idleRight4;
+                case "up" -> image = idleUp4;
+                case "down" -> image = idleDown4;
             }
 
         } else if (idleSpriteNum == 4){
-            if(direction.equals("left")){
-                image = idleLeft5;
-            } else if(direction.equals("right")) {
-                image = idleRight5;
-            } else if(direction.equals("up")){
-                image = idleUp5;
-            } else if(direction.equals("down")){
-                image = idleDown5;
+            switch (direction) {
+                case "left" -> image = idleLeft5;
+                case "right" -> image = idleRight5;
+                case "up" -> image = idleUp5;
+                case "down" -> image = idleDown5;
             }
 
         } else if (idleSpriteNum == 5){
-            if(direction.equals("left")){
-                image = idleLeft6;
-            } else if(direction.equals("right")) {
-                image = idleRight6;
-            } else if(direction.equals("up")){
-                image = idleUp6;
-            } else if(direction.equals("down")){
-                image = idleDown6;
+            switch (direction) {
+                case "left" -> image = idleLeft6;
+                case "right" -> image = idleRight6;
+                case "up" -> image = idleUp6;
+                case "down" -> image = idleDown6;
             }
 
         } else if (idleSpriteNum == 6){
-            if(direction.equals("left")){
-                image = idleLeft7;
-            } else if(direction.equals("right")) {
-                image = idleRight7;
-            } else if(direction.equals("up")){
-                image = idleUp7;
-            } else if(direction.equals("down")){
-                image = idleDown7;
+            switch (direction) {
+                case "left" -> image = idleLeft7;
+                case "right" -> image = idleRight7;
+                case "up" -> image = idleUp7;
+                case "down" -> image = idleDown7;
             }
 
         } else if (idleSpriteNum == 7){
-            if(direction.equals("left")){
-                image = idleLeft8;
-            } else if(direction.equals("right")) {
-                image = idleRight8;
-            } else if(direction.equals("up")){
-                image = idleUp8;
-            }  else if(direction.equals("down")){
-                image = idleDown8;
+            switch (direction) {
+                case "left" -> image = idleLeft8;
+                case "right" -> image = idleRight8;
+                case "up" -> image = idleUp8;
+                case "down" -> image = idleDown8;
             }
 
         } else if (idleSpriteNum == 8){
-            if(direction.equals("left")){
-                image = idleLeft9;
-            } else if(direction.equals("right")) {
-                image = idleRight9;
-            } else if(direction.equals("up")){
-                image = idleUp9;
-            }  else if(direction.equals("down")){
-                image = idleDown9;
+            switch (direction) {
+                case "left" -> image = idleLeft9;
+                case "right" -> image = idleRight9;
+                case "up" -> image = idleUp9;
+                case "down" -> image = idleDown9;
             }
         }
     }
 
     public void drawMoving(){
         if (walkSpriteNum == 0){
-            if(direction.equals("left")){
-                image = left1;
-            } else if(direction.equals("right")) {
-                image = right1;
-            } else if(direction.equals("up")){
-                image = up1;
-            } else if(direction.equals("down")){
-                image = down1;
+            switch (direction) {
+                case "left" -> image = left1;
+                case "right" -> image = right1;
+                case "up" -> image = up1;
+                case "down" -> image = down1;
             }
         } else if (walkSpriteNum == 1){
-            if(direction.equals("left")){
-                image = left2;
-            } else if(direction.equals("right")) {
-                image = right2;
-            } else if(direction.equals("up")){
-                image = up2;
-            } else if(direction.equals("down")){
-                image = down2;
+            switch (direction) {
+                case "left" -> image = left2;
+                case "right" -> image = right2;
+                case "up" -> image = up2;
+                case "down" -> image = down2;
             }
         } else if (walkSpriteNum == 2){
-            if(direction.equals("left")){
-                image = left3;
-            } else if(direction.equals("right")) {
-                image = right3;
-            } else if(direction.equals("up")){
-                image = up3;
-            } else if(direction.equals("down")){
-                image = down3;
+            switch (direction) {
+                case "left" -> image = left3;
+                case "right" -> image = right3;
+                case "up" -> image = up3;
+                case "down" -> image = down3;
             }
 
         } else if (walkSpriteNum == 3){
-            if(direction.equals("left")){
-                image = left4;
-            } else if(direction.equals("right")) {
-                image = right4;
-            } else if(direction.equals("up")){
-                image = up4;
-            } else if(direction.equals("down")){
-                image = down4;
+            switch (direction) {
+                case "left" -> image = left4;
+                case "right" -> image = right4;
+                case "up" -> image = up4;
+                case "down" -> image = down4;
             }
 
         } else if (walkSpriteNum == 4){
-            if(direction.equals("left")){
-                image = left5;
-            } else if(direction.equals("right")) {
-                image = right5;
-            } else if(direction.equals("up")){
-                image = up5;
-            } else if(direction.equals("down")){
-                image = down5;
+            switch (direction) {
+                case "left" -> image = left5;
+                case "right" -> image = right5;
+                case "up" -> image = up5;
+                case "down" -> image = down5;
             }
 
         } else if (walkSpriteNum == 5){
-            if(direction.equals("left")){
-                image = left6;
-            } else if(direction.equals("right")) {
-                image = right6;
-            } else if(direction.equals("up")){
-                image = up6;
-            } else if(direction.equals("down")){
-                image = down6;
+            switch (direction) {
+                case "left" -> image = left6;
+                case "right" -> image = right6;
+                case "up" -> image = up6;
+                case "down" -> image = down6;
             }
 
         } else if (walkSpriteNum == 6){
-            if(direction.equals("left")){
-                image = left7;
-            } else if(direction.equals("right")) {
-                image = right7;
-            } else if(direction.equals("up")){
-                image = up7;
-            } else if(direction.equals("down")){
-                image = down7;
+            switch (direction) {
+                case "left" -> image = left7;
+                case "right" -> image = right7;
+                case "up" -> image = up7;
+                case "down" -> image = down7;
             }
 
         } else if (walkSpriteNum == 7){
-            if(direction.equals("left")){
-                image = left8;
-            } else if(direction.equals("right")) {
-                image = right8;
-            } else if(direction.equals("up")){
-                image = up8;
-            } else if(direction.equals("down")){
-                image = down8;
+            switch (direction) {
+                case "left" -> image = left8;
+                case "right" -> image = right8;
+                case "up" -> image = up8;
+                case "down" -> image = down8;
             }
 
         } else if (walkSpriteNum == 8){
-            if(direction.equals("left")){
-                image = left9;
-            } else if(direction.equals("right")) {
-                image = right9;
-            } else if(direction.equals("up")){
-                image = up9;
-            } else if(direction.equals("down")){
-                image = down9;
+            switch (direction) {
+                case "left" -> image = left9;
+                case "right" -> image = right9;
+                case "up" -> image = up9;
+                case "down" -> image = down9;
             }
         }
     }
@@ -1615,7 +1496,7 @@ public class Player extends Entity {
         }
         gp.allFightingEntities.add(gp.player);
 
-        gp.eManager.update();
+        gp.eManager.updateOnMapSwitch();
 
         gp.player.worldX = respawnData[1];
         gp.player.worldY = respawnData[2];
@@ -1642,7 +1523,7 @@ public class Player extends Entity {
             boolean foundEnemy = false;
             for (int i = 0; i < gp.allFightingEntities.size(); i++) {
                 Entity tempEntity = gp.allFightingEntities.get(i);
-                if(tempEntity.middleDistance(this) < gp.tileSize * 10 && tempEntity != this
+                if(tempEntity.middleDistance(this) < GamePanel.tileSize * 10 && tempEntity != this
                         && tempEntity.isHostile(this, tempEntity)){
                     foundEnemy = true;
                     break;
@@ -1719,20 +1600,17 @@ public class Player extends Entity {
                 castFrameCounter = 0;
             }
         }
+        if(speedFromMushroom > 0){
+            mushroomCounter ++;
+            if(mushroomCounter > 60 * 30){
+                mushroomCounter = 0;
+                speedFromMushroom = 0;
+                refreshPlayerStatsWithItems();
+            }
+        }
 
         momoJuice.refreshMomo();
         momoJuice.updateImage();
-    }
-
-    public boolean checkIfShatterRemoved2(){
-        for (int i = 0; i < gp.player.equippedSpellList.length; i++) {
-            if(gp.player.equippedSpellList[i] != null){
-                if(gp.player.equippedSpellList[i].uniqueSpellID == 5){
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     public boolean checkIfShatterRemoved(){
@@ -1761,7 +1639,7 @@ public class Player extends Entity {
         //gp.ui.drawTestOn = !gp.ui.drawTestOn;
         gp.keyH.lPressed = false;
 
-        //new Teleport(gp);
+        new Teleport(gp);
     }
 
     public int auraRadius() {

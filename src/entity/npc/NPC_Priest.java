@@ -49,7 +49,7 @@ public class NPC_Priest extends Entity {
     // TODO when map ready
     public void followBehaviourAct1(){
         controlSpeed();
-        setActionWhenNear();
+        decideIfPlayerNear();
         //setBoundAreaNPC(1,1,10,10);
         if(targetPathFollowed){
             int goalCol = 5;

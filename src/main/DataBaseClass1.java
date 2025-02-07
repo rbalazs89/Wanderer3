@@ -8,26 +8,25 @@ public class DataBaseClass1 {
 
     // put here rather than player class for better readability
     public static int getRequiredExpForNextLevel(int currentLevel) {
-        switch (currentLevel) {
-            case 0:
-            case 1: return 500;
-            case 2: return 1000;
-            case 3: return 2000;
-            case 4: return 4000;
-            case 5: return 8000;
-            case 6: return 13000;
-            case 7: return 19000;
-            case 8: return 26000;
-            case 9: return 34000;
-            case 10: return 48000;
-            case 11: return 65000;
-            case 12: return 85000;
-            case 13: return 110000;
-            case 14: return 136000;
-            case 15: return 166000;
-            case 16: return 200000;
-            default: return ((35000 * currentLevel) - 360000);
-        }
+        return switch (currentLevel) {
+            case 0, 1 -> 500;
+            case 2 -> 1000;
+            case 3 -> 2000;
+            case 4 -> 4000;
+            case 5 -> 8000;
+            case 6 -> 13000;
+            case 7 -> 19000;
+            case 8 -> 26000;
+            case 9 -> 34000;
+            case 10 -> 48000;
+            case 11 -> 65000;
+            case 12 -> 85000;
+            case 13 -> 110000;
+            case 14 -> 136000;
+            case 15 -> 166000;
+            case 16 -> 200000;
+            default -> ((35000 * currentLevel) - 360000);
+        };
     }
 
     public int getMusicNumber(int mapNumber){
@@ -91,30 +90,30 @@ public class DataBaseClass1 {
     }
 
     public int currentMapLightingRadius(int map){
-        switch (map){
-            case 1: return 700;
-            case 2: return 600;
-            case 3: return 800;
-            case 4: return 810;
-        }
-        return 400;
+        return switch (map) {
+            case 1 -> 900;
+            case 2 -> 600;
+            case 3 -> 800;
+            case 4 -> 810;
+            default -> 820;
+        };
     }
 
     public float currentMapDarkness(int map){
-        switch (map){
-            case 1: return 0.6f;
-            case 2: return 1f;
-        }
-        return 0.6f;
+        return switch (map) {
+            case 1 -> 0.6f;
+            case 2 -> 1f;
+            default -> 0.6f;
+        };
     }
 
     public int currentMapDarknessMultiplier(int map){
-        switch (map){
-            case 1: return 10;
-            case 2: return 20;
-            case 3: return 15;
-        }
-        return 10;
+        return switch (map) {
+            case 1 -> 12;
+            case 2 -> 20;
+            case 3 -> 15;
+            default -> 11;
+        };
     }
 
     //better to have mana value before spell instance is created because of the casting time
@@ -165,22 +164,12 @@ public class DataBaseClass1 {
 
 
         int levelDifference = Math.min(playerLevel - monsterLevel,10);
-        switch (levelDifference){
-            case 6:
-                monsterExperience = (int)(monsterExperience * 0.81);
-                break;
-            case 7:
-                monsterExperience = (int)(monsterExperience * 0.62);
-                break;
-            case 8:
-                monsterExperience = (int)(monsterExperience * 0.43);
-                break;
-            case 9:
-                monsterExperience = (int)(monsterExperience * 0.24);
-                break;
-            case 10:
-                monsterExperience = (int)(monsterExperience * 0.05);
-                break;
+        switch (levelDifference) {
+            case 6 -> monsterExperience = (int) (monsterExperience * 0.81);
+            case 7 -> monsterExperience = (int) (monsterExperience * 0.62);
+            case 8 -> monsterExperience = (int) (monsterExperience * 0.43);
+            case 9 -> monsterExperience = (int) (monsterExperience * 0.24);
+            case 10 -> monsterExperience = (int) (monsterExperience * 0.05);
         }
 
         return monsterExperience;

@@ -54,7 +54,7 @@ public class NPC_Pumpkin extends Entity {
     public void setActionAI(){
 
         controlSpeed();
-        setActionWhenNear();
+        decideIfPlayerNear();
 
         setBoundAreaNPC(20,19,39,43);
 

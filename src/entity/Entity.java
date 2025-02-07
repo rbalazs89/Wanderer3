@@ -376,7 +376,7 @@ public class Entity {
         } else return false;
     }
 
-    public void setActionWhenNear() {
+    public void decideIfPlayerNear() {
         if(middleDistance(gp.player) < GamePanel.tileSize * 3 / 2){
             actionWhenNear1 = true;
         }

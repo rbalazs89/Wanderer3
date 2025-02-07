@@ -75,7 +75,7 @@ public class AllInventoryPages {
         if(hasItemGrabbed){
             g2.drawImage(grabbedItem.imageInventory, gp.mouseH.mouseX - 25, gp.mouseH.mouseY - 25, null);
         }
-        else if(!hasItemGrabbed && !drawConfirmationWindow){
+        else if(!drawConfirmationWindow){
             drawHover();
         }
     }
@@ -565,24 +565,23 @@ public class AllInventoryPages {
 
     private void drawHoverGuide(String text, int x, int y, int width) {
         int padding = 10;
-        int fixedWidth = width;
 
         // Get font metrics for the current font
         FontMetrics fm = g2.getFontMetrics();
         int textHeight = fm.getHeight();
 
         // Split text into lines
-        ArrayList<String> lines = splitTextIntoLines(text, fm, fixedWidth - 2 * padding);
+        ArrayList<String> lines = splitTextIntoLines(text, fm, width - 2 * padding);
         int boxHeight = textHeight * lines.size() + 2 * padding;
 
         // Draw the semi-transparent black box
         g2.setColor(new Color(0, 0, 0, 200));
-        g2.fillRoundRect(x, y, fixedWidth, boxHeight, 10, 10);
+        g2.fillRoundRect(x, y, width, boxHeight, 10, 10);
 
         // Draw the silver border
         g2.setColor(new Color(192, 192, 192));
         g2.setStroke(new BasicStroke(2));
-        g2.drawRoundRect(x, y, fixedWidth, boxHeight, 10, 10);
+        g2.drawRoundRect(x, y, width, boxHeight, 10, 10);
 
         // Draw the text
         g2.setColor(Color.WHITE);
@@ -760,7 +759,7 @@ public class AllInventoryPages {
             }
         }
 
-        // If finding a suitable random position fails, generate somewhere near the player
+        // If finding a suitable random position fails, generate somewhere near the player anyway
         int j = random.nextInt(32) - 16;
         int k = random.nextInt(32) - 16;
         result[0] = j + x;

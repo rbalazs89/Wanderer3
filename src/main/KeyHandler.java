@@ -75,7 +75,7 @@ public class KeyHandler implements KeyListener {
                 enterPressed = true;
             }
             if(code == KeyEvent.VK_O){
-                //checkDrawTime = !checkDrawTime;
+                checkDrawTime = !checkDrawTime;
             }
             else if(code == KeyEvent.VK_P){
                 gp.gameState = gp.pauseState;
@@ -401,18 +401,10 @@ public class KeyHandler implements KeyListener {
 
                 int slice = (int) Math.round(angle / 90) % 4;
                 switch (slice) {
-                    case 0:
-                        gp.player.direction = "right";
-                        break;
-                    case 1:
-                        gp.player.direction = "down";
-                        break;
-                    case 2:
-                        gp.player.direction = "left";
-                        break;
-                    case 3:
-                        gp.player.direction = "up";
-                        break;
+                    case 0 -> gp.player.direction = "right";
+                    case 1 -> gp.player.direction = "down";
+                    case 2 -> gp.player.direction = "left";
+                    case 3 -> gp.player.direction = "up";
                 }
             }
         }

@@ -8,6 +8,10 @@ public class OBJ_StorageChest extends SuperObject{
         interactable = true;
         getGlitterImages();
         image = setup("/objects/interact/treasurechest");
+        solidArea.x = 16;
+        solidArea.y = 16;
+        solidArea.width = 32;
+        solidArea.height = 32;
     }
 
     public void interact(){

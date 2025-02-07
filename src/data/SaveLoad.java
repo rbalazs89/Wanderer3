@@ -227,7 +227,7 @@ public class SaveLoad {
         }
         gp.allFightingEntities.add(gp.player);
 
-        gp.eManager.update();
+        gp.eManager.updateOnMapSwitch();
 
         gp.currentMap = gp.dataBase1.getRespawnData()[0];
         gp.player.worldX = gp.dataBase1.getRespawnData()[1];

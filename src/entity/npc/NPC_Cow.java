@@ -24,7 +24,7 @@ public class NPC_Cow extends Entity {
 
     public void setActionAI(){
         setDirectionFromRandomMovement();
-        setActionWhenNear();
+        decideIfPlayerNear();
     }
 
     public void getImage() {

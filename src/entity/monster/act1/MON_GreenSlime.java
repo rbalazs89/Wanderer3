@@ -169,7 +169,7 @@ public class MON_GreenSlime extends Fighter {
         gp.cChecker.checkTile(this);
         gp.cChecker.checkObject(this, false);
         //gp.cChecker.checkEntity(this,gp.npc); // npc no collision anyway
-        gp.cChecker.checkEntity(this, gp.fighters); // check monster with eachother
+        //gp.cChecker.checkEntity(this, gp.fighters); // check monster with eachother
 
         if (!collisionOn) {
             switch (direction) {

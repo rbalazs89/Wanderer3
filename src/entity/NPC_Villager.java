@@ -58,7 +58,7 @@ public class NPC_Villager extends NPC {
 
     public void setActionAI() {
 
-        setActionWhenNear();
+        decideIfPlayerNear();
 
         if(targetPathFollowed){
             int goalCol = gp.player.worldMiddleX() / GamePanel.tileSize;

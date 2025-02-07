@@ -12,7 +12,6 @@ public class OBJ_DroppedItem extends SuperObject{
 
     public OBJ_DroppedItem(GamePanel gp) {
         super(gp);
-        this.gp = gp;
         interactable = true;
         image = setup("/items/pouch4");
         solidArea.x = 16;
@@ -27,10 +26,10 @@ public class OBJ_DroppedItem extends SuperObject{
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
+        if(worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
             g2.drawImage(image, screenX, screenY,null);
         }
 

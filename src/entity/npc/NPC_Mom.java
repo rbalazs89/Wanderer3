@@ -52,7 +52,7 @@ public class NPC_Mom extends Entity {
 
     public void setActionAI(){
         controlSpeed();
-        setActionWhenNear();
+        decideIfPlayerNear();
         setDirectionFromRandomMovement();
     }
 

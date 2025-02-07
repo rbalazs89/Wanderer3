@@ -41,21 +41,22 @@ public class NPC_NapTimeEnforcer extends NPC {
 
         for (int i = 0; i < maxWalkSpriteArrayLength; i++) {
             //down
-            walkImages[2][i] = setupSheet("/entity/npcnaptimeneforcer/kindergartenteacher", i * 77, 0, 77, 77, 77, 77);
+            walkImages[2][i] = setupSheet("/entity/npcnaptimeneforcer/kindergartenteacher", i * 77, 0, 77, 77, 64, 64);
         }
         for (int i = 0; i < maxWalkSpriteArrayLength; i++) {
             //left
-            walkImages[3][i] = setupSheet("/entity/npcnaptimeneforcer/kindergartenteacher", i * 77, 77, 77, 77, 77, 77);
+            walkImages[3][i] = setupSheet("/entity/npcnaptimeneforcer/kindergartenteacher", i * 77, 77, 77, 77, 64, 64);
         }
         for (int i = 0; i < maxWalkSpriteArrayLength; i++) {
             //right
-            walkImages[1][i] = setupSheet("/entity/npcnaptimeneforcer/kindergartenteacher", i * 77, 77 * 2, 77, 77, 77, 77);
+            walkImages[1][i] = setupSheet("/entity/npcnaptimeneforcer/kindergartenteacher", i * 77, 77 * 2, 77, 77, 64, 64);
         }
         for (int i = 0; i < maxWalkSpriteArrayLength; i++) {
-            walkImages[0][i] = setupSheet("/entity/npcnaptimeneforcer/kindergartenteacher", i * 77, 77 * 3, 77, 77, 77, 77);
+            walkImages[0][i] = setupSheet("/entity/npcnaptimeneforcer/kindergartenteacher", i * 77, 77 * 3, 77, 77, 64, 64);
         }
         image = walkImages[0][0];
     }
+
     public void getSpecialData(){
 
     }
@@ -93,6 +94,7 @@ public class NPC_NapTimeEnforcer extends NPC {
                 }
             }
         }
+
         if(walking){
             setDirectionFromRandomMovement();
         }

@@ -12,12 +12,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class TileManager {
-
     GamePanel gp;
     public Tile[] tile;
     public int[][] mapTileNum;
     public boolean drawPath = false;
     public BufferedImage tileSheetImage;
+    //TODO fine tile
+    public boolean fineTileActive = false;
+    private FineCollisionMapManager fineCollisionMapManager;
 
     public TileManager(GamePanel gp){
         this.gp = gp;
@@ -255,15 +257,13 @@ public class TileManager {
 
     public void setupTileFromSheetAct1(int index, int row, int column, boolean collision){
         tile[index] = new Tile();
-        BufferedImage subImage = tileSheetImage.getSubimage((column - 1) * 64,(row - 1) * 64,64,64);
-        tile[index].image = subImage;
+        tile[index].image = tileSheetImage.getSubimage((column - 1) * 64,(row - 1) * 64,64,64);
         tile[index].collision = collision;
     }
 
     public BufferedImage setup(String imagePath){
         try {
-            BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imagePath +".png"));
-            return image;
+            return ImageIO.read(getClass().getResourceAsStream("/tiles/" + imagePath +".png"));
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -305,7 +305,7 @@ public class TileManager {
             }
             br.close();
         }
-        catch (Exception e){
+        catch (Exception ignored){
 
         }
     }

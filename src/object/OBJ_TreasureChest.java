@@ -10,6 +10,10 @@ public class OBJ_TreasureChest extends SuperObject{
         super(gp);
         getImage();
         interactable = true;
+        solidArea.x = 16;
+        solidArea.y = 16;
+        solidArea.width = 32;
+        solidArea.height = 32;
         getGlitterImages();
     }
 
@@ -46,8 +50,5 @@ public class OBJ_TreasureChest extends SuperObject{
         }
     }
 
-    public void conditional() {
-        interactable = false;
-    }
 
 }

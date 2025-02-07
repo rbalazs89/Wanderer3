@@ -193,7 +193,7 @@ public class GamePanel extends JPanel implements Runnable{
         mapBlockManager.update();
         tileM.getTileManagerDataCurrentMap(currentMap);
         map.createMapScreenImage();
-        eManager.update();
+        eManager.updateOnMapSwitch();
         //
 
         for(int i = 0; i < obj[1].length; i++){
@@ -322,6 +322,7 @@ public class GamePanel extends JPanel implements Runnable{
             for(int i = 0; i < damageNumbers.size(); i ++){
                 damageNumbers.get(i).update();
             }
+            eManager.updateEveryLoop();
         }
         else if(gameState == inventoryState){
             cChecker.checkObjectToInteract(); // to allow  finding suitable place if multiple items dropped from inventory
@@ -338,6 +339,7 @@ public class GamePanel extends JPanel implements Runnable{
         if(gameState != transitionState && gameState != loadSavedGameLoadingState && gameState != newGameLoadingState) {
 
             long drawStart = 0;
+
             if (keyH.checkDrawTime) {
                 drawStart = System.nanoTime();
             }
@@ -348,7 +350,9 @@ public class GamePanel extends JPanel implements Runnable{
             } else if (gameState == gameEndState){
                     ui.drawGameEnd(g2);
             } else {
+
                 tileM.draw(g2);
+
                 decorManager.draw(g2);
                 mapBlockManager.draw(g2, this);
                 for (int i = 0; i < obj[1].length; i++) {
@@ -361,7 +365,9 @@ public class GamePanel extends JPanel implements Runnable{
 
                 for (int i = 0; i < interactObjects.size(); i++) {
                     if (interactObjects.get(i) != null) {
-                        interactObjects.get(i).draw(g2, this);
+                        if(!interactObjects.get(i).currentlyInteracting){
+                            interactObjects.get(i).draw(g2, this);
+                        }
                     }
                 }
 
@@ -386,8 +392,7 @@ public class GamePanel extends JPanel implements Runnable{
                 Collections.sort(entityList, new Comparator<Entity>() {
                     @Override
                     public int compare(Entity e1, Entity e2) {
-                        int result = Integer.compare(e1.worldY, e2.worldY);
-                        return result;
+                        return Integer.compare(e1.worldY, e2.worldY);
                     }
                 });
 
@@ -397,6 +402,7 @@ public class GamePanel extends JPanel implements Runnable{
                 }
 
                 entityList.clear();
+
 
                 for (int i = 0; i < attacks.size(); i++) {
                     attacks.get(i).draw(g2);
@@ -410,10 +416,18 @@ public class GamePanel extends JPanel implements Runnable{
                     damageNumbers.get(i).draw(g2);
                 }
 
+                //only for books
+                for (int i = 0; i < interactObjects.size(); i++) {
+                    if(interactObjects.get(i).currentlyInteracting){
+                        interactObjects.get(i).draw(g2, this);
+                    }
+                }
+
                 eManager.draw(g2);
                 map.drawMiniMap(g2);
             }
             ui.draw(g2);
+
             if (keyH.checkDrawTime) {
                 long drawEnd = System.nanoTime();
                 long passed = drawEnd - drawStart;
@@ -446,10 +460,6 @@ public class GamePanel extends JPanel implements Runnable{
     public void stopMusic(){
         music.stop();
     }
-    public void stopSE() {
-        se.stopAllSE();
-    }
-
 
     public void playSE(int i) {
         se.setFile(i);
@@ -661,7 +671,7 @@ public class GamePanel extends JPanel implements Runnable{
         }
         allFightingEntities.add(player);
 
-        eManager.update();
+        eManager.updateOnMapSwitch();
 
         player.refreshPlayerStatsNoItems();
 
@@ -700,6 +710,5 @@ public class GamePanel extends JPanel implements Runnable{
                 startSinging(currentMap);
             }
         }
-
     }
 }

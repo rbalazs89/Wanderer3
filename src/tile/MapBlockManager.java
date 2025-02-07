@@ -7,15 +7,18 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Arrays;
 
 //class
 public class MapBlockManager {
     GamePanel gp;
-    MapBlock mapBlock[] = new MapBlock[100];
+    MapBlock[] mapBlock = new MapBlock[100];
+    public BufferedImage[] savedImages;
 
     public MapBlockManager(GamePanel gp) {
         this.gp = gp;
         blockSetter();
+        savedImages = new BufferedImage[100];
     }
 
     public void draw(Graphics2D g2, GamePanel gp) {
@@ -33,9 +36,9 @@ public class MapBlockManager {
                     int screenY = mapBlock[i].worldY - gp.player.worldY + gp.player.screenY;
 
                     if (mapBlock[i].worldX + blockWidth > gp.player.worldX - gp.player.screenX &&
-                            mapBlock[i].worldX   < gp.player.worldX + gp.player.screenX + gp.tileSize &&
+                            mapBlock[i].worldX   < gp.player.worldX + gp.player.screenX + GamePanel.tileSize &&
                             mapBlock[i].worldY + blockHeight > gp.player.worldY - gp.player.screenY &&
-                            mapBlock[i].worldY  < gp.player.worldY + gp.player.screenY + gp.tileSize) {
+                            mapBlock[i].worldY  < gp.player.worldY + gp.player.screenY + GamePanel.tileSize) {
                         g2.drawImage(mapBlock[i].image, screenX, screenY, null);
                     }
                // }
@@ -71,15 +74,13 @@ public class MapBlockManager {
     }
 
     public void clearArray(){
-        for (int i = 0; i < mapBlock.length; i++) {
-            mapBlock[i] = null;
-        }
+        Arrays.fill(mapBlock, null);
     }
 
     public void blockSetter(){
         switch (gp.currentMap){
             case 1:
-                setMap1test();
+                setMap1();
                 break;
             case 2:
                 break;
@@ -100,303 +101,306 @@ public class MapBlockManager {
                 break;
             case 6:
                 mapBlock[0] = new MapBlock();
-                mapBlock[0].worldX = 10 * gp.tileSize;
-                mapBlock[0].worldY = (int)(0.5 * gp. tileSize);
+                mapBlock[0].worldX = 10 * GamePanel.tileSize;
+                mapBlock[0].worldY = (int)(0.5 * GamePanel. tileSize);
                 mapBlock[0].image = setup("/mapblock/a1/church_window");
 
                 mapBlock[1] = new MapBlock();
-                mapBlock[1].worldX = 3 * gp.tileSize;
-                mapBlock[1].worldY = (int)(0.5 * gp. tileSize);
+                mapBlock[1].worldX = 3 * GamePanel.tileSize;
+                mapBlock[1].worldY = (int)(0.5 * GamePanel. tileSize);
                 mapBlock[1].image = setup("/mapblock/a1/church_window");
 
                 mapBlock[2] = new MapBlock();
-                mapBlock[2].worldX = 1 * gp.tileSize;
-                mapBlock[2].worldY = 5 * gp.tileSize;
+                mapBlock[2].worldX = GamePanel.tileSize;
+                mapBlock[2].worldY = 5 * GamePanel.tileSize;
                 mapBlock[2].image = setup("/mapblock/a1/church_candle");
 
                 mapBlock[3] = new MapBlock();
-                mapBlock[3].worldX = 1 * gp.tileSize;
-                mapBlock[3].worldY = 7 * gp.tileSize;
+                mapBlock[3].worldX = GamePanel.tileSize;
+                mapBlock[3].worldY = 7 * GamePanel.tileSize;
                 mapBlock[3].image = setup("/mapblock/a1/church_candle");
 
                 mapBlock[4] = new MapBlock();
-                mapBlock[4].worldX = 1 * gp.tileSize;
-                mapBlock[4].worldY = 9 * gp.tileSize;
+                mapBlock[4].worldX = GamePanel.tileSize;
+                mapBlock[4].worldY = 9 * GamePanel.tileSize;
                 mapBlock[4].image = setup("/mapblock/a1/church_candle");
 
                 mapBlock[5] = new MapBlock();
-                mapBlock[5].worldX = 1 * gp.tileSize;
-                mapBlock[5].worldY = 11 * gp.tileSize;
+                mapBlock[5].worldX = GamePanel.tileSize;
+                mapBlock[5].worldY = 11 * GamePanel.tileSize;
                 mapBlock[5].image = setup("/mapblock/a1/church_candle");
 
                 mapBlock[6] = new MapBlock();
-                mapBlock[6].worldX = 1 * gp.tileSize;
-                mapBlock[6].worldY = 13 * gp.tileSize;
+                mapBlock[6].worldX = GamePanel.tileSize;
+                mapBlock[6].worldY = 13 * GamePanel.tileSize;
                 mapBlock[6].image = setup("/mapblock/a1/church_candle");
 
                 mapBlock[7] = new MapBlock();
-                mapBlock[7].worldX = 1 * gp.tileSize;
-                mapBlock[7].worldY = 15 * gp.tileSize;
+                mapBlock[7].worldX = GamePanel.tileSize;
+                mapBlock[7].worldY = 15 * GamePanel.tileSize;
                 mapBlock[7].image = setup("/mapblock/a1/church_candle");
 
                 mapBlock[8] = new MapBlock();
-                mapBlock[8].worldX = (int)(12.5 * gp.tileSize);
-                mapBlock[8].worldY = 5 * gp.tileSize;
+                mapBlock[8].worldX = (int)(12.5 * GamePanel.tileSize);
+                mapBlock[8].worldY = 5 * GamePanel.tileSize;
                 mapBlock[8].image = setup("/mapblock/a1/church_candle2");
 
                 mapBlock[9] = new MapBlock();
-                mapBlock[9].worldX = (int)(12.5 * gp.tileSize);
-                mapBlock[9].worldY = 7 * gp.tileSize;
+                mapBlock[9].worldX = (int)(12.5 * GamePanel.tileSize);
+                mapBlock[9].worldY = 7 * GamePanel.tileSize;
                 mapBlock[9].image = setup("/mapblock/a1/church_candle2");
 
                 mapBlock[10] = new MapBlock();
-                mapBlock[10].worldX = (int)(12.5 * gp.tileSize);
-                mapBlock[10].worldY = 9 * gp.tileSize;
+                mapBlock[10].worldX = (int)(12.5 * GamePanel.tileSize);
+                mapBlock[10].worldY = 9 * GamePanel.tileSize;
                 mapBlock[10].image = setup("/mapblock/a1/church_candle2");
 
                 mapBlock[11] = new MapBlock();
-                mapBlock[11].worldX = (int)(12.5 * gp.tileSize);
-                mapBlock[11].worldY = 11 * gp.tileSize;
+                mapBlock[11].worldX = (int)(12.5 * GamePanel.tileSize);
+                mapBlock[11].worldY = 11 * GamePanel.tileSize;
                 mapBlock[11].image = setup("/mapblock/a1/church_candle2");
 
                 mapBlock[12] = new MapBlock();
-                mapBlock[12].worldX = (int)(12.5 * gp.tileSize);
-                mapBlock[12].worldY = 13 * gp.tileSize;
+                mapBlock[12].worldX = (int)(12.5 * GamePanel.tileSize);
+                mapBlock[12].worldY = 13 * GamePanel.tileSize;
                 mapBlock[12].image = setup("/mapblock/a1/church_candle2");
 
                 mapBlock[13] = new MapBlock();
-                mapBlock[13].worldX = (int)(12.5 * gp.tileSize);
-                mapBlock[13].worldY = 15 * gp.tileSize;
+                mapBlock[13].worldX = (int)(12.5 * GamePanel.tileSize);
+                mapBlock[13].worldY = 15 * GamePanel.tileSize;
                 mapBlock[13].image = setup("/mapblock/a1/church_candle2");
                 break;
 
             case 7:
                 mapBlock[0] = new MapBlock();
-                mapBlock[0].worldX = -1 * gp.tileSize;
-                mapBlock[0].worldY = 5 * gp. tileSize;
+                mapBlock[0].worldX = -1 * GamePanel.tileSize;
+                mapBlock[0].worldY = 5 * GamePanel. tileSize;
                 mapBlock[0].image = setup("/mapblock/a1/woodstairs");
                 break;
 
             case 8:
                 mapBlock[0] = new MapBlock();
-                mapBlock[0].worldX = 5 * gp.tileSize;
-                mapBlock[0].worldY = (3 * gp. tileSize);
+                mapBlock[0].worldX = 5 * GamePanel.tileSize;
+                mapBlock[0].worldY = (3 * GamePanel. tileSize);
                 mapBlock[0].image = setup("/mapblock/a1/desk2");
 
                 mapBlock[1] = new MapBlock();
-                mapBlock[1].worldX = 3 * gp.tileSize;
-                mapBlock[1].worldY = (int) (0.5 * gp. tileSize);
+                mapBlock[1].worldX = 3 * GamePanel.tileSize;
+                mapBlock[1].worldY = (int) (0.5 * GamePanel. tileSize);
                 mapBlock[1].image = setup("/mapblock/a1/shopwindow");
 
                 mapBlock[2] = new MapBlock();
-                mapBlock[2].worldX = 9 * gp.tileSize;
-                mapBlock[2].worldY = (int) (0.5 * gp. tileSize);
+                mapBlock[2].worldX = 9 * GamePanel.tileSize;
+                mapBlock[2].worldY = (int) (0.5 * GamePanel. tileSize);
                 mapBlock[2].image = setup("/mapblock/a1/shopwindow");
 
                 mapBlock[3] = new MapBlock();
-                mapBlock[3].worldX = 1 * gp.tileSize;
-                mapBlock[3].worldY = 5 * gp. tileSize;
+                mapBlock[3].worldX = GamePanel.tileSize;
+                mapBlock[3].worldY = 5 * GamePanel. tileSize;
                 mapBlock[3].image = setup("/mapblock/a1/benchside");
 
                 mapBlock[4] = new MapBlock();
-                mapBlock[4].worldX = 11 * gp.tileSize;
-                mapBlock[4].worldY = (int) (1.5 * gp. tileSize);
+                mapBlock[4].worldX = 11 * GamePanel.tileSize;
+                mapBlock[4].worldY = (int) (1.5 * GamePanel. tileSize);
                 mapBlock[4].image = setup("/mapblock/a1/fireplacewood");
 
                 mapBlock[5] = new MapBlock();
-                mapBlock[5].worldX = 1 * gp.tileSize;
-                mapBlock[5].worldY = 8 * gp. tileSize;
+                mapBlock[5].worldX = GamePanel.tileSize;
+                mapBlock[5].worldY = 8 * GamePanel. tileSize;
                 mapBlock[5].image = setup("/mapblock/a1/benchside");
 
                 mapBlock[6] = new MapBlock();
-                mapBlock[6].worldX = 1 * gp.tileSize;
-                mapBlock[6].worldY = 8 * gp. tileSize;
+                mapBlock[6].worldX = GamePanel.tileSize;
+                mapBlock[6].worldY = 8 * GamePanel. tileSize;
                 mapBlock[6].image = setup("/mapblock/a1/benchside");
 
                 mapBlock[7] = new MapBlock();
-                mapBlock[7].worldX = 4 * gp.tileSize;
-                mapBlock[7].worldY = 7 * gp. tileSize;
+                mapBlock[7].worldX = 4 * GamePanel.tileSize;
+                mapBlock[7].worldY = 7 * GamePanel. tileSize;
                 mapBlock[7].image = setup("/mapblock/a1/bluecarpet");
 
                 mapBlock[8] = new MapBlock();
-                mapBlock[8].worldX = (int)(12.6 * gp.tileSize);
-                mapBlock[8].worldY = 4 * gp. tileSize;
+                mapBlock[8].worldX = (int)(12.6 * GamePanel.tileSize);
+                mapBlock[8].worldY = 4 * GamePanel. tileSize;
                 mapBlock[8].image = setup("/mapblock/a1/showcaseside");
 
                 mapBlock[9] = new MapBlock();
-                mapBlock[9].worldX = 2 * gp.tileSize;
-                mapBlock[9].worldY = 3 * gp. tileSize;
+                mapBlock[9].worldX = 2 * GamePanel.tileSize;
+                mapBlock[9].worldY = 3 * GamePanel. tileSize;
                 mapBlock[9].image = setup("/mapblock/a1/desk");
 
                 mapBlock[10] = new MapBlock();
-                mapBlock[10].worldX = 9 * gp.tileSize;
-                mapBlock[10].worldY = 3 * gp. tileSize;
+                mapBlock[10].worldX = 9 * GamePanel.tileSize;
+                mapBlock[10].worldY = 3 * GamePanel. tileSize;
                 mapBlock[10].image = setup("/mapblock/a1/rack");
                 break;
             case 9:
                 mapBlock[0] = new MapBlock();
-                mapBlock[0].worldX = 1 * gp.tileSize;
-                mapBlock[0].worldY = 3 * gp. tileSize;
+                mapBlock[0].worldX = GamePanel.tileSize;
+                mapBlock[0].worldY = 3 * GamePanel. tileSize;
                 mapBlock[0].image = setup("/mapblock/a1/woodentrapdoor");
 
                 mapBlock[1] = new MapBlock();
-                mapBlock[1].worldX = 5 * gp.tileSize;
-                mapBlock[1].worldY = (int)(1.1 * gp. tileSize);
+                mapBlock[1].worldX = 5 * GamePanel.tileSize;
+                mapBlock[1].worldY = (int)(1.1 * GamePanel. tileSize);
                 mapBlock[1].image = setup("/mapblock/a1/bookcase");
 
                 mapBlock[2] = new MapBlock();
-                mapBlock[2].worldX = 8 * gp.tileSize;
-                mapBlock[2].worldY = 2 * gp. tileSize;
+                mapBlock[2].worldX = 8 * GamePanel.tileSize;
+                mapBlock[2].worldY = 2 * GamePanel. tileSize;
                 mapBlock[2].image = setup("/mapblock/a1/bookcase2");
 
                 mapBlock[3] = new MapBlock();
-                mapBlock[3].worldX = 12 * gp.tileSize;
-                mapBlock[3].worldY = 3 * gp. tileSize;
+                mapBlock[3].worldX = 12 * GamePanel.tileSize;
+                mapBlock[3].worldY = 3 * GamePanel. tileSize;
                 mapBlock[3].image = setup("/mapblock/a1/bluebed");
 
                 mapBlock[4] = new MapBlock();
-                mapBlock[4].worldX = 12 * gp.tileSize;
-                mapBlock[4].worldY = 6 * gp. tileSize;
+                mapBlock[4].worldX = 12 * GamePanel.tileSize;
+                mapBlock[4].worldY = 6 * GamePanel. tileSize;
                 mapBlock[4].image = setup("/mapblock/a1/redbed");
 
                 mapBlock[5] = new MapBlock();
-                mapBlock[5].worldX = 1 * gp.tileSize;
-                mapBlock[5].worldY = 9 * gp. tileSize;
+                mapBlock[5].worldX = GamePanel.tileSize;
+                mapBlock[5].worldY = 9 * GamePanel. tileSize;
                 mapBlock[5].image = setup("/mapblock/a1/doublebed");
 
                 mapBlock[6] = new MapBlock();
-                mapBlock[6].worldX = 7 * gp.tileSize;
-                mapBlock[6].worldY = 6 * gp. tileSize;
+                mapBlock[6].worldX = 7 * GamePanel.tileSize;
+                mapBlock[6].worldY = 6 * GamePanel. tileSize;
                 mapBlock[6].image = setup("/mapblock/a1/fruitdesk");
 
                 mapBlock[7] = new MapBlock();
-                mapBlock[7].worldX = 6 * gp.tileSize;
-                mapBlock[7].worldY = (int)(6.5 * gp. tileSize);
+                mapBlock[7].worldX = 6 * GamePanel.tileSize;
+                mapBlock[7].worldY = (int)(6.5 * GamePanel. tileSize);
                 mapBlock[7].image = setup("/mapblock/a1/smallchair");
 
                 mapBlock[8] = new MapBlock();
-                mapBlock[8].worldX = 8 * gp.tileSize;
-                mapBlock[8].worldY = (int)(6.5 * gp. tileSize);
+                mapBlock[8].worldX = 8 * GamePanel.tileSize;
+                mapBlock[8].worldY = (int)(6.5 * GamePanel. tileSize);
                 mapBlock[8].image = setup("/mapblock/a1/smallchair");
 
                 mapBlock[9] = new MapBlock();
-                mapBlock[9].worldX = 4 * gp.tileSize;
-                mapBlock[9].worldY = 2 * gp. tileSize;
+                mapBlock[9].worldX = 4 * GamePanel.tileSize;
+                mapBlock[9].worldY = 2 * GamePanel. tileSize;
                 mapBlock[9].image = setup("/mapblock/a1/homecabinet");
 
                 mapBlock[10] = new MapBlock();
-                mapBlock[10].worldX = 1 * gp.tileSize;
-                mapBlock[10].worldY = 5 * gp. tileSize;
+                mapBlock[10].worldX = GamePanel.tileSize;
+                mapBlock[10].worldY = 5 * GamePanel. tileSize;
                 mapBlock[10].image = setup("/mapblock/a1/desk_home");
 
                 mapBlock[11] = new MapBlock();
-                mapBlock[11].worldX = 2 * gp.tileSize;
-                mapBlock[11].worldY = (int)(5.5 * gp. tileSize);
+                mapBlock[11].worldX = 2 * GamePanel.tileSize;
+                mapBlock[11].worldY = (int)(5.5 * GamePanel. tileSize);
                 mapBlock[11].image = setup("/mapblock/a1/smallchair");
 
                 mapBlock[12] = new MapBlock();
-                mapBlock[12].worldX = 10 * gp.tileSize;
-                mapBlock[12].worldY = (int)(9 * gp. tileSize);
+                mapBlock[12].worldX = 10 * GamePanel.tileSize;
+                mapBlock[12].worldY = 9 * GamePanel. tileSize;
                 mapBlock[12].image = setup("/mapblock/a1/cabinet");
                 break;
 
             case 10:
                 mapBlock[0] = new MapBlock();
-                mapBlock[0].worldX = 18 * gp.tileSize;
-                mapBlock[0].worldY = 13 * gp.tileSize;
+                mapBlock[0].worldX = 18 * GamePanel.tileSize;
+                mapBlock[0].worldY = 13 * GamePanel.tileSize;
                 mapBlock[0].image = setup("/mapblock/a1/hpdesk");
 
                 mapBlock[1] = new MapBlock();
-                mapBlock[1].worldX = 1 * gp.tileSize;
-                mapBlock[1].worldY = 2 * gp.tileSize;
+                mapBlock[1].worldX = GamePanel.tileSize;
+                mapBlock[1].worldY = 2 * GamePanel.tileSize;
                 mapBlock[1].image = setup("/mapblock/a1/angelstatueleft");
 
                 mapBlock[2] = new MapBlock();
-                mapBlock[2].worldX = 1 * gp.tileSize;
-                mapBlock[2].worldY = 5 * gp.tileSize;
+                mapBlock[2].worldX = GamePanel.tileSize;
+                mapBlock[2].worldY = 5 * GamePanel.tileSize;
                 mapBlock[2].image = setup("/mapblock/a1/angelstatueleft");
 
                 mapBlock[3] = new MapBlock();
-                mapBlock[3].worldX = 1 * gp.tileSize;
-                mapBlock[3].worldY = 8 * gp.tileSize;
+                mapBlock[3].worldX = GamePanel.tileSize;
+                mapBlock[3].worldY = 8 * GamePanel.tileSize;
                 mapBlock[3].image = setup("/mapblock/a1/angelstatueleft");
 
                 mapBlock[4] = new MapBlock();
-                mapBlock[4].worldX = 10 * gp.tileSize;
-                mapBlock[4].worldY = 2 * gp.tileSize;
+                mapBlock[4].worldX = 10 * GamePanel.tileSize;
+                mapBlock[4].worldY = 2 * GamePanel.tileSize;
                 mapBlock[4].image = setup("/mapblock/a1/angelstatueright");
 
                 mapBlock[5] = new MapBlock();
-                mapBlock[5].worldX = 10 * gp.tileSize;
-                mapBlock[5].worldY = 5 * gp.tileSize;
+                mapBlock[5].worldX = 10 * GamePanel.tileSize;
+                mapBlock[5].worldY = 5 * GamePanel.tileSize;
                 mapBlock[5].image = setup("/mapblock/a1/angelstatueright");
 
                 mapBlock[6] = new MapBlock();
-                mapBlock[6].worldX = 10 * gp.tileSize;
-                mapBlock[6].worldY = 8 * gp.tileSize;
+                mapBlock[6].worldX = 10 * GamePanel.tileSize;
+                mapBlock[6].worldY = 8 * GamePanel.tileSize;
                 mapBlock[6].image = setup("/mapblock/a1/angelstatueright");
 
                 mapBlock[7] = new MapBlock();
-                mapBlock[7].worldX = 5 * gp.tileSize;
-                mapBlock[7].worldY = 3 * gp.tileSize;
+                mapBlock[7].worldX = 5 * GamePanel.tileSize;
+                mapBlock[7].worldY = 3 * GamePanel.tileSize;
                 mapBlock[7].image = setup("/mapblock/a1/redcarpet");
 
                 mapBlock[8] = new MapBlock();
-                mapBlock[8].worldX = 5 * gp.tileSize;
-                mapBlock[8].worldY = 0 * gp.tileSize;
+                mapBlock[8].worldX = 5 * GamePanel.tileSize;
+                mapBlock[8].worldY = 0;
                 mapBlock[8].image = setup("/mapblock/a1/carpetstairs");
 
                 mapBlock[9] = new MapBlock();
-                mapBlock[9].worldX = 13 * gp.tileSize;
-                mapBlock[9].worldY = (int)(8 * gp.tileSize);
+                mapBlock[9].worldX = 13 * GamePanel.tileSize;
+                mapBlock[9].worldY = 8 * GamePanel.tileSize;
                 mapBlock[9].image = setup("/mapblock/a1/bigcabinetmagic");
 
                 mapBlock[10] = new MapBlock();
-                mapBlock[10].worldX = 22 * gp.tileSize;
-                mapBlock[10].worldY = (int)(12 * gp.tileSize);
+                mapBlock[10].worldX = 22 * GamePanel.tileSize;
+                mapBlock[10].worldY = 12 * GamePanel.tileSize;
                 mapBlock[10].image = setup("/mapblock/a1/magiccabinet");
 
                 mapBlock[11] = new MapBlock();
-                mapBlock[11].worldX = (int)(23 * gp.tileSize);
-                mapBlock[11].worldY = (int)(19.6 * gp.tileSize);
+                mapBlock[11].worldX = 23 * GamePanel.tileSize;
+                mapBlock[11].worldY = (int)(19.6 * GamePanel.tileSize);
                 mapBlock[11].image = setup("/mapblock/a1/potioncabinet");
 
                 mapBlock[12] = new MapBlock();
-                mapBlock[12].worldX = 22 * gp.tileSize;
-                mapBlock[12].worldY = 17 * gp.tileSize;
+                mapBlock[12].worldX = 22 * GamePanel.tileSize;
+                mapBlock[12].worldY = 17 * GamePanel.tileSize;
                 mapBlock[12].image = setup("/mapblock/a1/cauldron");
                 break;
 
             case 11:
                 mapBlock[0] = new MapBlock();
-                mapBlock[0].worldX = 4 * gp.tileSize;
-                mapBlock[0].worldY = 1 * gp.tileSize;
+                mapBlock[0].worldX = 4 * GamePanel.tileSize;
+                mapBlock[0].worldY = GamePanel.tileSize;
                 mapBlock[0].image = setup("/mapblock/a1/knightstatue");
 
                 mapBlock[2] = new MapBlock();
-                mapBlock[2].worldX = 2 * gp.tileSize;
-                mapBlock[2].worldY = 0 * gp.tileSize;
+                mapBlock[2].worldX = 2 * GamePanel.tileSize;
+                mapBlock[2].worldY = 0;
                 mapBlock[2].image = setup("/mapblock/a1/bigsword");
 
                 mapBlock[3] = new MapBlock();
-                mapBlock[3].worldX = 13 * gp.tileSize;
-                mapBlock[3].worldY = 1 * gp.tileSize;
+                mapBlock[3].worldX = 13 * GamePanel.tileSize;
+                mapBlock[3].worldY = GamePanel.tileSize;
                 mapBlock[3].image = setup("/mapblock/a1/crest");
 
                 mapBlock[4] = new MapBlock();
-                mapBlock[4].worldX = 10 * gp.tileSize;
-                mapBlock[4].worldY = (int)(0.5 * gp.tileSize);
+                mapBlock[4].worldX = 10 * GamePanel.tileSize;
+                mapBlock[4].worldY = (int)(0.5 * GamePanel.tileSize);
                 mapBlock[4].image = setup("/mapblock/a1/axes");
 
                 mapBlock[5] = new MapBlock();
-                mapBlock[5].worldX = 11 * gp.tileSize;
-                mapBlock[5].worldY = 1 * gp.tileSize;
+                mapBlock[5].worldX = 11 * GamePanel.tileSize;
+                mapBlock[5].worldY = GamePanel.tileSize;
                 mapBlock[5].image = setup("/mapblock/a1/knightstatue");
 
                 mapBlock[6] = new MapBlock();
-                mapBlock[6].worldX = 4 * gp.tileSize;
-                mapBlock[6].worldY = (int)(12.5 * gp.tileSize);
+                mapBlock[6].worldX = 4 * GamePanel.tileSize;
+                mapBlock[6].worldY = (int)(12.5 * GamePanel.tileSize);
                 mapBlock[6].image = setup("/mapblock/a1/bluecarpet2");
+                break;
+            case 13:
+                setMap13();
                 break;
         }
     }
@@ -637,7 +641,7 @@ public class MapBlockManager {
         mapBlock[46].image = setup("/mapblock/a1/smallcabinet");
     }
 
-    public void setMap1test(){
+    public void setMap1(){
         mapBlock[0] = new MapBlock();
         mapBlock[0].worldX = 1152;
         mapBlock[0].worldY = 64;
@@ -754,29 +758,29 @@ public class MapBlockManager {
         mapBlock[22].image = setup("/mapblock/a1/fruittree");
 
         mapBlock[23] = new MapBlock();
-        mapBlock[23].worldX = 1536;
-        mapBlock[23].worldY = 2240;
-        mapBlock[23].image = setup("/mapblock/a1/fruittree");
+        mapBlock[23].worldX = 1155;
+        mapBlock[23].worldY = 1918;
+        mapBlock[23].image = setup("/mapblock/a1/library");
 
         mapBlock[24] = new MapBlock();
         mapBlock[24].worldX = 1536;
-        mapBlock[24].worldY = 2368;
+        mapBlock[24].worldY = 2240;
         mapBlock[24].image = setup("/mapblock/a1/fruittree");
 
         mapBlock[25] = new MapBlock();
         mapBlock[25].worldX = 1536;
-        mapBlock[25].worldY = 2496;
+        mapBlock[25].worldY = 2368;
         mapBlock[25].image = setup("/mapblock/a1/fruittree");
 
         mapBlock[26] = new MapBlock();
-        mapBlock[26].worldX = 2240;
-        mapBlock[26].worldY = 2240;
-        mapBlock[26].image = setup("/mapblock/a1/house2");
+        mapBlock[26].worldX = 1536;
+        mapBlock[26].worldY = 2496;
+        mapBlock[26].image = setup("/mapblock/a1/fruittree");
 
         mapBlock[27] = new MapBlock();
-        mapBlock[27].worldX = 1536;
-        mapBlock[27].worldY = 2624;
-        mapBlock[27].image = setup("/mapblock/a1/fruittree");
+        mapBlock[27].worldX = 2240;
+        mapBlock[27].worldY = 2240;
+        mapBlock[27].image = setup("/mapblock/a1/house2");
 
         mapBlock[28] = new MapBlock();
         mapBlock[28].worldX = 1536;
@@ -803,112 +807,56 @@ public class MapBlockManager {
         mapBlock[32].worldY = 2624;
         mapBlock[32].image = setup("/mapblock/a1/fruittree");
 
+        mapBlock[33] = new MapBlock();
+        mapBlock[33].worldX = 1536;
+        mapBlock[33].worldY = 2624;
+        mapBlock[33].image = setup("/mapblock/a1/fruittree");
     }
 
-    public void setMap1(){
+    public void setMap13(){
         mapBlock[0] = new MapBlock();
-        mapBlock[0].worldX = 35 * gp.tileSize;
-        mapBlock[0].worldY = 25 * gp. tileSize;
-        mapBlock[0].image = setup("/mapblock/a1/house1");
+        mapBlock[0].worldX = 73;
+        mapBlock[0].worldY = 61;
+        mapBlock[0].image = setup("/mapblock/a1/bookshelf2");
 
         mapBlock[1] = new MapBlock();
-        mapBlock[1].worldX = 44 * gp.tileSize;
-        mapBlock[1].worldY = 2 * gp. tileSize;
-        mapBlock[1].image = setup("/mapblock/a1/starttent");
+        mapBlock[1].worldX = 168;
+        mapBlock[1].worldY = 61;
+        mapBlock[1].image = setup("/mapblock/a1/bookshelf3");
 
         mapBlock[2] = new MapBlock();
-        mapBlock[2].worldX = 13 * gp.tileSize;
-        mapBlock[2].worldY = 1 * gp. tileSize;
-        mapBlock[2].image = setup("/mapblock/a1/tent_2");
+        mapBlock[2].worldX = 832;
+        mapBlock[2].worldY = 61;
+        mapBlock[2].image = setup("/mapblock/a1/bookshelf3");
 
         mapBlock[3] = new MapBlock();
-        mapBlock[3].worldX = 13* gp.tileSize;
-        mapBlock[3].worldY = 5 * gp. tileSize;
-        mapBlock[3].image = setup("/mapblock/a1/3desk");
+        mapBlock[3].worldX = 925;
+        mapBlock[3].worldY = 135;
+        mapBlock[3].image = setup("/mapblock/a1/bookcase2");
 
         mapBlock[4] = new MapBlock();
-        mapBlock[4].worldX = 18* gp.tileSize;
-        mapBlock[4].worldY = 1 * gp. tileSize;
-        mapBlock[4].image = setup("/mapblock/a1/barrel2");
+        mapBlock[4].worldX = 87;
+        mapBlock[4].worldY = 493;
+        mapBlock[4].image = setup("/mapblock/a1/smallchair3");
 
         mapBlock[5] = new MapBlock();
-        mapBlock[5].worldX = 14* gp.tileSize;
-        mapBlock[5].worldY = 6 * gp. tileSize;
-        mapBlock[5].image = setup("/mapblock/a1/smallchair2");
+        mapBlock[5].worldX = 130;
+        mapBlock[5].worldY = 449;
+        mapBlock[5].image = setup("/mapblock/a1/hpdesk");
 
         mapBlock[6] = new MapBlock();
-        mapBlock[6].worldX = 12* gp.tileSize;
-        mapBlock[6].worldY = 2 * gp. tileSize;
-        mapBlock[6].image = setup("/mapblock/a1/logs");
+        mapBlock[6].worldX = 1056;
+        mapBlock[6].worldY = 320;
+        mapBlock[6].image = setup("/mapblock/a1/sidecabinet");
 
         mapBlock[7] = new MapBlock();
-        mapBlock[7].worldX = 8* gp.tileSize;
-        mapBlock[7].worldY = 1 * gp. tileSize;
-        mapBlock[7].image = setup("/mapblock/a1/carriage");
+        mapBlock[7].worldX = 384;
+        mapBlock[7].worldY = 479;
+        mapBlock[7].image = setup("/mapblock/a1/bluecarpet2");
 
         mapBlock[8] = new MapBlock();
-        mapBlock[8].worldX = 0 * gp.tileSize;
-        mapBlock[8].worldY = 0 * gp. tileSize;
-        mapBlock[8].image = setup("/mapblock/a1/cave2");
-
-        mapBlock[9] = new MapBlock();
-        mapBlock[9].worldX = (int)(22.8 * gp.tileSize);
-        mapBlock[9].worldY = 23 * gp. tileSize;
-        mapBlock[9].image = setup("/mapblock/a1/statue");
-
-        mapBlock[10] = new MapBlock();
-        mapBlock[10].worldX = (int)(5 * gp.tileSize);
-        mapBlock[10].worldY = 16 * gp. tileSize;
-        mapBlock[10].image = setup("/mapblock/a1/churcha1");
-
-        mapBlock[11] = new MapBlock();
-        mapBlock[11].worldX = 34 * gp.tileSize;
-        mapBlock[11].worldY = 31 * gp. tileSize;
-        mapBlock[11].image = setup("/mapblock/a1/shopsign");
-
-        mapBlock[12] = new MapBlock();
-        mapBlock[12].worldX = 35 * gp.tileSize;
-        mapBlock[12].worldY = 35 * gp. tileSize;
-        mapBlock[12].image = setup("/mapblock/a1/house2");
-
-        mapBlock[13] = new MapBlock();
-        mapBlock[13].worldX = 24 * gp.tileSize;
-        mapBlock[13].worldY = 27 * gp. tileSize;
-        mapBlock[13].image = setup("/mapblock/a1/fruittree");
-
-        mapBlock[14] = new MapBlock();
-        mapBlock[14].worldX = 24 * gp.tileSize;
-        mapBlock[14].worldY = 29 * gp. tileSize;
-        mapBlock[14].image = setup("/mapblock/a1/fruittree");
-
-        mapBlock[15] = new MapBlock();
-        mapBlock[15].worldX = 24 * gp.tileSize;
-        mapBlock[15].worldY = 31 * gp. tileSize;
-        mapBlock[15].image = setup("/mapblock/a1/fruittree");
-
-        mapBlock[16] = new MapBlock();
-        mapBlock[16].worldX = 24 * gp.tileSize;
-        mapBlock[16].worldY = 33 * gp. tileSize;
-        mapBlock[16].image = setup("/mapblock/a1/fruittree");
-
-        mapBlock[17] = new MapBlock();
-        mapBlock[17].worldX = 24 * gp.tileSize;
-        mapBlock[17].worldY = 35 * gp. tileSize;
-        mapBlock[17].image = setup("/mapblock/a1/fruittree");
-
-        mapBlock[18] = new MapBlock();
-        mapBlock[18].worldX = 24 * gp.tileSize;
-        mapBlock[18].worldY = 37 * gp. tileSize;
-        mapBlock[18].image = setup("/mapblock/a1/fruittree");
-
-        mapBlock[19] = new MapBlock();
-        mapBlock[19].worldX = 24 * gp.tileSize;
-        mapBlock[19].worldY = 39 * gp. tileSize;
-        mapBlock[19].image = setup("/mapblock/a1/fruittree");
-
-        mapBlock[20] = new MapBlock();
-        mapBlock[20].worldX = 24 * gp.tileSize;
-        mapBlock[20].worldY = 41 * gp. tileSize;
-        mapBlock[20].image = setup("/mapblock/a1/fruittree");
+        mapBlock[8].worldX = 384;
+        mapBlock[8].worldY = 479;
+        mapBlock[8].image = setup("/mapblock/a1/bluecarpet2");
     }
 }

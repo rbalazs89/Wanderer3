@@ -51,7 +51,6 @@ public abstract class Fighter extends Entity {
     public int shouldTryToAttackRange = (int) (2.5 * GamePanel.tileSize);
     public static final Color transparentRed = new Color(255, 0, 0, 128);
     public int screenX, screenY;
-    public int screenXWOCorrection, screenYWOCorrectionY;
     public int frozenResistance = 0; // higher number -> comes alive faster if frozen
 
     public BufferedImage[] dying;

@@ -24,7 +24,7 @@ public class OBJ_MapTransition extends SuperObject{
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/nullimage.png"));
-            uTool.scaleImage(image, gp.tileSize, gp.tileSize);
+            uTool.scaleImage(image, GamePanel.tileSize, GamePanel.tileSize);
         } catch (IOException e){
             e.printStackTrace();
         }

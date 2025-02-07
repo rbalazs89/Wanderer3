@@ -1,19 +1,11 @@
 package environment;
 
-import main.DataBaseClass1;
 import main.GamePanel;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class Lighting {
-
     GamePanel gp;
     static BufferedImage darknessFilter;
 
@@ -28,12 +20,12 @@ public class Lighting {
         Graphics2D g2 = (Graphics2D) darknessFilter.getGraphics();
 
         // Get the center x and y of the light circle
-        int centerX = gp.player.screenX + (gp.tileSize) / 2;
-        int centerY = gp.player.screenY + (gp.tileSize) / 2;
+        int centerX = gp.player.screenX + (GamePanel.tileSize) / 2;
+        int centerY = gp.player.screenY + (GamePanel.tileSize) / 2;
 
         // Create a smoother gradient effect
-        Color color[] = new Color[12];
-        float fraction[] = new float[12];
+        Color[] color = new Color[12];
+        float[] fraction = new float[12];
 
         int multiplier = Math.min(20,gp.dataBase1.currentMapDarknessMultiplier(gp.currentMap));
 
@@ -78,7 +70,7 @@ public class Lighting {
         g2.drawImage(darknessFilter, 0, 0, null);
     }
 
-    public void update() {
+    public void updateOnMapSwitch() {
         setLighting();
     }
 }

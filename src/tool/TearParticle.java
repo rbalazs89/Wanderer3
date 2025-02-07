@@ -55,10 +55,10 @@ public class TearParticle {
         int screenX = originEntity.worldX - gp.player.worldX + gp.player.screenX;
         int screenY = originEntity.worldY - gp.player.worldY + gp.player.screenY;
 
-        if (originEntity.worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+        /*if (originEntity.worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
                 originEntity.worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
                 originEntity.worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
-                originEntity.worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY) {
+                originEntity.worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY) {*/
             float alpha = 1.0f - (float) age / lifespan;
             alpha = Math.max(alpha, 0f);
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
@@ -66,6 +66,6 @@ public class TearParticle {
             g2.setColor(new Color(255, 215, 0));
             g2.fillOval(screenX + x, screenY + y, 5, 5);
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
-        }
+        //}
     }
 }

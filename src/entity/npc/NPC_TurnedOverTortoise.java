@@ -38,10 +38,10 @@ public class NPC_TurnedOverTortoise extends NPC {
     }
 
     public void setActionAI(){
-        setActionWhenNear();
+        decideIfPlayerNear();
     }
 
-    public void setActionWhenNear() {
+    public void decideIfPlayerNear() {
         int distance = middleDistance(gp.player);
 
         if(distance < GamePanel.tileSize * 10 && distance > GamePanel.tileSize * 2){

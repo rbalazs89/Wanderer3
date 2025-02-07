@@ -7,10 +7,8 @@ import java.awt.*;
 import java.io.IOException;
 
 public class OBJ_Door extends SuperObject{
-    GamePanel gp;
     public OBJ_Door(GamePanel gp) {
         super(gp);
-        this.gp = gp;
         solidArea = new Rectangle(0,0,64, 64);
         name = "Door";
         image = setup("/entity/monster/act1/mimicdoor/mimic1");

@@ -46,7 +46,7 @@ public class NPC_Bro extends Entity {
     }
 
     public void setActionAI() {
-        setActionWhenNear();
+        decideIfPlayerNear();
         setDirectionFromRandomMovement();
     }
 

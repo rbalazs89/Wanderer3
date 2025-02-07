@@ -51,7 +51,7 @@ public class NPC_Horse extends Entity {
 
 
     public void followBehaviourAct1(){
-        setActionWhenNear();
+        decideIfPlayerNear();
         if(worldX < 19 * gp.tileSize || worldY > gp.tileSize * 7){
             targetPathFollowed = true;
         }

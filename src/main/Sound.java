@@ -5,15 +5,11 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Sound {
 
     Clip clip;
-    private static final List<Clip> activeClips = new ArrayList<>();
-
-    URL soundURL[] = new URL[100];
+    URL[] soundURL = new URL[100];
     FloatControl fc;
     public int volumeScale = 8; //starting volume
     public float volume;
@@ -111,6 +107,7 @@ public class Sound {
         soundURL[85] = getClass().getResource("/sound/npc/childcry1.wav");
         soundURL[86] = getClass().getResource("/sound/npc/childcry2.wav");
         soundURL[87] = getClass().getResource("/sound/npc/childcry3.wav");
+        soundURL[88] = getClass().getResource("/sound/objects/eating.wav");
     }
 
     public void setFile(int i){
@@ -121,7 +118,7 @@ public class Sound {
             fc = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
             checkVolume();
 
-        } catch (Exception e){
+        } catch (Exception ignored){
 
         }
     }
@@ -162,33 +159,22 @@ public class Sound {
         }
     }*/
 
-    public static void stopAllSE() {
-        /*for (Clip c : activeClips) {
-            if (c.isRunning()) {
-                c.stop();
-                c.flush();
-                c.close();
-            }
-        }
-        activeClips.clear(); // Remove all stopped clips from memory*/
-    }
-
     public void checkVolume() {
         if(volumeScale < 1){
             volumeScale = 1;
         }
-        switch(volumeScale){
-            case 1: volume = -80f; break;
-            case 2: volume = -55f; break;
-            case 3: volume = -41f; break;
-            case 4: volume = -30f; break;
-            case 5: volume = -22f; break;
-            case 6: volume = -16f; break;
-            case 7: volume = -10f; break;
-            case 8: volume = -5f; break;
-            case 9: volume = -1f; break;
-            case 10: volume = 3f; break;
-            case 11: volume = 6f; break;
+        switch (volumeScale) {
+            case 1 -> volume = -80f;
+            case 2 -> volume = -55f;
+            case 3 -> volume = -41f;
+            case 4 -> volume = -30f;
+            case 5 -> volume = -22f;
+            case 6 -> volume = -16f;
+            case 7 -> volume = -10f;
+            case 8 -> volume = -5f;
+            case 9 -> volume = -1f;
+            case 10 -> volume = 3f;
+            case 11 -> volume = 6f;
         }
         fc.setValue(volume);
     }

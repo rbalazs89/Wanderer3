@@ -10,6 +10,10 @@ public class OBJ_MomoRefillOnce extends SuperObject{
         super(gp);
         getGlitterImages();
         interactable = true;
+        solidArea.x = 16;
+        solidArea.y = 16;
+        solidArea.width = 32;
+        solidArea.height = 32;
         name = "pumpkin";
 
         if(pictureNumber == 1){
@@ -34,10 +38,10 @@ public class OBJ_MomoRefillOnce extends SuperObject{
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        if(worldX + 5 * gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX - 5 * gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY + 5 * gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - 5 * gp.tileSize < gp.player.worldY + gp.player.screenY){
+        if(worldX + 5 * GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - 5 * GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + 5 * GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - 5 * GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
             g2.drawImage(image, screenX, screenY,null);
         }
 

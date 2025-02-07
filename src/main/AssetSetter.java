@@ -26,9 +26,10 @@ public class AssetSetter {
      * 7: house cellar
      * 8: shop + music good
      * 9: my house + music good
-     * 10 cave 2
-     * 11 boss room + music good
-     * //12 a1 ending music taken
+     * 10: cave 2
+     * 11: boss room + music good
+     * //12: a1 ending music taken
+     * 13: library
      */
 
     GamePanel gp;
@@ -69,9 +70,11 @@ public class AssetSetter {
         setObjectMap10(currentMap); // cave 2
 
         currentMap = 11;
-        setObjectMap11(currentMap); // bossxmap
-    }
+        setObjectMap11(currentMap); // boss map
 
+        currentMap = 13;
+        setObjectMap13(currentMap); // library
+    }
 
 
     public void setNPC() {
@@ -95,8 +98,10 @@ public class AssetSetter {
 
         currentMap = 9;
         setNPCMap9(currentMap);
-    }
 
+        currentMap = 13;
+        setNPCMap13(currentMap);
+    }
 
 
     public void setFighter(){
@@ -121,7 +126,6 @@ public class AssetSetter {
         currentMap = 11;
         setFighter11(currentMap);
     }
-
 
 
     public BufferedImage setup(String imageName, int width, int height) {
@@ -181,12 +185,12 @@ public class AssetSetter {
     }
 
     public void setObjectMap1(int currentMap){
-        gp.obj[currentMap][0] = new OBJ_MapTransitionPickable(gp,8,7 * gp.tileSize,10 * gp.tileSize);
+        gp.obj[currentMap][0] = new OBJ_MapTransitionPickable(gp,8,7 * GamePanel.tileSize,10 * GamePanel.tileSize);
         gp.obj[currentMap][0].worldX = 37 * tileSize;
         gp.obj[currentMap][0].worldY = (int) (30.5 * tileSize);
         gp.obj[currentMap][0].interactSoundNumber = 56;
 
-        gp.obj[currentMap][1] = new OBJ_MapTransitionPickable(gp,6,7 * gp.tileSize,18 * gp.tileSize);
+        gp.obj[currentMap][1] = new OBJ_MapTransitionPickable(gp,6,7 * GamePanel.tileSize,18 * GamePanel.tileSize);
         gp.obj[currentMap][1].worldX = (int) (7.7 * tileSize);
         gp.obj[currentMap][1].worldY = (int) (22.5 * tileSize);
         gp.obj[currentMap][1].interactSoundNumber = 56;
@@ -197,16 +201,16 @@ public class AssetSetter {
             gp.obj[currentMap][2].worldY = 16 * tileSize;
         }
 
-        gp.obj[currentMap][3] = new OBJ_MapTransitionPickable(gp,9,7 * gp.tileSize,10 * gp.tileSize);
-        gp.obj[currentMap][3].worldX = (int) (37 * tileSize);
-        gp.obj[currentMap][3].worldY = (int) (40 * tileSize);
+        gp.obj[currentMap][3] = new OBJ_MapTransitionPickable(gp,9,7 * GamePanel.tileSize,10 * GamePanel.tileSize);
+        gp.obj[currentMap][3].worldX = 37 * tileSize;
+        gp.obj[currentMap][3].worldY = 40 * tileSize;
         gp.obj[currentMap][3].interactSoundNumber = 56;
 
         gp.obj[currentMap][5] = new OBJ_StorageChest(gp);
         gp.obj[currentMap][5].worldX = 17 * tileSize;
-        gp.obj[currentMap][5].worldY = 1 * tileSize;
+        gp.obj[currentMap][5].worldY = tileSize;
 
-        gp.obj[currentMap][6] = new OBJ_MapTransition(gp, 2,2 * gp.tileSize,3 * gp.tileSize);
+        gp.obj[currentMap][6] = new OBJ_MapTransition(gp, 2,2 * GamePanel.tileSize,3 * GamePanel.tileSize);
         gp.obj[currentMap][6].worldX = (int)(0.5 * tileSize);
         gp.obj[currentMap][6].worldY = (int)(0.5 * tileSize);
 
@@ -226,7 +230,7 @@ public class AssetSetter {
             gp.obj[currentMap][10].progressInteract(); // separate method not to cause sound on loading
         }
 
-        gp.obj[currentMap][11] = new OBJ_MapTransition(gp, 3, tileSize * 1, tileSize * 2);
+        gp.obj[currentMap][11] = new OBJ_MapTransition(gp, 3, tileSize, tileSize * 2);
         gp.obj[currentMap][11].worldX = 48 * tileSize;
         gp.obj[currentMap][11].worldY = 49 * tileSize;
 
@@ -253,10 +257,18 @@ public class AssetSetter {
         gp.obj[currentMap][17] = new OBJ_MapTransitionPickable(gp, 5, 9 * GamePanel.tileSize, (int)(15.5 * GamePanel.tileSize));
         gp.obj[currentMap][17].worldX = 33 * tileSize;
         gp.obj[currentMap][17].worldY = 21 * tileSize;
+
+        gp.obj[currentMap][18] = new OBJ_A1Statue(gp);
+        gp.obj[currentMap][18].worldX = 23 * tileSize;
+        gp.obj[currentMap][18].worldY = 23 * tileSize;
+
+        gp.obj[currentMap][19] = new OBJ_MapTransitionPickable(gp, 13, 9 * GamePanel.tileSize, (int)(9.5 * GamePanel.tileSize));
+        gp.obj[currentMap][19].worldX = 20 * tileSize;
+        gp.obj[currentMap][19].worldY = 35 * tileSize;
     }
 
     public void setObjectMap2(int currentMap){
-        gp.obj[currentMap][0] = new OBJ_MapTransition(gp, 1, 1 * tileSize, 2 * tileSize);
+        gp.obj[currentMap][0] = new OBJ_MapTransition(gp, 1, tileSize, 2 * tileSize);
         gp.obj[currentMap][0].worldX = 0;
         gp.obj[currentMap][0].worldY = 3 * tileSize;
         gp.obj[currentMap][0].image = setup("/objects/door/stairsup", tileSize, tileSize);
@@ -309,20 +321,40 @@ public class AssetSetter {
         gp.obj[currentMap][0].worldY = 30 * tileSize;
 
         gp.obj[currentMap][1] = new OBJ_MapTransition(gp, 1, tileSize * 46, tileSize * 48);
-        gp.obj[currentMap][1].worldX = 1 * tileSize;
-        gp.obj[currentMap][1].worldY = 0 * tileSize;
+        gp.obj[currentMap][1].worldX = tileSize;
+        gp.obj[currentMap][1].worldY = 0;
 
         if(!gp.progress.act1InteractedObjects[4]){
             gp.obj[currentMap][2] = new OBJ_TurtleHelper(gp);
             gp.obj[currentMap][2].worldX = tileSize * 38;
             gp.obj[currentMap][2].worldY = tileSize * 28;
         }
+
+        gp.obj[currentMap][3] = new OBJ_Mushroom(gp);
+        gp.obj[currentMap][3].worldX = 12 * tileSize;
+        gp.obj[currentMap][3].worldY = 33 * tileSize;
+
+        gp.obj[currentMap][4] = new OBJ_Mushroom(gp);
+        gp.obj[currentMap][4].worldX = 19 * tileSize;
+        gp.obj[currentMap][4].worldY = 31 * tileSize;
     }
 
     public void setObjectMap4(int currentMap){
         gp.obj[currentMap][0] = new OBJ_MapTransition(gp, 1, tileSize * 16, tileSize * 48);
         gp.obj[currentMap][0].worldX = 41 * tileSize;
-        gp.obj[currentMap][0].worldY = 0 * tileSize;
+        gp.obj[currentMap][0].worldY = 0;
+
+        gp.obj[currentMap][1] = new OBJ_Mushroom(gp);
+        gp.obj[currentMap][1].worldX = 8 * tileSize;
+        gp.obj[currentMap][1].worldY = 21 * tileSize;
+
+        gp.obj[currentMap][2] = new OBJ_Mushroom(gp);
+        gp.obj[currentMap][2].worldX = 4 * tileSize;
+        gp.obj[currentMap][2].worldY = 20 * tileSize;
+
+        gp.obj[currentMap][3] = new OBJ_Mushroom(gp);
+        gp.obj[currentMap][3].worldX = 5 * tileSize;
+        gp.obj[currentMap][3].worldY = 23 * tileSize;
     }
 
     private void setObjectMap5(int currentMap) {
@@ -336,21 +368,22 @@ public class AssetSetter {
         gp.obj[currentMap][0].worldX = 5 * tileSize;
         gp.obj[currentMap][0].worldY = (int)(0.5 * tileSize);
 
-        gp.obj[currentMap][1] = new OBJ_Lectern(gp);
+        gp.obj[currentMap][1] = new OBJ_BookInLibrary(gp);
         gp.obj[currentMap][1].worldX = (int)(6.5 * tileSize);
-        gp.obj[currentMap][1].worldY = (int)(5.5 * tileSize);
+        gp.obj[currentMap][1].worldY = (int)(6.5 * tileSize);
+        ((OBJ_BookInLibrary) gp.obj[currentMap][1]).setTextExorcism();
 
-        gp.obj[currentMap][2] = new OBJ_MapTransitionPickable(gp,1,8 * gp.tileSize,23 * gp.tileSize);
-        gp.obj[currentMap][2].worldX = (int) (7 * tileSize);
-        gp.obj[currentMap][2].worldY = (int) (19 * tileSize);
+        gp.obj[currentMap][2] = new OBJ_MapTransitionPickable(gp,1,8 * GamePanel.tileSize,23 * GamePanel.tileSize);
+        gp.obj[currentMap][2].worldX = 7 * tileSize;
+        gp.obj[currentMap][2].worldY = 19 * tileSize;
         gp.obj[currentMap][2].interactSoundNumber = 56;
         gp.obj[currentMap][2].image = setup("/entity/monster/act1/mimicdoor/mimic1", tileSize, tileSize);
     }
 
     public void setObjectMap7(int currentMap) {
-        gp.obj[currentMap][0] = new OBJ_MapTransitionPickable(gp,9,2 * gp.tileSize,3 * gp.tileSize);
-        gp.obj[currentMap][0].worldX = (int) (0 * tileSize);
-        gp.obj[currentMap][0].worldY = (int) (7 * tileSize);
+        gp.obj[currentMap][0] = new OBJ_MapTransitionPickable(gp,9,2 * GamePanel.tileSize,3 * GamePanel.tileSize);
+        gp.obj[currentMap][0].worldX = 0;
+        gp.obj[currentMap][0].worldY = 7 * tileSize;
         gp.obj[currentMap][0].interactSoundNumber = 60;
 
         OBJ_TreasureChest chest1 = new OBJ_TreasureChest(gp);
@@ -365,28 +398,33 @@ public class AssetSetter {
     }
 
     public void setObjectMap8(int currentMap){
-        gp.obj[currentMap][0] = new OBJ_MapTransitionPickable(gp,1,37 * gp.tileSize,32 * gp.tileSize);
-        gp.obj[currentMap][0].worldX = (int) (7 * tileSize);
-        gp.obj[currentMap][0].worldY = (int) (11 * tileSize);
+        gp.obj[currentMap][0] = new OBJ_MapTransitionPickable(gp,1,37 * GamePanel.tileSize,32 * GamePanel.tileSize);
+        gp.obj[currentMap][0].worldX = 7 * tileSize;
+        gp.obj[currentMap][0].worldY = 11 * tileSize;
         gp.obj[currentMap][0].interactSoundNumber = 56;
         gp.obj[currentMap][0].image = setup("/entity/monster/act1/mimicdoor/mimic1", tileSize, tileSize);
 
         gp.obj[currentMap][1] = new OBJ_NPCShopA1House(gp);
         gp.obj[currentMap][1].worldX = (int) (6.5 * tileSize);
-        gp.obj[currentMap][1].worldY = (int) (6 * tileSize);
+        gp.obj[currentMap][1].worldY = 6 * tileSize;
     }
 
     public void setObjectMap9(int currentMap){
-        gp.obj[currentMap][0] = new OBJ_MapTransitionPickable(gp,1,37 * gp.tileSize,41 * gp.tileSize);
-        gp.obj[currentMap][0].worldX = (int) (7 * tileSize);
-        gp.obj[currentMap][0].worldY = (int) (11 * tileSize);
+        gp.obj[currentMap][0] = new OBJ_MapTransitionPickable(gp,1,37 * GamePanel.tileSize,41 * GamePanel.tileSize);
+        gp.obj[currentMap][0].worldX = 7 * tileSize;
+        gp.obj[currentMap][0].worldY = 11 * tileSize;
         gp.obj[currentMap][0].interactSoundNumber = 56;
         gp.obj[currentMap][0].image = setup("/entity/monster/act1/mimicdoor/mimic1", tileSize, tileSize);
 
-        gp.obj[currentMap][1] = new OBJ_MapTransitionPickable(gp,7,2 * gp.tileSize,7 * gp.tileSize);
-        gp.obj[currentMap][1].worldX = (int) (1 * tileSize);
-        gp.obj[currentMap][1].worldY = (int) (3 * tileSize);
+        gp.obj[currentMap][1] = new OBJ_MapTransitionPickable(gp,7,2 * GamePanel.tileSize,7 * GamePanel.tileSize);
+        gp.obj[currentMap][1].worldX = tileSize;
+        gp.obj[currentMap][1].worldY = 3 * tileSize;
         gp.obj[currentMap][1].interactSoundNumber = 60;
+
+        gp.obj[currentMap][2] = new OBJ_BookInLibrary(gp);
+        gp.obj[currentMap][2].worldX = 1 * tileSize;
+        gp.obj[currentMap][2].worldY = 7 * tileSize;
+        ((OBJ_BookInLibrary)(gp.obj[currentMap][2])).setTextLetterToMyFamilyFromCaptain();
     }
 
     public void setObjectMap10(int currentMap){
@@ -414,14 +452,14 @@ public class AssetSetter {
         gp.obj[currentMap][4] = new OBJ_MapTransition(gp, 11, 5 * tileSize,10 * tileSize);
         gp.obj[currentMap][4].solidArea.width = 128;
         gp.obj[currentMap][4].worldX = 5 * tileSize;
-        gp.obj[currentMap][4].worldY = 0 * tileSize;
+        gp.obj[currentMap][4].worldY = 0;
 
         gp.obj[currentMap][5] = new OBJ_Door(gp);
         gp.obj[currentMap][5].worldX = 11 * tileSize;
         gp.obj[currentMap][5].worldY = 30 * tileSize;
 
         gp.obj[currentMap][6] = new OBJ_Lever(gp);
-        gp.obj[currentMap][6].worldX = 1 * tileSize;
+        gp.obj[currentMap][6].worldX = tileSize;
         gp.obj[currentMap][6].worldY = 28 * tileSize;
         gp.obj[currentMap][6].interactThisList.add(gp.obj[currentMap][5]);
     }
@@ -429,11 +467,42 @@ public class AssetSetter {
     private void setObjectMap11(int currentMap){
         gp.obj[currentMap][0] = new OBJ_A1Ending(gp);
         gp.obj[currentMap][0].worldX = (int)(6.5 * tileSize);
-        gp.obj[currentMap][0].worldY = 1 * tileSize;
+        gp.obj[currentMap][0].worldY = tileSize;
 
         gp.obj[currentMap][1] = new OBJ_FinalDoor(gp);
         gp.obj[currentMap][1].worldX = 6 * tileSize;
-        gp.obj[currentMap][1].worldY = 0 * tileSize;
+        gp.obj[currentMap][1].worldY = 0;
+    }
+
+    private void setObjectMap13(int currentMap){
+        gp.obj[currentMap][0] = new OBJ_BookInLibrary(gp);
+        gp.obj[currentMap][0].worldX = 4 * tileSize;
+        gp.obj[currentMap][0].worldY = 3 * tileSize;
+        ((OBJ_BookInLibrary) gp.obj[currentMap][0]).setTextTownStatue();
+
+        gp.obj[currentMap][1] = new OBJ_BookInLibrary(gp);
+        gp.obj[currentMap][1].worldX = 6 * tileSize;
+        gp.obj[currentMap][1].worldY = 3 * tileSize;
+        ((OBJ_BookInLibrary) gp.obj[currentMap][1]).setTextMushrooms();
+
+        gp.obj[currentMap][2] = new OBJ_BookInLibrary(gp);
+        gp.obj[currentMap][2].worldX = 8 * tileSize;
+        gp.obj[currentMap][2].worldY = 3 * tileSize;
+        ((OBJ_BookInLibrary) gp.obj[currentMap][2]).setTextTurtles();
+
+        gp.obj[currentMap][3] = new OBJ_BookInLibrary(gp);
+        gp.obj[currentMap][3].worldX = 10 * tileSize;
+        gp.obj[currentMap][3].worldY = 3 * tileSize;
+        ((OBJ_BookInLibrary) gp.obj[currentMap][3]).setTextPumpkinTrade();
+
+        gp.obj[currentMap][4] = new OBJ_BookInLibrary(gp);
+        gp.obj[currentMap][4].worldX = 12 * tileSize;
+        gp.obj[currentMap][4].worldY = 3 * tileSize;
+        ((OBJ_BookInLibrary) gp.obj[currentMap][4]).setTextUnderWater();
+
+        gp.obj[currentMap][5] = new OBJ_MapTransitionPickable(gp, 1, 20 * tileSize, 36 * tileSize);
+        gp.obj[currentMap][5].worldX = 9 * tileSize;
+        gp.obj[currentMap][5].worldY = 10    * tileSize;
     }
 
     private void setNPCMap1(int currentMap) {
@@ -467,6 +536,13 @@ public class AssetSetter {
         setTurtleInCampBasedOnQuestA1(); // uses index 6
 
         // index 8 used by npc_arrowchild spawned by fighter entity
+    }
+
+    private void setNPCMap13(int currentMap){
+        gp.npc[currentMap][0] = new NPC_Librarian(gp);
+        gp.npc[currentMap][0].worldX = tileSize * 5;
+        gp.npc[currentMap][0].worldY = tileSize * 5;
+
     }
 
 
@@ -505,7 +581,7 @@ public class AssetSetter {
     private void setNPCMap8(int currentMap) {
         gp.npc[currentMap][0] = new NPC_Shopkeeper(gp);
         gp.npc[currentMap][0].worldX = (int)(tileSize * 6.5);
-        gp.npc[currentMap][0].worldY = (int)(tileSize * 4);
+        gp.npc[currentMap][0].worldY = tileSize * 4;
     }
 
     private void setNPCMap9(int currentMap) {
@@ -893,118 +969,118 @@ public class AssetSetter {
         setBigBroFighter();
 
         gp.fighters[currentMap][1] = new MON_Skeleton(gp);
-        gp.fighters[currentMap][1].worldX = gp.tileSize * 11;
-        gp.fighters[currentMap][1].worldY = gp.tileSize * 9;
+        gp.fighters[currentMap][1].worldX = GamePanel.tileSize * 11;
+        gp.fighters[currentMap][1].worldY = GamePanel.tileSize * 9;
         gp.fighters[currentMap][1].setDefaultSpawn();
 
         gp.fighters[currentMap][2] = new MON_Skeleton(gp);
-        gp.fighters[currentMap][2].worldX = gp.tileSize * 12;
-        gp.fighters[currentMap][2].worldY = gp.tileSize * 9;
+        gp.fighters[currentMap][2].worldX = GamePanel.tileSize * 12;
+        gp.fighters[currentMap][2].worldY = GamePanel.tileSize * 9;
         gp.fighters[currentMap][2].setDefaultSpawn();
 
         gp.fighters[currentMap][3] = new MON_Skeleton(gp);
-        gp.fighters[currentMap][3].worldX = gp.tileSize * 16;
-        gp.fighters[currentMap][3].worldY = gp.tileSize * 3;
+        gp.fighters[currentMap][3].worldX = GamePanel.tileSize * 16;
+        gp.fighters[currentMap][3].worldY = GamePanel.tileSize * 3;
         gp.fighters[currentMap][3].setDefaultSpawn();
 
         gp.fighters[currentMap][4] = new MON_Skeleton(gp);
-        gp.fighters[currentMap][4].worldX = gp.tileSize * 16;
-        gp.fighters[currentMap][4].worldY = gp.tileSize * 10;
+        gp.fighters[currentMap][4].worldX = GamePanel.tileSize * 16;
+        gp.fighters[currentMap][4].worldY = GamePanel.tileSize * 10;
         gp.fighters[currentMap][4].setDefaultSpawn();
 
         gp.fighters[currentMap][5] = new MON_Skeleton(gp);
-        gp.fighters[currentMap][5].worldX = gp.tileSize * 22;
-        gp.fighters[currentMap][5].worldY = gp.tileSize * 9;
+        gp.fighters[currentMap][5].worldX = GamePanel.tileSize * 22;
+        gp.fighters[currentMap][5].worldY = GamePanel.tileSize * 9;
         gp.fighters[currentMap][5].setDefaultSpawn();
 
         gp.fighters[currentMap][6] = new MON_Skeleton(gp);
-        gp.fighters[currentMap][6].worldX = gp.tileSize * 22;
-        gp.fighters[currentMap][6].worldY = gp.tileSize * 4;
+        gp.fighters[currentMap][6].worldX = GamePanel.tileSize * 22;
+        gp.fighters[currentMap][6].worldY = GamePanel.tileSize * 4;
         gp.fighters[currentMap][6].setDefaultSpawn();
 
         gp.fighters[currentMap][7] = new MON_Skeleton(gp);
-        gp.fighters[currentMap][7].worldX = gp.tileSize * 25;
-        gp.fighters[currentMap][7].worldY = gp.tileSize * 6;
+        gp.fighters[currentMap][7].worldX = GamePanel.tileSize * 25;
+        gp.fighters[currentMap][7].worldY = GamePanel.tileSize * 6;
         gp.fighters[currentMap][7].setDefaultSpawn();
 
         gp.fighters[currentMap][8] = new MON_Skeleton(gp);
-        gp.fighters[currentMap][8].worldX = gp.tileSize * 29;
-        gp.fighters[currentMap][8].worldY = gp.tileSize * 10;
+        gp.fighters[currentMap][8].worldX = GamePanel.tileSize * 29;
+        gp.fighters[currentMap][8].worldY = GamePanel.tileSize * 10;
         gp.fighters[currentMap][8].setDefaultSpawn();
 
         gp.fighters[currentMap][9] = new MON_Skeleton(gp);
-        gp.fighters[currentMap][9].worldX = gp.tileSize * 29;
-        gp.fighters[currentMap][9].worldY = gp.tileSize * 10;
+        gp.fighters[currentMap][9].worldX = GamePanel.tileSize * 29;
+        gp.fighters[currentMap][9].worldY = GamePanel.tileSize * 10;
         gp.fighters[currentMap][9].setDefaultSpawn();
 
         gp.fighters[currentMap][10] = new MON_Skeleton(gp);
-        gp.fighters[currentMap][10].worldX = gp.tileSize * 35;
-        gp.fighters[currentMap][10].worldY = gp.tileSize * 7;
+        gp.fighters[currentMap][10].worldX = GamePanel.tileSize * 35;
+        gp.fighters[currentMap][10].worldY = GamePanel.tileSize * 7;
         gp.fighters[currentMap][10].setDefaultSpawn();
 
         gp.fighters[currentMap][11] = new MON_Skeleton(gp);
-        gp.fighters[currentMap][11].worldX = gp.tileSize * 44;
-        gp.fighters[currentMap][11].worldY = gp.tileSize * 3;
+        gp.fighters[currentMap][11].worldX = GamePanel.tileSize * 44;
+        gp.fighters[currentMap][11].worldY = GamePanel.tileSize * 3;
         gp.fighters[currentMap][11].setDefaultSpawn();
 
         gp.fighters[currentMap][12] = new MON_Skeleton(gp);
-        gp.fighters[currentMap][12].worldX = gp.tileSize * 45;
-        gp.fighters[currentMap][12].worldY = gp.tileSize * 4;
+        gp.fighters[currentMap][12].worldX = GamePanel.tileSize * 45;
+        gp.fighters[currentMap][12].worldY = GamePanel.tileSize * 4;
         gp.fighters[currentMap][12].setDefaultSpawn();
 
         gp.fighters[currentMap][13] = new MON_Skeleton(gp);
-        gp.fighters[currentMap][13].worldX = gp.tileSize * 45;
-        gp.fighters[currentMap][13].worldY = gp.tileSize * 8;
+        gp.fighters[currentMap][13].worldX = GamePanel.tileSize * 45;
+        gp.fighters[currentMap][13].worldY = GamePanel.tileSize * 8;
         gp.fighters[currentMap][13].setDefaultSpawn();
 
         gp.fighters[currentMap][14] = new MON_Skeleton(gp);
-        gp.fighters[currentMap][14].worldX = gp.tileSize * 44;
-        gp.fighters[currentMap][14].worldY = gp.tileSize * 9;
+        gp.fighters[currentMap][14].worldX = GamePanel.tileSize * 44;
+        gp.fighters[currentMap][14].worldY = GamePanel.tileSize * 9;
         gp.fighters[currentMap][14].setDefaultSpawn();
 
         gp.fighters[currentMap][15] = new MON_SkeletonKing(gp);
-        gp.fighters[currentMap][15].worldX = gp.tileSize * 45;
-        gp.fighters[currentMap][15].worldY = gp.tileSize * 6;
+        gp.fighters[currentMap][15].worldX = GamePanel.tileSize * 45;
+        gp.fighters[currentMap][15].worldY = GamePanel.tileSize * 6;
         gp.fighters[currentMap][15].setDefaultSpawn();
     }
 
     public void setFighterMap10(int currentMap){
         gp.fighters[currentMap][0] = new MON_Totem(gp);
-        gp.fighters[currentMap][0].worldX = gp.tileSize * 17;
-        gp.fighters[currentMap][0].worldY = gp.tileSize * 28;
+        gp.fighters[currentMap][0].worldX = GamePanel.tileSize * 17;
+        gp.fighters[currentMap][0].worldY = GamePanel.tileSize * 28;
         gp.fighters[currentMap][0].setAI(1);
 
         gp.fighters[currentMap][1] = new MON_Totem(gp);
-        gp.fighters[currentMap][1].worldX = gp.tileSize * 20;
-        gp.fighters[currentMap][1].worldY = gp.tileSize * 28;
+        gp.fighters[currentMap][1].worldX = GamePanel.tileSize * 20;
+        gp.fighters[currentMap][1].worldY = GamePanel.tileSize * 28;
         gp.fighters[currentMap][1].setAI(1);
 
         gp.fighters[currentMap][2] = new MON_Totem(gp);
-        gp.fighters[currentMap][2].worldX = gp.tileSize * 17;
-        gp.fighters[currentMap][2].worldY = gp.tileSize * 31;
+        gp.fighters[currentMap][2].worldX = GamePanel.tileSize * 17;
+        gp.fighters[currentMap][2].worldY = GamePanel.tileSize * 31;
         gp.fighters[currentMap][2].setAI(1);
 
         gp.fighters[currentMap][3] = new MON_Totem(gp);
-        gp.fighters[currentMap][3].worldX = gp.tileSize * 20;
-        gp.fighters[currentMap][3].worldY = gp.tileSize * 31;
+        gp.fighters[currentMap][3].worldX = GamePanel.tileSize * 20;
+        gp.fighters[currentMap][3].worldY = GamePanel.tileSize * 31;
         gp.fighters[currentMap][3].setAI(1);
 
         gp.fighters[currentMap][4] = new MON_MimicDoor(gp);
-        gp.fighters[currentMap][4].worldX = gp.tileSize * 11;
-        gp.fighters[currentMap][4].worldY = gp.tileSize * 14;
+        gp.fighters[currentMap][4].worldX = GamePanel.tileSize * 11;
+        gp.fighters[currentMap][4].worldY = GamePanel.tileSize * 14;
     }
 
     public void setFighter11(int currentMap){
         gp.fighters[currentMap][0] = new MON_ShadowBoss(gp);
-        gp.fighters[currentMap][0].worldX = gp.tileSize * 10;
-        gp.fighters[currentMap][0].worldY = gp.tileSize * 5;
+        gp.fighters[currentMap][0].worldX = GamePanel.tileSize * 10;
+        gp.fighters[currentMap][0].worldY = GamePanel.tileSize * 5;
     }
 
     public void setBigBroFighter(){
         if(!gp.progress.act1InteractedObjects[2]) {
             gp.fighters[7][0] = new A_Brother(gp);
-            gp.fighters[7][0].worldX = gp.tileSize * 1;
-            gp.fighters[7][0].worldY = gp.tileSize * 3;
+            gp.fighters[7][0].worldX = GamePanel.tileSize;
+            gp.fighters[7][0].worldY = GamePanel.tileSize * 3;
         } else {
             gp.fighters[7][0] = null;
         }
