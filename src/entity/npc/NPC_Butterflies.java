@@ -27,21 +27,12 @@ public class NPC_Butterflies extends NPC {
         direction = "down";
         defaultSpeed = 2;
         speed = defaultSpeed;
-        /*
-        solidArea = new Rectangle(2 * GamePanel.tileSize / 16,
-                2 * GamePanel.tileSize / 16,
-                GamePanel.tileSize * 12 / 16,
-                GamePanel.tileSize * 12 / 16);*/
-
         solidArea.x = 12;
         solidArea.y = 10;
         solidArea.width = 40;
         solidArea.height = 54;
         solidAreaDefaultY = solidArea.y;
         solidAreaDefaultX = solidArea.x;
-
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
         collisionEntity = false;
 
         getImage();
@@ -167,14 +158,14 @@ public class NPC_Butterflies extends NPC {
     }
 
     public void setParticlesToFast(){
-        for (int i = 0; i < butterflyHelper.length; i++) {
-            butterflyHelper[i].fastMode = true;
+        for (ButterflyParticle butterflyParticle : butterflyHelper) {
+            butterflyParticle.fastMode = true;
         }
     }
 
     public void setParticlesToSlow(){
-        for (int i = 0; i < butterflyHelper.length; i++) {
-            butterflyHelper[i].fastMode = false;
+        for (ButterflyParticle butterflyParticle : butterflyHelper) {
+            butterflyParticle.fastMode = false;
         }
     }
 

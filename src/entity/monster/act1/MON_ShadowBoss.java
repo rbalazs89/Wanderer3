@@ -535,15 +535,15 @@ public class MON_ShadowBoss extends Fighter {
             drawHitBox(g2);
         }
     }
-
+    /**
+     attackSpriteNum = Math.min((attackFrameCounter) / ( maxattackframes/ 9 ), 8);
+     attack instance creation at 80th frame
+     finish attacking at 100th frame
+     casting animation number = 2;
+     max animation sprites = 9;
+     */
     private void drawAttackImageCastinDagger() {
-        /**
-         attackSpriteNum = Math.min((attackFrameCounter) / ( maxattackframes/ 9 ), 8);
-         attack instance creation at 80th frame
-         finish attacking at 100th frame
-         casting animation number = 2;
-         max animation sprites = 9;
-         */
+
         if(attackFrameCounter == 0 || attackFrameCounter == 1){
             attackSpriteNum = 0;
         } else if(attackFrameCounter == 7){
@@ -562,15 +562,15 @@ public class MON_ShadowBoss extends Fighter {
         }
     }
 
+    /**
+     attackSpriteNum = Math.min((attackFrameCounter) / ( maxattackframes/ 9 ), 8);
+     attack instance creation at 120th frame
+     finish attacking at 140th frame
+     casting animation number = 2;
+     max animation sprites = 9;
+     attackSpriteNum = Math.min((((attackFrameCounter - 120) / ((140 - 120) / 9)) + 3), 8);
+     */
     private void drawAttackImageCastingProjectile() {
-        /**
-         attackSpriteNum = Math.min((attackFrameCounter) / ( maxattackframes/ 9 ), 8);
-         attack instance creation at 120th frame
-         finish attacking at 140th frame
-         casting animation number = 2;
-         max animation sprites = 9;
-         attackSpriteNum = Math.min((((attackFrameCounter - 120) / ((140 - 120) / 9)) + 3), 8);
-         */
         if(attackFrameCounter == 0 || attackFrameCounter == 1){
             attackSpriteNum = 0;
         } else if(attackFrameCounter == 7){
@@ -588,15 +588,14 @@ public class MON_ShadowBoss extends Fighter {
             case 3 -> image = attackLeft[attackSpriteNum];
         }
     }
-
+    /**
+     attackSpriteNum = Math.min((attackFrameCounter) / ( maxattackframes/ 9 ), 8);
+     attack instance creation at 80th frame
+     finish attacking at 110th frame
+     casting animation number = 2;
+     max animation sprites = 9;
+     */
     private void drawAttackImageCastingDragon() {
-        /**
-        attackSpriteNum = Math.min((attackFrameCounter) / ( maxattackframes/ 9 ), 8);
-        attack instance creation at 80th frame
-         finish attacking at 110th frame
-         casting animation number = 2;
-         max animation sprites = 9;
-         */
         if(attackFrameCounter == 0 || attackFrameCounter == 1){
             attackSpriteNum = 0;
         } else if(attackFrameCounter == 7){
@@ -659,15 +658,13 @@ public class MON_ShadowBoss extends Fighter {
             case 3 -> image = attackLeft[attackSpriteNum];
         }
     }
-
+    /**first 10 frames move back
+     * until 30th frame move forward
+     * at 60th frame attack
+     * 80th frame attack end
+     * reference: attackSpriteNum = Math.min((((attackFrameCounter - 80) / ((100 - 80) / 9)) + 3), 8);
+     * */
     public void drawAttackImageMelee2(){
-        /**first 10 frames move back
-         * until 30th frame move forward
-         * at 60th frame attack
-         * 80th frame attack end
-         * reference: attackSpriteNum = Math.min((((attackFrameCounter - 80) / ((100 - 80) / 9)) + 3), 8);
-         * */
-
         if(attackFrameCounter < 40){
             attackSpriteNum = 0;
         } else {
@@ -824,10 +821,7 @@ public class MON_ShadowBoss extends Fighter {
     }
 
     public void printStatus(){
-        /*if(targetEntity != null){
-            System.out.println(targetEntity.name);
-        }
-         */
+
     }
 
     public void drawGetWalkingImage(){

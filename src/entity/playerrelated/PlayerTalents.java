@@ -126,6 +126,7 @@ public class PlayerTalents {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions// noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
             image = uTool.scaleImage(image, width, height);
         }catch (IOException e){
@@ -201,6 +202,7 @@ public class PlayerTalents {
     public BufferedImage setupSheet(String imageName, int x, int y, int width, int height) {
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
             image = image.getSubimage(x, y, width, height);
         }catch (IOException e){

@@ -22,8 +22,6 @@ public class MON_MeleeAttack2 extends Entity {
         this.originEntity = originEntity;
         maxLife = life;
         gp.attacks.add(this);
-        //int middleX = originEntity.worldX - gp.player.worldX + gp.player.screenX + gp.tileSize / 2;
-        //int middleY = originEntity.worldY - gp.player.worldY + gp.player.screenY + gp.tileSize / 2;
         int middleX = originEntity.screenMiddleX();
         int middleY = originEntity.screenMiddleY();
         damageType = 0; //physical

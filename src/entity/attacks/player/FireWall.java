@@ -12,8 +12,6 @@ public class FireWall extends Spells {
     public BufferedImage[] images = new BufferedImage[8];
     private int fireWallCounter = 0;
     private int imageNumber = 0;
-    //private final int originEntityXAtCast;
-    //private final int originEntityYAtCast;
     private final int x10,x20,x30,x40,y10,y20,y30,y40;
     private int x1,x2,x3,x4,y1,y2,y3,y4;
     private int counter = 0;

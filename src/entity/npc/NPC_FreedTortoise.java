@@ -156,18 +156,12 @@ public class NPC_FreedTortoise extends NPC {
 
         switch (dialogueIndex) {
             // turtle related:
-            case 0:
-                currentDialogue = "Oh, sweet, merciful ground! I missed you so much!";
-                break;
-            case 1:
-                currentDialogue = "That was the worst experience of my entire life. And I once accidentally sat on a cactus.";
-                break;
-            case 2:
-                currentDialogue = "You're a true hero! A champion of turtles everywhere! I would write you a poem, but, uh… I forgot how to write.";
-                break;
-            case 3:
-                currentDialogue = "Follow me back to my den, a true hero like you deserves a reward.";
-                break;
+            case 0 -> currentDialogue = "Oh, sweet, merciful ground! I missed you so much!";
+            case 1 ->
+                    currentDialogue = "That was the worst experience of my entire life. And I once accidentally sat on a cactus.";
+            case 2 ->
+                    currentDialogue = "You're a true hero! A champion of turtles everywhere! I would write you a poem, but, uh… I forgot how to write.";
+            case 3 -> currentDialogue = "Follow me back to my den, a true hero like you deserves a reward.";
         }
     }
 

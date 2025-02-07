@@ -4,11 +4,9 @@ import entity.Entity;
 import entity.Fighter;
 import entity.attacks.projectile.MON_PikaLightning;
 import main.GamePanel;
-import object.OBJ_DroppedItem;
 import object.OBJ_DroppedTalentBook;
 
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 public class MON_RedBunny extends Fighter {
 

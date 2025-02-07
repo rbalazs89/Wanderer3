@@ -14,7 +14,7 @@ public class ParticleEffectForAttack extends Spells {
     private final int endY;
     private final int playerWorldAtStartX;
     private final int playerWorldAtStartY;
-    private CopyOnWriteArrayList<ParticleEffectForAttack.Particle> particles;
+    private final CopyOnWriteArrayList<ParticleEffectForAttack.Particle> particles;
     private final Random random = new Random();
 
     public ParticleEffectForAttack(GamePanel gp, int startX, int startY, int endX, int endY) {

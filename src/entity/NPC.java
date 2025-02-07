@@ -118,10 +118,7 @@ public abstract class NPC extends Entity{
 
 
     public void drawSpecial(Graphics2D g2){
-        /*
-        if(actionWhenNear1){
-            nearHeadDialogue(g2);
-        }*/
+
     }
 
     public void drawSpecial(Graphics2D g2, int x, int y){

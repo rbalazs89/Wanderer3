@@ -6,7 +6,6 @@ import tool.TearParticle;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NPC_ArrowChild extends NPC {
@@ -15,8 +14,8 @@ public class NPC_ArrowChild extends NPC {
     private static final int fallDistanceToRight = 3 * GamePanel.tileSize;
     private static final int fallingDistanceToDown = 5 * GamePanel.tileSize;
     private static final int stopFallingAtThisFrame = 100;
-    public int startX = 0;
-    public int startY = 0;
+    public int startX;
+    public int startY;
     public int addXFromFall = 0;
     public int addYFromFall = 0;
     public int cryingCounter = 0;
@@ -113,10 +112,6 @@ public class NPC_ArrowChild extends NPC {
                 particle.draw(g2);
             }
         }
-
-        /*for (TearParticle particle : particles) {
-            particle.draw(g2);
-        }*/
     }
 
     public void getFallingSprite(){

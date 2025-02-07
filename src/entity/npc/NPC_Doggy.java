@@ -11,10 +11,10 @@ public class NPC_Doggy extends Entity {
         super(gp);
         direction = "down";
         speed = 1;
-        solidArea = new Rectangle(3 * gp.tileSize / 16,
-                gp.tileSize * 5/ 16,
-                gp.tileSize * 10 / 16,
-                gp.tileSize * 11 / 16);
+        solidArea = new Rectangle(3 * GamePanel.tileSize / 16,
+                GamePanel.tileSize * 5/ 16,
+                GamePanel.tileSize * 10 / 16,
+                GamePanel.tileSize * 11 / 16);
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         getImage();
@@ -49,10 +49,10 @@ public class NPC_Doggy extends Entity {
     public void draw(Graphics2D g2) {
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
-        if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+        if (worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY) {
 
             getWalkImage();
             drawGetWalkSpriteNumber();
@@ -75,18 +75,10 @@ public class NPC_Doggy extends Entity {
 
     public void getWalkImage() {
         switch (direction) {
-            case "left":
-                image = walkLeft[spriteNum];
-                break;
-            case "right":
-                image = walkRight[spriteNum];
-                break;
-            case "up":
-                image = walkUp[spriteNum];
-                break;
-            case "down":
-                image = walkDown[spriteNum];
-                break;
+            case "left" -> image = walkLeft[spriteNum];
+            case "right" -> image = walkRight[spriteNum];
+            case "up" -> image = walkUp[spriteNum];
+            case "down" -> image = walkDown[spriteNum];
         }
     }
 

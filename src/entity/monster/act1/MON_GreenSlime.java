@@ -10,17 +10,6 @@ import java.util.Random;
 
 public class MON_GreenSlime extends Fighter {
 
-    //GamePanel gp;
-
-    //public int contactGraceCounter = 0;
-    //public boolean contactGraced = false;
-    //public int contactGraceFrame = 30;
-    //public int entityType = 2;
-    //public boolean contactGraceCollision = false; can use the same field
-
-    /*public int attackGraceCounter = 0;
-    public boolean attackGraced = false;
-    public static int attackGraceFrame = 60;*/
     int counterMagic1 = 0;
     boolean canCastMagic1 = true;
 

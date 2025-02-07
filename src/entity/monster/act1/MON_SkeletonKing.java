@@ -126,8 +126,8 @@ public class MON_SkeletonKing extends Fighter {
         screenY = screenY + 32;
     }
 
+    /**int framesPerSprite = 60 / 10; // 60 frames divided by 10 sprites*/
     public void drawDying(){
-        /**int framesPerSprite = 60 / 10; // 60 frames divided by 10 sprites*/
         int deathSprite = Math.min(deathTimeCounter / 12, 4);
         image = dying[deathSprite];
         screenX = screenX - GamePanel.tileSize;

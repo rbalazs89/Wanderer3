@@ -1,8 +1,6 @@
 package entity.monster.act1;
 
 import entity.Fighter;
-import entity.attacks.melee.MON_MeleeAttack;
-import entity.attacks.melee.MON_MeleeAttack2;
 import entity.attacks.melee.MON_MeleeAttackStun;
 import main.GamePanel;
 

@@ -14,10 +14,10 @@ public class NPC_Priest extends Entity {
         super(gp);
         direction ="down";
         speed = 1;
-        solidArea =new Rectangle(3*gp.tileSize /16,
-                  gp.tileSize *5/16,
-                  gp.tileSize *10/16,
-                  gp.tileSize *11/16);
+        solidArea =new Rectangle(3* GamePanel.tileSize /16,
+                  GamePanel.tileSize *5/16,
+                  GamePanel.tileSize *10/16,
+                  GamePanel.tileSize *11/16);
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         getImage();
@@ -65,15 +65,13 @@ public class NPC_Priest extends Entity {
         BufferedImage image = null;
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
-        if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
-            switch(direction){
-                case "left":
-                case "down": image = walkLeft[spriteNum]; break;
-                case "right":
-                case "up": image = walkRight[spriteNum]; break;
+        if(worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
+            switch (direction) {
+                case "left", "down" -> image = walkLeft[spriteNum];
+                case "right", "up" -> image = walkRight[spriteNum];
             }
 
             if (gp.gameState == gp.playState) {

@@ -473,38 +473,6 @@ public class MON_RedWizard extends Fighter {
         return false;
     }
 
-    /*
-    public void findAvailableTileGroup2(int col, int row){
-        if(findAvailableTile(col - 1, row - 1)){
-            return;
-        }
-        if(findAvailableTile(col , row - 1)){
-            return;
-        }
-        if(findAvailableTile(col + 1, row - 1)){
-            return;
-        }
-        if(findAvailableTile(col - 1, row)){
-            return;
-        }
-        if(findAvailableTile(col, row)){
-            return;
-        }
-        if(findAvailableTile(col + 1, row)){
-            return;
-        }
-        if(findAvailableTile(col - 1, row + 1)){
-            return;
-        }
-        if(findAvailableTile(col, row + 1)){
-            return;
-        }
-        if(findAvailableTile(col + 1, row + 1)){
-            return;
-        }
-    }
-    */
-
     public void findAvailableTileGroup(int col, int row) {
         ArrayList<int[]> tileCoordinates = new ArrayList<>();
         tileCoordinates.add(new int[]{col - 1, row - 1});

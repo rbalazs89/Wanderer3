@@ -14,8 +14,8 @@ public class NPC_Pumpkin extends Entity {
         direction = "down";
         defaultSpeed = 1;
         speed = defaultSpeed;
-        solidArea = new Rectangle(1 * GamePanel.tileSize / 16,
-                GamePanel.tileSize * 1/ 16,
+        solidArea = new Rectangle(GamePanel.tileSize / 16,
+                GamePanel.tileSize / 16,
                 GamePanel.tileSize * 14 / 16,
                 GamePanel.tileSize * 14 / 16);
 
@@ -99,18 +99,10 @@ public class NPC_Pumpkin extends Entity {
 
     public void getWalkImage() {
         switch (direction) {
-            case "left":
-                image = walkLeft[spriteNum];
-                break;
-            case "right":
-                image = walkRight[spriteNum];
-                break;
-            case "up":
-                image = walkUp[spriteNum];
-                break;
-            case "down":
-                image = walkDown[spriteNum];
-                break;
+            case "left" -> image = walkLeft[spriteNum];
+            case "right" -> image = walkRight[spriteNum];
+            case "up" -> image = walkUp[spriteNum];
+            case "down" -> image = walkDown[spriteNum];
         }
     }
 

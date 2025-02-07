@@ -18,8 +18,6 @@ public class PlayerSpellList {
     }
 
     private void createSpellList() {
-        //int imageSize = 70;
-
         PlayerSpell fireBall = new PlayerSpell(player);
         allPlayerAvailableSpells[0] = fireBall;
         fireBall.currentPointsOnSpell = 1;
@@ -261,6 +259,7 @@ public class PlayerSpellList {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
             image = uTool.scaleImage(image, width, height);
         }catch (IOException e){
@@ -272,6 +271,7 @@ public class PlayerSpellList {
     public BufferedImage setup(String imageName) {
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
         }catch (IOException e){
             e.printStackTrace();
@@ -492,6 +492,7 @@ public class PlayerSpellList {
     public BufferedImage setupSheet(String imageName, int x, int y, int width, int height) {
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
             image = image.getSubimage(x, y, width, height);
         }catch (IOException e){

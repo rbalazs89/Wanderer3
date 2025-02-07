@@ -50,7 +50,7 @@ public class Entity {
             down1, down2, down3, down4, down5, down6, down7, down8, down9,
             left1, left2, left3, left4, left5, left6, left7, left8, left9,
             right1, right2, right3, right4, right5, right6, right7, right8, right9,
-            death1, death2, death3, death4, death5, death6, death7, death8, death9, death10,
+            death1, death2, death3, death4, death5, death6, death7,
             castUp1, castUp2, castUp3, castUp4, castUp5, castUp6, castUp7, castUp8, castUp9,
             castRight1, castRight2, castRight3, castRight4, castRight5, castRight6, castRight7, castRight8, castRight9,
             castDown1, castDown2, castDown3, castDown4, castDown5, castDown6, castDown7, castDown8, castDown9,
@@ -80,8 +80,6 @@ public class Entity {
     public boolean actionWhenNear1 = false;
     public int actionWhenNearCounter = 0;
     public int randomMovementCheckIfCollidedCounter = 0;
-    //public String name; //not used for now
-    //public boolean collisionTiles = true; // always true
     public boolean collisionEntity = false; // better false for npcs ? collision with other entities
     public String[] dialogues = new String[20];
 
@@ -91,7 +89,8 @@ public class Entity {
     /// to avoid new instances:
     Color c1 = new Color(0,0,0,120);
     Color c2 = new Color(255,255,255);
-    BasicStroke stroke = new BasicStroke(1);
+    BasicStroke strokeOne = new BasicStroke(1);
+    BasicStroke strokeTwo = new BasicStroke(1);
     // utility
 
     //MONSTERS:
@@ -134,12 +133,12 @@ public class Entity {
 
     }
 
+    //gp.cChecker.checkEntity(this, gp.npc); // npc no collision anyway
+    //gp.cChecker.checkEntity(this, gp.fighters); // check monster with eachother
     public void checkCollision() {
         collisionOn = false;
         gp.cChecker.checkTile(this);
         gp.cChecker.checkObject(this, false);
-        //gp.cChecker.checkEntity(this, gp.npc); // npc no collision anyway
-        //gp.cChecker.checkEntity(this, gp.fighters); // check monster with eachother
     }
 
     public void update() {
@@ -234,6 +233,7 @@ public class Entity {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
             image = uTool.scaleImage(image, width, height);
         }catch (IOException e){
@@ -245,6 +245,7 @@ public class Entity {
     public BufferedImage setup(String imageName) {
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
         }catch (IOException e){
             e.printStackTrace();
@@ -263,6 +264,7 @@ public class Entity {
         BufferedImage image = null;
         UtilityTool uTool = new UtilityTool();
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
             image = image.getSubimage(x, y, width, height);
             image = uTool.scaleImage(image, scaleWidth, scaleHeight);
@@ -282,6 +284,7 @@ public class Entity {
     public BufferedImage setupImage(String imageName){
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
         } catch (IOException e){
             e.printStackTrace();
@@ -292,6 +295,7 @@ public class Entity {
     public BufferedImage setupSheet2(String imageName, int x, int y, int width, int height) {
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
             image = image.getSubimage(x, y, width, height);
         }catch (IOException e){
@@ -347,16 +351,6 @@ public class Entity {
         return (int) Math.sqrt(Math.pow(worldMiddleX() - entity.worldMiddleX(), 2) + Math.pow(worldMiddleY() - entity.worldMiddleY(), 2));
     }
 
-    /*
-    public Rectangle worldSolidRectangle(){
-        Rectangle entityWorldRectangle;
-        entityWorldRectangle = new Rectangle();
-        entityWorldRectangle.x = worldX + solidArea.x;
-        entityWorldRectangle.y = worldY + solidArea.y;
-        entityWorldRectangle.width = solidArea.width;
-        entityWorldRectangle.height = solidArea.height;
-        return entityWorldRectangle;
-    }*/
 
     public Rectangle screenSolidRectangle(){
         Rectangle entityScreenRectangle = new Rectangle();
@@ -368,12 +362,10 @@ public class Entity {
     }
 
     public boolean isHostile(Entity originEntity, Entity attackedEntity){
-        if(originEntity.entityType == 0 && (attackedEntity.entityType == 2 || attackedEntity.entityType == 3 || attackedEntity.entityType == 4) ||
-                        originEntity.entityType == 2 && (attackedEntity.entityType == 0 || attackedEntity.entityType == 3 || attackedEntity.entityType == 5) ||
-                        originEntity.entityType == 3 && (attackedEntity.entityType == 0 || attackedEntity.entityType == 2 || attackedEntity.entityType == 5) ||
-                        originEntity.entityType == 5 && (attackedEntity.entityType == 2 || attackedEntity.entityType == 3)){
-            return true;
-        } else return false;
+        return originEntity.entityType == 0 && (attackedEntity.entityType == 2 || attackedEntity.entityType == 3 || attackedEntity.entityType == 4) ||
+                originEntity.entityType == 2 && (attackedEntity.entityType == 0 || attackedEntity.entityType == 3 || attackedEntity.entityType == 5) ||
+                originEntity.entityType == 3 && (attackedEntity.entityType == 0 || attackedEntity.entityType == 2 || attackedEntity.entityType == 5) ||
+                originEntity.entityType == 5 && (attackedEntity.entityType == 2 || attackedEntity.entityType == 3);
     }
 
     public void decideIfPlayerNear() {
@@ -447,7 +439,7 @@ public class Entity {
 
         // Draw the silver border
         g2.setColor(new Color(192, 192, 192));
-        g2.setStroke(new BasicStroke(2));
+        g2.setStroke(strokeTwo);
         g2.drawRoundRect(x, y, width, boxHeight, 10, 10);
 
         // Draw the text
@@ -475,7 +467,7 @@ public class Entity {
 
         // Draw the silver border
         g2.setColor(new Color(192, 192, 192));
-        g2.setStroke(new BasicStroke(2));
+        g2.setStroke(strokeTwo);
         g2.drawRoundRect(x, y, width, boxHeight, 10, 10);
 
         // Draw the text

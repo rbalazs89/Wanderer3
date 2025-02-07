@@ -86,6 +86,7 @@ public class NPC_TurnedOverTortoise extends NPC {
         UtilityTool uTool = new UtilityTool();
         try {
             // Load the image
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName + ".png"));
 
             // Crop the image
@@ -117,66 +118,44 @@ public class NPC_TurnedOverTortoise extends NPC {
     public void setupCurrentDialogueWhenFar(int dialogueCounter){
         //int randomNumber = ThreadLocalRandom.current().nextInt(10);
         switch (dialogueCounter) {
-            case 0:
-                currentDialogue = "Maybe if I stay very still, gravity will get bored and let me go.";
-                break;
-            case 1:
-                currentDialogue = "Alright, let’s think. If I shift my weight juuuust right—aaand now I’m even more stuck. Great.";
-                break;
-            case 2:
-                currentDialogue = "This wouldn’t have happened if I had gone left instead of right. Or if I had stayed in bed.";
-                break;
-            case 3:
-                currentDialogue = "Hoo boy, that was quite the tumble. Really nailed the landing, though! 10 out of 10 on the backspin.";
-                break;
-            case 4:
-                currentDialogue = "What if I just start yelling? Turtles don’t usually yell, but maybe today’s the day we change history.";
-                break;
-            case 5:
-                currentDialogue = "I knew I should have skipped leg day. Now look at me—flailing like an overturned omelet.";
-                break;
-            case 6:
-                currentDialogue = "I wonder what the sky tastes like. Huh. Been staring at it long enough, might as well start asking questions";
-                break;
-            case 7:
-                currentDialogue = "This is a sign. A sign that I should rethink all my life choices. First step: never go on a walk ever again.";
-                break;
-            default:
-                currentDialogue = "I like turtles";
-                break;
+            case 0 -> currentDialogue = "Maybe if I stay very still, gravity will get bored and let me go.";
+            case 1 ->
+                    currentDialogue = "Alright, let’s think. If I shift my weight juuuust right—aaand now I’m even more stuck. Great.";
+            case 2 ->
+                    currentDialogue = "This wouldn’t have happened if I had gone left instead of right. Or if I had stayed in bed.";
+            case 3 ->
+                    currentDialogue = "Hoo boy, that was quite the tumble. Really nailed the landing, though! 10 out of 10 on the backspin.";
+            case 4 ->
+                    currentDialogue = "What if I just start yelling? Turtles don’t usually yell, but maybe today’s the day we change history.";
+            case 5 ->
+                    currentDialogue = "I knew I should have skipped leg day. Now look at me—flailing like an overturned omelet.";
+            case 6 ->
+                    currentDialogue = "I wonder what the sky tastes like. Huh. Been staring at it long enough, might as well start asking questions";
+            case 7 ->
+                    currentDialogue = "This is a sign. A sign that I should rethink all my life choices. First step: never go on a walk ever again.";
+            default -> currentDialogue = "I like turtles";
         }
     }
 
     public void setupCurrentDialogueWhenPlayerNear(int dialogueCounter){
         //int randomNumber = ThreadLocalRandom.current().nextInt(10);
         switch (dialogueCounter) {
-            case 0:
-                currentDialogue = "Oh, thank goodness! A kind soul has arrived! … Wait. Why are you just standing there?";
-                break;
-            case 1:
-                currentDialogue = "I can explain! You see, I was testing gravity… and, uh… yep, still works. Now please help me up!";
-                break;
-            case 2:
-                currentDialogue = "I swear, if you take one more step away from me, I will—oh no, I can’t even roll menacingly!";
-                break;
-            case 3:
-                currentDialogue = "This is fine. Totally fine. I’ll just start a new life here. Upside-down. Turtles are adaptable, right?";
-                break;
-            case 4:
-                currentDialogue = "You know, some turtles can flip themselves back over… but I am NOT one of those turtles.";
-                break;
-            case 5:
-                currentDialogue = "I bet if I had arms like you, I’d be helping YOU right now. Just saying.";
-                break;
-            case 6:
-                currentDialogue = "Oh sure, take your time! I love staring at the sky for hours… It’s not like I have things to do!";
-                break;
-            case 7:
-                currentDialogue = "Listen, if you help me, I promise I won’t follow you home and become your weirdly loyal pet. Maybe.";
-                break;
-            default:
-                currentDialogue = "I like turtles";
-                break;
+            case 0 ->
+                    currentDialogue = "Oh, thank goodness! A kind soul has arrived! … Wait. Why are you just standing there?";
+            case 1 ->
+                    currentDialogue = "I can explain! You see, I was testing gravity… and, uh… yep, still works. Now please help me up!";
+            case 2 ->
+                    currentDialogue = "I swear, if you take one more step away from me, I will—oh no, I can’t even roll menacingly!";
+            case 3 ->
+                    currentDialogue = "This is fine. Totally fine. I’ll just start a new life here. Upside-down. Turtles are adaptable, right?";
+            case 4 ->
+                    currentDialogue = "You know, some turtles can flip themselves back over… but I am NOT one of those turtles.";
+            case 5 -> currentDialogue = "I bet if I had arms like you, I’d be helping YOU right now. Just saying.";
+            case 6 ->
+                    currentDialogue = "Oh sure, take your time! I love staring at the sky for hours… It’s not like I have things to do!";
+            case 7 ->
+                    currentDialogue = "Listen, if you help me, I promise I won’t follow you home and become your weirdly loyal pet. Maybe.";
+            default -> currentDialogue = "I like turtles";
         }
     }
 }

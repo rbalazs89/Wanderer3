@@ -332,7 +332,7 @@ public class EntityImageLoader {
         return image;
     }
 
-    public BufferedImage setupSheet2(String imageName, int x, int y, int width, int height, int scaleHeigth, int scaleWidth) {
+    public BufferedImage setupSheet2(String imageName, int x, int y, int width, int height) {
         BufferedImage image = null;
         try{
             // noinspection ConstantConditions
@@ -344,10 +344,10 @@ public class EntityImageLoader {
         return image;
     }
 
-    public BufferedImage setupSheet3(BufferedImage image, int x, int y, int width, int height, int scaleHeigth, int scaleWidth) {
+    public BufferedImage setupSheet3(BufferedImage image, int x, int y, int width, int height, int scaleHeight, int scaleWidth) {
         UtilityTool uTool = new UtilityTool();
         image = image.getSubimage(x, y, width, height);
-        image = uTool.scaleImage(image, scaleWidth, scaleHeigth);
+        image = uTool.scaleImage(image, scaleWidth, scaleHeight);
         return image;
     }
 

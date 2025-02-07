@@ -12,10 +12,10 @@ public class NPC_CaravanBro extends Entity {
         direction = "down";
         defaultSpeed = 1;
         speed = defaultSpeed;
-        solidArea = new Rectangle(3 * gp.tileSize / 16,
-                gp.tileSize * 5/ 16,
-                gp.tileSize * 10 / 16,
-                gp.tileSize * 11 / 16);
+        solidArea = new Rectangle(3 * GamePanel.tileSize / 16,
+                GamePanel.tileSize * 5/ 16,
+                GamePanel.tileSize * 10 / 16,
+                GamePanel.tileSize * 11 / 16);
 
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
@@ -24,12 +24,8 @@ public class NPC_CaravanBro extends Entity {
         headDialogueString = "The route to the north is blocked. Go and explore the woods to the south!";
     }
 
-    public void updateHeadDialogue(String newDialogue){
-        headDialogueString = newDialogue;
-    }
-
     public void getImage() {
-        int tileSize = gp.tileSize;
+        int tileSize = GamePanel.tileSize;
         up1 = setup("/entity/npc_caravanbro/caravan_up_1", tileSize, tileSize);
         up2 = setup("/entity/npc_caravanbro/caravan_up_2", tileSize, tileSize);
         up3 = setup("/entity/npc_caravanbro/caravan_up_3", tileSize, tileSize);
@@ -57,12 +53,12 @@ public class NPC_CaravanBro extends Entity {
         BufferedImage image = null;
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
-        if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
-            switch(direction) {
-                case "left":
+        if(worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
+            switch (direction) {
+                case "left" -> {
                     if (spriteNum == 1) {
                         image = left1;
                     }
@@ -72,8 +68,8 @@ public class NPC_CaravanBro extends Entity {
                     if (spriteNum == 3) {
                         image = left3;
                     }
-                    break;
-                case "right":
+                }
+                case "right" -> {
                     if (spriteNum == 1) {
                         image = right1;
                     }
@@ -83,8 +79,8 @@ public class NPC_CaravanBro extends Entity {
                     if (spriteNum == 3) {
                         image = right3;
                     }
-                    break;
-                case "up":
+                }
+                case "up" -> {
                     if (spriteNum == 1) {
                         image = up1;
                     }
@@ -94,8 +90,8 @@ public class NPC_CaravanBro extends Entity {
                     if (spriteNum == 3) {
                         image = up3;
                     }
-                    break;
-                case "down":
+                }
+                case "down" -> {
                     if (spriteNum == 1) {
                         image = down1;
                     }
@@ -103,9 +99,9 @@ public class NPC_CaravanBro extends Entity {
                         image = down2;
                     }
                     if (spriteNum == 3) {
-                        image = down3                                                                                                                                       ;
+                        image = down3;
                     }
-                    break;
+                }
             }
             if (gp.gameState == gp.playState) {
                 spriteCounter++;

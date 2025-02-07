@@ -13,7 +13,6 @@ public class ENEMY_Child extends Fighter {
     public final int maxAttackImage = 9;
     public final int maxWalkImage = 9;
     public final int walkSpriteChangeFrameValue = 5;
-    public final int attackSpriteChangeFrameValue = 5;
 
     public ENEMY_Child(GamePanel gp){
         super(gp);
@@ -150,15 +149,6 @@ public class ENEMY_Child extends Fighter {
 
             //DRAW HITBOX:
             drawHitBox(g2);
-        }
-    }
-
-    //do in draw method instead when
-    public void setWalkingSpriteNumber() {
-        spriteCounter++;
-        if (spriteCounter > walkSpriteChangeFrameValue) {
-            walkSpriteNum = (walkSpriteNum + 1) % maxWalkSpriteArrayLength;
-            spriteCounter = 0;
         }
     }
 

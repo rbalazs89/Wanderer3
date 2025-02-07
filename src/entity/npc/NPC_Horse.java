@@ -13,10 +13,10 @@ public class NPC_Horse extends Entity {
         direction = "down";
         speed = 1;
         defaultSpeed = 1;
-        solidArea = new Rectangle(3 * gp.tileSize / 16,
-                gp.tileSize * 5/ 16,
-                gp.tileSize * 10 / 16,
-                gp.tileSize * 11 / 16);
+        solidArea = new Rectangle(3 * GamePanel.tileSize / 16,
+                GamePanel.tileSize * 5/ 16,
+                GamePanel.tileSize * 10 / 16,
+                GamePanel.tileSize * 11 / 16);
 
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
@@ -26,18 +26,18 @@ public class NPC_Horse extends Entity {
     }
 
     public void getImage(){
-        up1 = setup("/entity/npchorse/horse_up_1", gp.tileSize, gp.tileSize);
-        up2 = setup("/entity/npchorse/horse_up_2", gp.tileSize, gp.tileSize);
-        up3 = setup("/entity/npchorse/horse_up_3", gp.tileSize, gp.tileSize);
-        down1 = setup("/entity/npchorse/horse_down_1", gp.tileSize, gp.tileSize);
-        down2 = setup("/entity/npchorse/horse_down_2", gp.tileSize, gp.tileSize);
-        down3 = setup("/entity/npchorse/horse_down_3", gp.tileSize, gp.tileSize);
-        left1 = setup("/entity/npchorse/horse_left_1", gp.tileSize, gp.tileSize);
-        left2 = setup("/entity/npchorse/horse_left_2", gp.tileSize, gp.tileSize);
-        left3 = setup("/entity/npchorse/horse_left_3", gp.tileSize, gp.tileSize);
-        right1 = setup("/entity/npchorse/horse_right_1", gp.tileSize, gp.tileSize);
-        right2 = setup("/entity/npchorse/horse_right_2", gp.tileSize, gp.tileSize);
-        right3 = setup("/entity/npchorse/horse_right_3", gp.tileSize, gp.tileSize);
+        up1 = setup("/entity/npchorse/horse_up_1", GamePanel.tileSize, GamePanel.tileSize);
+        up2 = setup("/entity/npchorse/horse_up_2", GamePanel.tileSize, GamePanel.tileSize);
+        up3 = setup("/entity/npchorse/horse_up_3", GamePanel.tileSize, GamePanel.tileSize);
+        down1 = setup("/entity/npchorse/horse_down_1", GamePanel.tileSize, GamePanel.tileSize);
+        down2 = setup("/entity/npchorse/horse_down_2", GamePanel.tileSize, GamePanel.tileSize);
+        down3 = setup("/entity/npchorse/horse_down_3", GamePanel.tileSize, GamePanel.tileSize);
+        left1 = setup("/entity/npchorse/horse_left_1", GamePanel.tileSize, GamePanel.tileSize);
+        left2 = setup("/entity/npchorse/horse_left_2", GamePanel.tileSize, GamePanel.tileSize);
+        left3 = setup("/entity/npchorse/horse_left_3", GamePanel.tileSize, GamePanel.tileSize);
+        right1 = setup("/entity/npchorse/horse_right_1", GamePanel.tileSize, GamePanel.tileSize);
+        right2 = setup("/entity/npchorse/horse_right_2", GamePanel.tileSize, GamePanel.tileSize);
+        right3 = setup("/entity/npchorse/horse_right_3", GamePanel.tileSize, GamePanel.tileSize);
     }
 
     public void setActionAI(){
@@ -52,7 +52,7 @@ public class NPC_Horse extends Entity {
 
     public void followBehaviourAct1(){
         decideIfPlayerNear();
-        if(worldX < 19 * gp.tileSize || worldY > gp.tileSize * 7){
+        if(worldX < 19 * GamePanel.tileSize || worldY > GamePanel.tileSize * 7){
             targetPathFollowed = true;
         }
         if(targetPathFollowed){
@@ -69,10 +69,10 @@ public class NPC_Horse extends Entity {
         BufferedImage image = null;
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
-        if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
+        if(worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
             switch(direction) {
                 case "left":
                     if (spriteNum == 1) {

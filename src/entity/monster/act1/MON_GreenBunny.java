@@ -3,8 +3,6 @@ package entity.monster.act1;
 import entity.Fighter;
 import main.GamePanel;
 
-import java.awt.image.BufferedImage;
-
 public class MON_GreenBunny extends Fighter {
 
     public MON_GreenBunny(GamePanel gp){

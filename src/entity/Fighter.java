@@ -16,7 +16,7 @@ public abstract class Fighter extends Entity {
     public int[] resist = new int[4];
     public int contactGraceCounter = 0;
     public boolean contactGraced = false;
-    public int contactGraceFrame = 30;
+    public int contactGraceFrame = 35;
     public boolean drawHpBar = false;
     public int experienceValue = 1;
     public int meleeAttackRange = GamePanel.tileSize;
@@ -316,23 +316,7 @@ public abstract class Fighter extends Entity {
         }
     }
     public void attackImageCorrection(){
-        /*
-        switch (attackDirection) {
-            case "up":
-                screenX = screenX - (image.getWidth()/2 - gp.tileSize/2);
-                screenY = screenY - (image.getHeight() - gp.tileSize);
-                break;
-            case "right":
-                screenY = screenY - (image.getHeight()/2 - gp.tileSize/2);
-                break;
-            case "down":
-                screenX = screenX - (image.getWidth()/2 - gp.tileSize/2);
-                break;
-            case "left":
-                screenX = screenX - (image.getWidth() - gp.tileSize);
-                screenY = screenY - (image.getHeight()/2 - gp.tileSize/2);
-                break;
-        }*/
+
     }
 
     public void drawDying(){
@@ -561,13 +545,12 @@ public abstract class Fighter extends Entity {
             }
         }
     }
-
+    //gp.cChecker.checkEntity(this,gp.npc); // npc no collision anyway
+    //gp.cChecker.checkEntity(this, gp.fighters); // check monster with eachother
     public void handleCollisionAndMovement(){
         collisionOn = false;
         gp.cChecker.checkTile(this);
         gp.cChecker.checkObject(this, false);
-        //gp.cChecker.checkEntity(this,gp.npc); // npc no collision anyway
-        //gp.cChecker.checkEntity(this, gp.fighters); // check monster with eachother
         if (!collisionOn) {
             switch (direction) {
                 case "up" -> worldY -= speed;

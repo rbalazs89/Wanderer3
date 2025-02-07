@@ -120,7 +120,7 @@ public class IceBolt_FB extends Spells {
                 0, -boltWidth / 2,
                 new Color(173, 216, 230),
                 boltLength, boltWidth / 2,
-                new Color(0, 0, Math.min(blue,255), Math.min(alpha, 255))
+                new Color(0, 0, blue, alpha)
         );
         g2.setPaint(gradient);
         g2.fill(iceBolt);

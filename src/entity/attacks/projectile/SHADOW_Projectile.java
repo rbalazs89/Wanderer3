@@ -125,20 +125,20 @@ public class SHADOW_Projectile extends MON_ProjectilesWithSprite {
             gp.spells.remove(this);
         }
     }
-
+    /**
+     attackSpriteNum = Math.min((attackFrameCounter) / ( maxattackframes/ 9 ), 8);
+     attack instance creation at 120th frame
+     finish attacking at 140th frame
+     casting animation number = 2;
+     max animation sprites = 9;
+     attackSpriteNum = Math.min((((attackFrameCounter - 120) / ((140 - 120) / 9)) + 3), 8);
+     */
     public void draw(Graphics2D g2){
 
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        /**
-         attackSpriteNum = Math.min((attackFrameCounter) / ( maxattackframes/ 9 ), 8);
-         attack instance creation at 120th frame
-         finish attacking at 140th frame
-         casting animation number = 2;
-         max animation sprites = 9;
-         attackSpriteNum = Math.min((((attackFrameCounter - 120) / ((140 - 120) / 9)) + 3), 8);
-         */
+
 
         if(life == maxLife || life == maxLife - 1){
             spriteNum = 0;
