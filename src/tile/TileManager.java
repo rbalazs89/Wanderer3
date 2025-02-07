@@ -145,6 +145,7 @@ public class TileManager {
         setup2(104, "act1/totemtile", false);
     }
 
+    /*
     public void getTileImageFromSheetAct1(){
         tileSheetImage = setup("act1/tileSheet");
         setupTileFromSheetAct1(0, 1, 1, false);
@@ -241,12 +242,13 @@ public class TileManager {
         setupTileFromSheetAct1(93, 8, 2, true);
         setupTileFromSheetAct1(94, 8, 3, true);
         setupTileFromSheetAct1(95, 8, 4, true);
-    }
+    }*/
 
     public void setup(int index, String imagePath, boolean collision){
         UtilityTool uTool = new UtilityTool();
         try {
             tile[index] = new Tile();
+            // noinspection ConstantConditions
             tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imagePath +".png"));
             tile[index].image = uTool.scaleImage(tile[index].image, GamePanel.tileSize, GamePanel.tileSize);
             tile[index].collision = collision;
@@ -263,6 +265,7 @@ public class TileManager {
 
     public BufferedImage setup(String imagePath){
         try {
+            // noinspection ConstantConditions
             return ImageIO.read(getClass().getResourceAsStream("/tiles/" + imagePath +".png"));
         } catch (IOException e){
             e.printStackTrace();
@@ -273,6 +276,7 @@ public class TileManager {
     public void setup2(int index, String imagePath, boolean collision){
         try {
             tile[index] = new Tile();
+            // noinspection ConstantConditions
             tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imagePath +".png"));
             tile[index].collision = collision;
         } catch (IOException e){

@@ -11,8 +11,6 @@ public class ButterflyParticle {
     private float vx, vy; // Velocity components
 
     private final Random rand = new Random();
-    //public boolean flyCloseToEachOther;
-    //public BufferedImage[] images;
     private int spriteCounter = 0;
     private static final int spriteChangeFrameValue = 10;
     public int walkSpriteNum;

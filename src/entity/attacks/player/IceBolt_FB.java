@@ -1,14 +1,11 @@
 package entity.attacks.player;
 
 import entity.Entity;
-import entity.attacks.player.Spells;
 import main.GamePanel;
-import tool.DamageNumber;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
-import java.util.Random;
 
 
 @SuppressWarnings("IntegerDivisionInFloatingPointContext")

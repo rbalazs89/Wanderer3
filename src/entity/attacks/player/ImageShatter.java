@@ -2,7 +2,6 @@ package entity.attacks.player;
 
 import entity.Entity;
 import main.GamePanel;
-import tool.DamageNumber;
 
 import java.awt.*;
 import java.util.Random;
@@ -15,7 +14,7 @@ public class ImageShatter extends Spells {
     private final int endY;
     private final int playerWorldAtStartX;
     private final int playerWorldAtStartY;
-    private CopyOnWriteArrayList<Particle> particles;
+    private final CopyOnWriteArrayList<Particle> particles;
     private final Random random = new Random();
 
     public ImageShatter(GamePanel gp, int startX, int startY, int endX, int endY) {
@@ -36,18 +35,10 @@ public class ImageShatter extends Spells {
         auraRadiusSpell = 128;
         originEntity = gp.player;
         switch (gp.player.direction) {
-            case "up":
-                image = setup("/spell/imageshatter/imageshatterup");
-                break;
-            case "right":
-                image = setup("/spell/imageshatter/imageshatterright");
-                break;
-            case "down":
-                image = setup("/spell/imageshatter/imageshatterdown");
-                break;
-            case "left":
-                image = setup("/spell/imageshatter/imageshatterleft");
-                break;
+            case "up" -> image = setup("/spell/imageshatter/imageshatterup");
+            case "right" -> image = setup("/spell/imageshatter/imageshatterright");
+            case "down" -> image = setup("/spell/imageshatter/imageshatterdown");
+            case "left" -> image = setup("/spell/imageshatter/imageshatterleft");
         }
     }
     public void update() {
@@ -112,11 +103,12 @@ public class ImageShatter extends Spells {
 
 
 
-    private class Particle {
+    private static class Particle {
         private int drawX, drawY;
         private int x, y;
-        private double velocityX, velocityY;
-        private int lifespan;
+        private final double velocityX;
+        private final double velocityY;
+        private final int lifespan;
         private int age;
 
         public Particle(int x, int y, double velocityX, double velocityY, int lifespan) {

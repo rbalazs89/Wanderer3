@@ -26,6 +26,7 @@ public class OBJ_MapTransitionPickable extends SuperObject{
         interactSoundNumber = -1;
 
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream("/nullimage.png"));
             uTool.scaleImage(image, GamePanel.tileSize, GamePanel.tileSize);
         } catch (IOException e){

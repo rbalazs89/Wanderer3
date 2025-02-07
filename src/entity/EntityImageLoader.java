@@ -335,6 +335,7 @@ public class EntityImageLoader {
     public BufferedImage setupSheet2(String imageName, int x, int y, int width, int height, int scaleHeigth, int scaleWidth) {
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
             image = image.getSubimage(x, y, width, height);
         }catch (IOException e){
@@ -354,6 +355,7 @@ public class EntityImageLoader {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
             image = uTool.scaleImage(image, width, height);
         }catch (IOException e){
@@ -365,6 +367,7 @@ public class EntityImageLoader {
     public BufferedImage setupImage(String imageName){
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
         } catch (IOException e){
             e.printStackTrace();

@@ -203,6 +203,7 @@ public class CollisionChecker {
             current.distanceFromPlayer = (int)Math.sqrt(deltaY * deltaY + deltaX * deltaX);
         }
 
+
         Collections.sort(interactables, new Comparator<SuperObject>() {
             @Override
             public int compare(SuperObject o1, SuperObject o2) {

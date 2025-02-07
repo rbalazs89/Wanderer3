@@ -1,6 +1,7 @@
 package main;
 
 import data.DataStorage;
+import entity.playerrelated.PlayerTalents;
 import tool.UtilityTool;
 
 import javax.imageio.ImageIO;
@@ -22,7 +23,7 @@ public class UI {
     public String currentDialogue = "nothing";
     DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
     DecimalFormat df = new DecimalFormat("0.00", symbols);
-    private BufferedImage UIImages[] = new BufferedImage[30];
+    private final BufferedImage[] UIImages = new BufferedImage[30];
     public Color c1 = new Color(0,0,0,120);
 
     ArrayList<String> message = new ArrayList<>();
@@ -47,8 +48,6 @@ public class UI {
 
     // drawing ui stuff:
     public int commandNum = 0;
-    public int optionsCommandNum = 0;
-    public int previousOptionsCommandNum = 0;
     public int titleScreenSubState = 0;
     public int previousCommandNum = 0;
 
@@ -63,7 +62,7 @@ public class UI {
     public int previousMusicScale;
     public boolean canRespawn;
     public int canRespawnCounter;
-    public String drawStringText[] = new String[81];
+    public String[] drawStringText = new String[81];
 
     //AVOID NEW INSTANCE:
     Color myYellow = new Color(248,248,186);
@@ -71,9 +70,6 @@ public class UI {
     Color endColor1 = new Color(45,30,15);
     Color startColor2 = new Color(72, 50, 25,234);
     Color endColor2 = new Color(45, 25, 10,234);
-
-    Color startColor3 = new Color(124,90,60);
-    Color endColor3 = new Color(204, 153, 102);
     Color startColor4 = new Color(39, 26, 13);
     Color endColor4 = new Color(20, 13, 7);
     Color mainTitleColor = new Color(172 + 60, 172 + 30 , 172);
@@ -406,7 +402,7 @@ public class UI {
                 text = "Save slot taken. Level " + saveSlotUI[i] + " Hero.";
             }
             x = getXForCenteredText(text);
-            y += gp.tileSize;
+            y += GamePanel.tileSize;
 
             g2.setColor(Color.BLACK);
             g2.drawString(text, x + 3, y + 3);
@@ -414,7 +410,7 @@ public class UI {
             g2.drawString(text, x, y);
 
             if (commandNum == i) {
-                g2.drawString(">", x - gp.tileSize, y);
+                g2.drawString(">", x - GamePanel.tileSize, y);
                 g2.setColor(Color.GRAY);
                 g2.drawString(text, x, y);
             }
@@ -423,7 +419,7 @@ public class UI {
         // Draw the "BACK" option separately
         String text = "BACK";
         x = 200;
-        y += 1.5 * gp.tileSize;
+        y += 1.5 * GamePanel.tileSize;
 
         g2.setColor(Color.BLACK);
         g2.drawString(text, x + 3, y + 3);
@@ -431,7 +427,7 @@ public class UI {
         g2.drawString(text, x, y);
 
         if (commandNum == 5) {
-            g2.drawString(">", x - gp.tileSize, y);
+            g2.drawString(">", x - GamePanel.tileSize, y);
             g2.setColor(Color.GRAY);
             g2.drawString(text, x, y);
         }
@@ -446,8 +442,8 @@ public class UI {
     public void drawSkillTable() {
         int x = gp.getWidth()/2;
         int y = 1;
-        int WIDTH = gp.tileSize * 8 - 1;
-        int HEIGHT = gp.tileSize * 12 - 2;
+        int WIDTH = GamePanel.tileSize * 8 - 1;
+        int HEIGHT = GamePanel.tileSize * 12 - 2;
 
         Color startColor;
         Color endColor;
@@ -592,7 +588,7 @@ public class UI {
         for (int i = 0; i < gp.player.allSpellList.allPlayerAvailableSpells.length; i++) {
             int currentSpellX = spellColumnX + (i / 4) * (spellBoxWidth + spellSpacing);
             int requiredLevel = gp.player.allSpellList.allPlayerAvailableSpells[i].requiredLevel;
-            int currentSpellY = spellStartY + (int)((requiredLevel / (double)maxLevel) * (gp.tileSize * 12 - 5 - spellStartY - spellBoxHeight));
+            int currentSpellY = spellStartY + (int)((requiredLevel / (double)maxLevel) * (GamePanel.tileSize * 12 - 5 - spellStartY - spellBoxHeight));
 
             // Draw the spell image
             g2.drawImage(gp.player.allSpellList.allPlayerAvailableSpells[i].image, currentSpellX, currentSpellY, spellBoxWidth, spellBoxHeight, null);
@@ -653,8 +649,8 @@ public class UI {
     public void drawTalentTable() {
         int x = gp.getWidth()/2;
         int y = 1;
-        int WIDTH = gp.tileSize * 8 - 1;
-        int HEIGHT = gp.tileSize * 12 - 2;
+        int WIDTH = GamePanel.tileSize * 8 - 1;
+        int HEIGHT = GamePanel.tileSize * 12 - 2;
 
         Color startColor;
         Color endColor;
@@ -737,7 +733,7 @@ public class UI {
         y += 60;
         startColor = new Color(39, 26, 13);
         endColor = new Color(20, 13, 7);
-        gradient = new GradientPaint(x, y, startColor, x, y + lineHeight, endColor);;
+        gradient = new GradientPaint(x, y, startColor, x, y + lineHeight, endColor);
         g2.setPaint(gradient);
         g2.fillRect(x, y, 180, lineHeight);
 
@@ -769,7 +765,7 @@ public class UI {
             int talentY = y + (i / talentsPerRow) * (talentImageSize + talentSpacing);
 
             // Draw the image
-            g2.drawImage(gp.player.playerTalents.talentList[i].image, talentX, talentY, null);
+            g2.drawImage(PlayerTalents.talentList[i].image, talentX, talentY, null);
 
             // Draw bracket around the image
             g2.setColor(new Color(120, 120, 120));
@@ -780,7 +776,7 @@ public class UI {
             g2.drawRect(talentX - 1, talentY - 1, talentImageSize + 1, talentImageSize + 1);
 
             // Check if currentPointsOnTalent is 0 and draw transparent grey rectangle
-            if (gp.player.playerTalents.talentList[i].currentPointsOnTalent == 0) {
+            if (PlayerTalents.talentList[i].currentPointsOnTalent == 0) {
                 g2.setColor(new Color(100, 100, 100, 200));
                 g2.fillRect(talentX, talentY, talentImageSize, talentImageSize);
             }
@@ -804,31 +800,31 @@ public class UI {
 
             // Draw the current points on talent in the bottom right corner
             FontMetrics fm = g2.getFontMetrics(buttonFont);
-            int pointsTextWidth = fm.stringWidth(gp.player.playerTalents.talentList[i].currentPointsOnTalent + "");
+            int pointsTextWidth = fm.stringWidth(PlayerTalents.talentList[i].currentPointsOnTalent + "");
             int pointsTextX = pointsX + pointsBoxWidth - pointsTextWidth - 5;
             int pointsTextY = pointsY + pointsBoxHeight - 5;
 
             g2.setColor(new Color(192, 192, 192));
-            g2.drawString(gp.player.playerTalents.talentList[i].currentPointsOnTalent + "", pointsTextX, pointsTextY);
+            g2.drawString(PlayerTalents.talentList[i].currentPointsOnTalent + "", pointsTextX, pointsTextY);
         }
 
         Font descriptionFont = new Font("Calibri", Font.PLAIN, 18);
         g2.setFont(descriptionFont);
 
         //draw hover
-        for (int i = 0; i < gp.player.playerTalents.talentList.length; i++) {
-            if (gp.player.playerTalents.talentList[i].showHelp) {
+        for (int i = 0; i < PlayerTalents.talentList.length; i++) {
+            if (PlayerTalents.talentList[i].showHelp) {
                 y = 200 + i / 3 * 165;
-                drawHoverGuide(gp.player.playerTalents.talentList[i].description, 220, y, 280);
+                drawHoverGuide(PlayerTalents.talentList[i].description, 220, y, 280);
             }
         }
     }
 
     private void drawMainMenuScreen() {
-        int x = gp.getWidth()/2 - gp.tileSize * 3;
-        int y = gp.tileSize;
-        int WIDTH = gp.tileSize * 6;
-        int HEIGHT = gp.tileSize * 6;
+        int x = gp.getWidth()/2 - GamePanel.tileSize * 3;
+        int y = GamePanel.tileSize;
+        int WIDTH = GamePanel.tileSize * 6;
+        int HEIGHT = GamePanel.tileSize * 6;
 
         Color startColor;
         Color endColor;
@@ -869,8 +865,8 @@ public class UI {
 
         //draw the options:
         g2.setFont(new Font("Calibri", Font.PLAIN, 20));
-        x = x + 2 * gp.tileSize;
-        y = y + 2 * gp.tileSize;
+        x = x + 2 * GamePanel.tileSize;
+        y = y + 2 * GamePanel.tileSize;
         text = "SAVE AND EXIT";
         g2.setColor(Color.BLACK);
         g2.drawString(text, x, y);
@@ -882,7 +878,7 @@ public class UI {
             g2.drawString(">", x - 15,y);
         }
 
-        y = y + gp.tileSize*2/3;
+        y = y + GamePanel.tileSize *2/3;
         text = "HELP";
         g2.setColor(Color.BLACK);
         g2.drawString(text, x, y);
@@ -894,7 +890,7 @@ public class UI {
             g2.drawString(">", x - 15,y);
         }
 
-        y = y + gp.tileSize*2/3;
+        y = y + GamePanel.tileSize *2/3;
         text = "OPTIONS";
         g2.setColor(Color.BLACK);
         g2.drawString(text, x, y);
@@ -906,7 +902,7 @@ public class UI {
             g2.drawString(">", x - 15,y);
         }
 
-        y = y + gp.tileSize*2/3;
+        y = y + GamePanel.tileSize *2/3;
         text = "SHOW CONTROLS";
         g2.setColor(Color.BLACK);
         g2.drawString(text, x, y);
@@ -918,7 +914,7 @@ public class UI {
             g2.drawString(">", x - 15,y);
         }
 
-        y = y + gp.tileSize*2/3;
+        y = y + GamePanel.tileSize *2/3;
         text = "BACK TO GAME";
         g2.setColor(Color.BLACK);
         g2.drawString(text, x, y);
@@ -938,10 +934,10 @@ public class UI {
 
     public void drawHelpScreen(){
         //TODO HELP SCREEN
-        int x = gp.getWidth()/2 - gp.tileSize * 3;
-        int y = gp.tileSize;
-        int WIDTH = gp.tileSize * 6;
-        int HEIGHT = gp.tileSize * 8;
+        int x = gp.getWidth()/2 - GamePanel.tileSize * 3;
+        int y = GamePanel.tileSize;
+        int WIDTH = GamePanel.tileSize * 6;
+        int HEIGHT = GamePanel.tileSize * 8;
 
         Color startColor;
         Color endColor;
@@ -988,10 +984,10 @@ public class UI {
         //Draw back button
         g2.setFont(new Font("Calibri", Font.PLAIN, 20));
         g2.setColor(Color.BLACK);
-        g2.drawString("Back", x + 22, gp.tileSize * 9 - 10 );
+        g2.drawString("Back", x + 22, GamePanel.tileSize * 9 - 10 );
         g2.setColor(Color.YELLOW);
-        g2.drawString("Back", x + 22 + 1, gp.tileSize * 9 - 10 + 1);
-        g2.drawString(" > ", x + 5, gp.tileSize * 9 - 10);
+        g2.drawString("Back", x + 22 + 1, GamePanel.tileSize * 9 - 10 + 1);
+        g2.drawString(" > ", x + 5, GamePanel.tileSize * 9 - 10);
 
         if(gp.keyH.enterPressed){
             commandNum = 0;
@@ -1002,10 +998,10 @@ public class UI {
 
     private void drawOptionsScreen(){
 
-        int x = gp.getWidth()/2 - gp.tileSize * 3;
-        int y = gp.tileSize;
-        int WIDTH = gp.tileSize * 6;
-        int HEIGHT = gp.tileSize * 8;
+        int x = gp.getWidth()/2 - GamePanel.tileSize * 3;
+        int y = GamePanel.tileSize;
+        int WIDTH = GamePanel.tileSize * 6;
+        int HEIGHT = GamePanel.tileSize * 8;
 
         Color startColor;
         Color endColor;
@@ -1047,8 +1043,8 @@ public class UI {
         //Options
         String text;
 
-        g2.setFont(new Font("Calibri", Font.PLAIN, 20));;
-        y = y + 2 * gp.tileSize;
+        g2.setFont(new Font("Calibri", Font.PLAIN, 20));
+        y = y + 2 * GamePanel.tileSize;
         x = x + 25;
         text = "MUSIC";
         g2.setColor(Color.BLACK);
@@ -1069,7 +1065,7 @@ public class UI {
         int barX = x + 100;
         int barY = y - 25;
         int width = WIDTH * 3 / 5;
-        int height = gp.tileSize * 3 / 5;
+        int height = GamePanel.tileSize * 3 / 5;
 
         startColor = new Color(20, 15, 10);
         endColor = new Color(62,45,30);
@@ -1088,8 +1084,8 @@ public class UI {
         g2.drawRect(barX, barY, width, height);
 
         // SOUND:
-        y = y + gp.tileSize;
-        barY = barY + gp.tileSize;
+        y = y + GamePanel.tileSize;
+        barY = barY + GamePanel.tileSize;
         text = "SOUND";
         g2.setColor(Color.BLACK);
         g2.drawString(text, x, y);
@@ -1117,7 +1113,7 @@ public class UI {
         g2.drawRect(barX, barY, width, height);
 
         //visible hitbox option
-        y = y + gp.tileSize;
+        y = y + GamePanel.tileSize;
         text = "Visible hitbox";
         g2.setColor(Color.BLACK);
         g2.drawString(text, x, y);
@@ -1141,7 +1137,7 @@ public class UI {
 
 
         // visible exp numbers option
-        y = y + gp.tileSize;
+        y = y + GamePanel.tileSize;
         text = "Visible experience value";
         g2.setColor(Color.BLACK);
         g2.drawString(text, x, y);
@@ -1154,7 +1150,7 @@ public class UI {
         }
 
         //checkbox
-        checkBoxY += gp.tileSize;
+        checkBoxY += GamePanel.tileSize;
         g2.setColor(Color.BLACK);
         g2.fillRoundRect(637, checkBoxY,38, 38, 2, 2);
         g2.setColor(new Color(192,192,192));
@@ -1164,7 +1160,7 @@ public class UI {
         }
 
         // visible damage done to you
-        y = y + gp.tileSize;
+        y = y + GamePanel.tileSize;
         text = "Visible health loss number";
         g2.setColor(Color.BLACK);
         g2.drawString(text, x, y);
@@ -1177,7 +1173,7 @@ public class UI {
         }
 
         //checkbox
-        checkBoxY += gp.tileSize;
+        checkBoxY += GamePanel.tileSize;
         g2.setColor(Color.BLACK);
         g2.fillRoundRect(637, checkBoxY,38, 38, 2, 2);
         g2.setColor(new Color(192,192,192));
@@ -1187,7 +1183,7 @@ public class UI {
         }
 
         // visible damage done by you
-        y = y + gp.tileSize;
+        y = y + GamePanel.tileSize;
         text = "Visible damage number";
         g2.setColor(Color.BLACK);
         g2.drawString(text, x, y);
@@ -1200,7 +1196,7 @@ public class UI {
         }
 
         //checkbox
-        checkBoxY += gp.tileSize;
+        checkBoxY += GamePanel.tileSize;
         g2.setColor(Color.BLACK);
         g2.fillRoundRect(637, checkBoxY,38, 38, 2, 2);
         g2.setColor(new Color(192,192,192));
@@ -1210,7 +1206,7 @@ public class UI {
         }
 
         //Draw back button
-        y = HEIGHT + gp.tileSize - 10;
+        y = HEIGHT + GamePanel.tileSize - 10;
         text = "Back";
         g2.setFont(new Font("Calibri", Font.PLAIN, 20));
         g2.setColor(Color.BLACK);
@@ -1263,10 +1259,10 @@ public class UI {
         g2.setColor(c1);
         g2.fillRect(0,0,gp.screenWidth,gp.screenHeight);
 
-        int x = gp.getWidth()/2 - gp.tileSize * 3;
-        int y = gp.tileSize;
-        int WIDTH = gp.tileSize * 6;
-        int HEIGHT = gp.tileSize * 8 + 20;
+        int x = gp.getWidth()/2 - GamePanel.tileSize * 3;
+        int y = GamePanel.tileSize;
+        int WIDTH = GamePanel.tileSize * 6;
+        int HEIGHT = GamePanel.tileSize * 8 + 20;
 
         Color startColor;
         Color endColor;
@@ -1319,10 +1315,10 @@ public class UI {
 
         g2.setFont(new Font("Calibri", Font.PLAIN, 20));
         g2.setColor(Color.BLACK);
-        g2.drawString("Back", x + 22, gp.tileSize * 9 + 10 );
+        g2.drawString("Back", x + 22, GamePanel.tileSize * 9 + 10 );
         g2.setColor(Color.YELLOW);
-        g2.drawString("Back", x + 22 + 1, gp.tileSize * 9 + 10 + 1);
-        g2.drawString(" > ", x + 5, gp.tileSize * 9 + 10);
+        g2.drawString("Back", x + 22 + 1, GamePanel.tileSize * 9 + 10 + 1);
+        g2.drawString(" > ", x + 5, GamePanel.tileSize * 9 + 10);
 
         if(gp.keyH.enterPressed){
             commandNum = 0;
@@ -1332,10 +1328,10 @@ public class UI {
     }
 
     public void drawShowControlsScreen() {
-        int x = gp.getWidth()/2 - gp.tileSize * 3;
-        int y = gp.tileSize;
-        int WIDTH = gp.tileSize * 6;
-        int HEIGHT = gp.tileSize * 8 + 20;
+        int x = gp.getWidth()/2 - GamePanel.tileSize * 3;
+        int y = GamePanel.tileSize;
+        int WIDTH = GamePanel.tileSize * 6;
+        int HEIGHT = GamePanel.tileSize * 8 + 20;
 
         Color startColor;
         Color endColor;
@@ -1388,10 +1384,10 @@ public class UI {
 
         g2.setFont(new Font("Calibri", Font.PLAIN, 20));
         g2.setColor(Color.BLACK);
-        g2.drawString("Back", x + 22, gp.tileSize * 9 - 10 + 20);
+        g2.drawString("Back", x + 22, GamePanel.tileSize * 9 - 10 + 20);
         g2.setColor(Color.YELLOW);
-        g2.drawString("Back", x + 22 + 1, gp.tileSize * 9 - 10 + 1 + 20);
-        g2.drawString(" > ", x + 5, gp.tileSize * 9 - 10 + 20);
+        g2.drawString("Back", x + 22 + 1, GamePanel.tileSize * 9 - 10 + 1 + 20);
+        g2.drawString(" > ", x + 5, GamePanel.tileSize * 9 - 10 + 20);
 
         if(gp.keyH.enterPressed){
             commandNum = 0;
@@ -1415,7 +1411,7 @@ public class UI {
                 text = "Load Level " + saveSlotUI[i] + " Hero.";
             }
             x = getXForCenteredText(text);
-            y += gp.tileSize;
+            y += GamePanel.tileSize;
 
             g2.setColor(Color.BLACK);
             g2.drawString(text, x + 3, y + 3);
@@ -1423,7 +1419,7 @@ public class UI {
             g2.drawString(text, x, y);
 
             if (commandNum == i) {
-                g2.drawString(">", x - gp.tileSize, y);
+                g2.drawString(">", x - GamePanel.tileSize, y);
                 g2.setColor(Color.GRAY);
                 g2.drawString(text, x, y);
             }
@@ -1432,7 +1428,7 @@ public class UI {
         // Draw the "BACK" option separately
         String text = "BACK";
         x = 200;
-        y += 1.5 * gp.tileSize;
+        y += 1.5 * GamePanel.tileSize;
 
         g2.setColor(Color.BLACK);
         g2.drawString(text, x + 3, y + 3);
@@ -1440,7 +1436,7 @@ public class UI {
         g2.drawString(text, x, y);
 
         if (commandNum == 5) {
-            g2.drawString(">", x - gp.tileSize, y);
+            g2.drawString(">", x - GamePanel.tileSize, y);
             g2.setColor(Color.GRAY);
             g2.drawString(text, x, y);
         }
@@ -1460,7 +1456,7 @@ public class UI {
         String text1 = "You have died.";
         String text2 = "Press enter to respawn.";
         int x = getXForCenteredText(text1);
-        int y = gp.tileSize * 4;
+        int y = GamePanel.tileSize * 4;
 
         // SHADOW
         g2.setColor(new Color(42,0,0));
@@ -1551,8 +1547,8 @@ public class UI {
     }
 
     public void drawMessage(){
-        int messageX = gp.tileSize/2;
-        int messageY = gp.tileSize * 9;
+        int messageX = GamePanel.tileSize /2;
+        int messageY = GamePanel.tileSize * 9;
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 15F));
 
         for (int i = 0; i < message.size(); i++) {
@@ -1783,7 +1779,6 @@ public class UI {
         Color myYellow = new Color(248,248,186);
         //g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 14));
-        x = 30;
         y = 125;
         int lineHeight = 40;
         String[] attributes = {"Strength", "Dexterity", "Endurance", "Intelligence"};
@@ -1792,7 +1787,7 @@ public class UI {
             // Draw black box for attribute values
             startColor = new Color(39, 26, 13);
             endColor = new Color(20, 13, 7);
-            gradient = new GradientPaint(x, y, startColor, x, y + lineHeight, endColor);;
+            gradient = new GradientPaint(x, y, startColor, x, y + lineHeight, endColor);
             g2.setPaint(gradient);
             g2.fillRect(x, y, 150, lineHeight);
             // Silver bracket addition:
@@ -1821,7 +1816,7 @@ public class UI {
         //UNSPENT STATS:
         startColor = new Color(39, 26, 13);
         endColor = new Color(20, 13, 7);
-        gradient = new GradientPaint(x, y, startColor, x, y + lineHeight, endColor);;
+        gradient = new GradientPaint(x, y, startColor, x, y + lineHeight, endColor);
         g2.setPaint(gradient);
         g2.fillRect(x, y, 180, lineHeight);
         // Silver bracket addition:
@@ -1839,16 +1834,15 @@ public class UI {
         //Draw resistances
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 14));
-        x = 30;
         y = y + 10;
-        lineHeight = 40;
+        //lineHeight = 40;
         String[] attributes2 = {"Armor", "Physical resistance", "Fire resistance", "Cold resistance", "Lightning resistance"};
         int[] values2 = {gp.player.armor, gp.player.resist[0], gp.player.resist[1], gp.player.resist[2], gp.player.resist[3]};
         for (int i = 0; i < attributes2.length; i++) {
             // Draw black box for attribute values
             startColor = new Color(39, 26, 13);
             endColor = new Color(20, 13, 7);
-            gradient = new GradientPaint(x, y, startColor, x, y + lineHeight, endColor);;
+            gradient = new GradientPaint(x, y, startColor, x, y + lineHeight, endColor);
             g2.setPaint(gradient);
             g2.fillRect(x, y, 215, lineHeight);
             // Silver bracket addition:
@@ -1869,7 +1863,7 @@ public class UI {
             if(i==0){
                 g2.drawString(String.valueOf(values2[i]), x + 175, y + lineHeight - 15);
             } else {
-                g2.drawString(String.valueOf(values2[i]) + " %", x + 175, y + lineHeight - 15);
+                g2.drawString(values2[i] + " %", x + 175, y + lineHeight - 15);
             }
             y += lineHeight + 10;
         }
@@ -1912,13 +1906,13 @@ public class UI {
                 df.format(cooldownValue) + " sec",
                 df.format(lifeRegen) + " / min ",
                 df.format(manaRegen) + " / min ",
-                String.valueOf(gp.tileSize * 5 / 4 + gp.player.attackRangeIncrease),
+                String.valueOf(GamePanel.tileSize * 5 / 4 + gp.player.attackRangeIncrease),
                 String.valueOf(tomesFound)};
         for (int i = 0; i < attributes3.length; i++) {
             // Draw black box for attribute values
             startColor = new Color(39, 26, 13);
             endColor = new Color(20, 13, 7);
-            gradient = new GradientPaint(x, y, startColor, x, y + lineHeight, endColor);;
+            gradient = new GradientPaint(x, y, startColor, x, y + lineHeight, endColor);
             g2.setPaint(gradient);
             g2.fillRect(x, y, 200, lineHeight);
             // Silver bracket addition:
@@ -2024,7 +2018,7 @@ public class UI {
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
             String text = "The Wanderer 2";
             int x = getXForCenteredText(text);
-            int y = gp.tileSize * 3;
+            int y = GamePanel.tileSize * 3;
 
             // SHADOW
             g2.setColor(Color.BLACK);
@@ -2039,52 +2033,52 @@ public class UI {
 
             text = "NEW GAME";
             x = getXForCenteredText(text);
-            y += gp.tileSize*3;
+            y += GamePanel.tileSize *3;
             g2.setColor(Color.BLACK);
             g2.drawString(text,x+3,y+3);
             g2.setColor(Color.WHITE);
             g2.drawString(text,x,y);
             if (commandNum == 0) {
-                g2.drawString(">", x-gp.tileSize, y);
+                g2.drawString(">", x- GamePanel.tileSize, y);
                 g2.setColor(Color.gray);
                 g2.drawString(text,x,y);
             }
 
             text = "LOAD GAME";
             x = getXForCenteredText(text);
-            y += gp.tileSize;
+            y += GamePanel.tileSize;
             g2.setColor(Color.BLACK);
             g2.drawString(text,x+3,y+3);
             g2.setColor(Color.WHITE);
             g2.drawString(text,x,y);
             if( commandNum == 1) {
-                g2.drawString(">", x-gp.tileSize, y);
+                g2.drawString(">", x- GamePanel.tileSize, y);
                 g2.setColor(Color.gray);
                 g2.drawString(text,x,y);
             }
 
             text = "SHOW CONTROLS";
             x = getXForCenteredText(text);
-            y += gp.tileSize;
+            y += GamePanel.tileSize;
             g2.setColor(Color.BLACK);
             g2.drawString(text,x+3,y+3);
             g2.setColor(Color.WHITE);
             g2.drawString(text,x,y);
             if( commandNum == 2) {
-                g2.drawString(">", x-gp.tileSize, y);
+                g2.drawString(">", x- GamePanel.tileSize, y);
                 g2.setColor(Color.gray);
                 g2.drawString(text,x,y);
             }
 
             text = "QUIT GAME";
             x = getXForCenteredText(text);
-            y += gp.tileSize;
+            y += GamePanel.tileSize;
             g2.setColor(Color.BLACK);
             g2.drawString(text,x+3,y+3);
             g2.setColor(Color.WHITE);
             g2.drawString(text,x,y);
             if( commandNum == 3) {
-                g2.drawString(">", x-gp.tileSize, y);
+                g2.drawString(">", x- GamePanel.tileSize, y);
                 g2.setColor(Color.gray);
                 g2.drawString(text,x,y);
             }
@@ -2096,15 +2090,15 @@ public class UI {
     }
 
     private void drawDialogueScreen() {
-        int x = 2 * gp.tileSize;
-        int y = gp.tileSize / 2;
-        int width = gp.screenWidth - ( 4 * gp.tileSize);
-        int height = (int)(gp.tileSize * 3.5);
+        int x = 2 * GamePanel.tileSize;
+        int y = GamePanel.tileSize / 2;
+        int width = gp.screenWidth - ( 4 * GamePanel.tileSize);
+        int height = (int)(GamePanel.tileSize * 3.5);
 
         drawSubWindow(x, y, width, height);
 
-        x += gp.tileSize/2;
-        y += gp.tileSize;
+        x += GamePanel.tileSize /2;
+        y += GamePanel.tileSize;
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 30));
         for(String line : currentDialogue.split("/n")){
             g2.drawString(line, x, y);
@@ -2246,10 +2240,10 @@ public class UI {
 
     public void drawFancySubWindow(int x, int y, int WIDTH, int HEIGHT) {
 
-        x = gp.getWidth()/2 - gp.tileSize * 3;
-        y = gp.tileSize;
-        WIDTH = gp.tileSize * 6;
-        HEIGHT = gp.tileSize * 8;
+        x = gp.getWidth()/2 - GamePanel.tileSize * 3;
+        y = GamePanel.tileSize;
+        WIDTH = GamePanel.tileSize * 6;
+        HEIGHT = GamePanel.tileSize * 8;
 
         Color startColor;
         Color endColor;
@@ -2435,6 +2429,7 @@ public class UI {
     public BufferedImage setupImage(String imageName){
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
         } catch (IOException e){
             e.printStackTrace();
@@ -2447,6 +2442,7 @@ public class UI {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
             image = uTool.scaleImage(image, width, height);
         }catch (IOException e){
@@ -2459,6 +2455,7 @@ public class UI {
     public BufferedImage setup(String imageName) {
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
         }catch (IOException e){
             e.printStackTrace();

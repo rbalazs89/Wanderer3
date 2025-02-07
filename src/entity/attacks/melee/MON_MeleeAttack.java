@@ -2,7 +2,6 @@ package entity.attacks.melee;
 
 import entity.Entity;
 import main.GamePanel;
-import tool.DamageNumber;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -17,13 +16,10 @@ public class MON_MeleeAttack extends Entity {
     public MON_MeleeAttack(GamePanel gp, int duration, String Melee_AttackDirection, int Melee_attackRange, Entity originEntity){
         super(gp);
         this.gp = gp;
-        //this.life = duration * 2;
         this.life = 50;
         this.originEntity = originEntity;
         maxLife = life;
         gp.attacks.add(this);
-        //int middleX = originEntity.worldX - gp.player.worldX + gp.player.screenX + gp.tileSize / 2;
-        //int middleY = originEntity.worldY - gp.player.worldY + gp.player.screenY + gp.tileSize / 2;
         int middleX = originEntity.screenMiddleX();
         int middleY = originEntity.screenMiddleY();
         damageType = 0; //physical

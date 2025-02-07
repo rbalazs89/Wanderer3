@@ -15,6 +15,7 @@ public class OBJ_A1Ending extends SuperObject{
         solidArea.width = 17;
         solidArea.height = 17;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream("/nullimage.png"));
             uTool.scaleImage(image, GamePanel.tileSize, GamePanel.tileSize);
         } catch (IOException e){

@@ -231,8 +231,8 @@ public class A_Brother extends Fighter {
             setActionAIPath();
         } else {
             //randomMovement();
-            goalCol = gp.player.worldMiddleX() / gp.tileSize;
-            goalRow = gp.player.worldMiddleY() / gp.tileSize;
+            goalCol = gp.player.worldMiddleX() / GamePanel.tileSize;
+            goalRow = gp.player.worldMiddleY() / GamePanel.tileSize;
 
             searchPath(goalCol, goalRow, true);
 

@@ -8,13 +8,9 @@ public class ProgressQuest {
     /**
      * I need to figure out how to do this class.
      * TBD: set certain entities/drops/when map loads based on some of the numbers below
-     */
+     *  numbers have to match with asset setter for correct save file
 
-    //numbers have to match with asset setter for correct save file
-
-    /**
      * Have to match with asset setter:
-     *
      * 0: bunnies +
      * 1: fire mage +
      * 2: shop1 +

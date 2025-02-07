@@ -26,7 +26,7 @@ public class FadingParticle {
     public void resetFields(){
         alpha = 1f;
         x = (int) (Math.random() * GamePanel.tileSize) - GamePanel.tileSize/8;
-        y = + (int) (Math.random() * GamePanel.tileSize * 1 / 2);
+        y = (int) (Math.random() * GamePanel.tileSize * 1 / 2);
         ageCounter = (int) (Math.random() * 50) - 30;
     }
 }

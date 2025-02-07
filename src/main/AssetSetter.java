@@ -132,6 +132,7 @@ public class AssetSetter {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
             image = uTool.scaleImage(image, width, height);
         }catch (IOException e){
@@ -143,6 +144,7 @@ public class AssetSetter {
     public BufferedImage setup(String imageName) {
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
         }catch (IOException e){
             e.printStackTrace();
@@ -422,7 +424,7 @@ public class AssetSetter {
         gp.obj[currentMap][1].interactSoundNumber = 60;
 
         gp.obj[currentMap][2] = new OBJ_BookInLibrary(gp);
-        gp.obj[currentMap][2].worldX = 1 * tileSize;
+        gp.obj[currentMap][2].worldX = tileSize;
         gp.obj[currentMap][2].worldY = 7 * tileSize;
         ((OBJ_BookInLibrary)(gp.obj[currentMap][2])).setTextLetterToMyFamilyFromCaptain();
     }

@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class OBJ_A1Statue extends SuperObject{
-    private BufferedImage[] sheet = new BufferedImage[6];
+    private final BufferedImage[] sheet = new BufferedImage[6];
     private int eyeCounter = 0;
     private int currentImageNumber = 0;
     private boolean eyeopening = false;
@@ -29,6 +29,7 @@ public class OBJ_A1Statue extends SuperObject{
         BufferedImage image = null;
         UtilityTool uTool = new UtilityTool();
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
             image = image.getSubimage(x, y, width, height);
             image = uTool.scaleImage(image, scaleWidth, scaleHeight);

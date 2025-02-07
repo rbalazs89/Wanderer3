@@ -23,6 +23,7 @@ public class OBJ_MapTransition extends SuperObject{
         name = "MapTransition";
 
         try {
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream("/nullimage.png"));
             uTool.scaleImage(image, GamePanel.tileSize, GamePanel.tileSize);
         } catch (IOException e){

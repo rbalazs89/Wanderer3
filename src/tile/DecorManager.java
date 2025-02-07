@@ -126,6 +126,7 @@ public class DecorManager {
         UtilityTool uTool = new UtilityTool();
         images[index] = new Decor();
         try {
+            // noinspection ConstantConditions
             images[index].image = ImageIO.read(getClass().getResourceAsStream("/decor/" + imagePath +".png"));
             images[index].image = uTool.scaleImage(images[index].image, GamePanel.tileSize, GamePanel.tileSize);
         } catch (IOException e){
@@ -141,6 +142,7 @@ public class DecorManager {
 
         images[index] = decor;
         try {
+            // noinspection ConstantConditions
             images[index].image = ImageIO.read(getClass().getResourceAsStream("/decor/" + imagePath +".png"));
         } catch (IOException e){
             e.printStackTrace();

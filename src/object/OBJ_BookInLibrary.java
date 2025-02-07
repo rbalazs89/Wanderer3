@@ -32,25 +32,20 @@ public class OBJ_BookInLibrary extends SuperObject {
     }
 
     public void setTextTownStatue(){
-        textToShow = "No one remembers a time before the statue stood at the heart of the town.It was here before the first stones of the town were laid, before the roads were carved through the hills. Some say it was always here, watching./n" +
-                "\n" +
-                "The statue is unlike any known craft. Its weathered stone bears no chisel marks, no signs of erosion, as if time dares not touch it./n"+
-                "\n" +
-                "A lingering tale persists in whispers: the statue is alive. Not in the way of men or beasts, but something else entirely. They say it watches when unseen, that its eyes, flicker open when one is looking from far away. Those who have tried to catch it in the act report an eerie sensation—the certainty that they are being observed, even when standing alone in the square./n" +
-                "\n" +
-                "But the oldest and strangest legend speaks of a secret, one locked away within the statue itself. If a soul were ever to touch its cold surface while its unseen eyes were open - a feat requiring both reckless courage and impossible timing. Something would awaken. What? No one knows. Some believe it would unleash something better left undisturbed./n" +
-                "\n" +
-                "Many have attempted to solve the riddle, yet none have succeeded. And so the statue remains, unmoving. Watching. Waiting. /n";
+        textToShow = """
+                No one remembers a time before the statue stood at the heart of the town.It was here before the first stones of the town were laid, before the roads were carved through the hills. Some say it was always here, watching./n
+                The statue is unlike any known craft. Its weathered stone bears no chisel marks, no signs of erosion, as if time dares not touch it./n
+                A lingering tale persists in whispers: the statue is alive. Not in the way of men or beasts, but something else entirely. They say it watches when unseen, that its eyes, flicker open when one is looking from far away. Those who have tried to catch it in the act report an eerie sensation—the certainty that they are being observed, even when standing alone in the square./n
+                But the oldest and strangest legend speaks of a secret, one locked away within the statue itself. If a soul were ever to touch its cold surface while its unseen eyes were open - a feat requiring both reckless courage and impossible timing. Something would awaken. What? No one knows. Some believe it would unleash something better left undisturbed./n
+                Many have attempted to solve the riddle, yet none have succeeded. And so the statue remains, unmoving. Watching. Waiting. /n""";
     }
 
     public void setTextMushrooms(){
-        textToShow = "Excerpt from Flora and Fungi of the Realm, Vol. III/n" +
-                "\n" +
-                "Lapsa Celeris, commonly referred to as the Fleetfoot Mushroom, is a bioluminescent fungal species found in damp forested regions and shaded glades. Despite its unassuming ochre cap and slender white stalk, the mushroom exhibits a remarkable effect when ingested./n" +
-                "\n" +
-                "Upon consumption, Lapsa Celeris releases a unique alkaloid compound, mycothrine, which rapidly binds to neuromuscular receptors. This results in a temporary but dramatic increase in reflex speed and locomotor efficiency. Studies suggest that the compound stimulates the adrenal response while simultaneously reducing lactic acid buildup, allowing for heightened movement without the usual onset of fatigue./n" +
-                "\n" +
-                "Contrary to folk myths, the Fleetfoot Mushroom does not grant supernatural speed, nor does it cause the consumer to levitate. However, excessive ingestion has been reported to induce temporary dizziness, an uncontrollable urge to sprint, and, in rare cases, spontaneous giggling./n";
+        textToShow = """
+                Excerpt from Flora and Fungi of the Realm, Vol. III/n
+                Lapsa Celeris, commonly referred to as the Fleetfoot Mushroom, is a bioluminescent fungal species found in damp forested regions and shaded glades. Despite its unassuming ochre cap and slender white stalk, the mushroom exhibits a remarkable effect when ingested./n
+                Upon consumption, Lapsa Celeris releases a unique alkaloid compound, mycothrine, which rapidly binds to neuromuscular receptors. This results in a temporary but dramatic increase in reflex speed and locomotor efficiency. Studies suggest that the compound stimulates the adrenal response while simultaneously reducing lactic acid buildup, allowing for heightened movement without the usual onset of fatigue./n
+                Contrary to folk myths, the Fleetfoot Mushroom does not grant supernatural speed, nor does it cause the consumer to levitate. However, excessive ingestion has been reported to induce temporary dizziness, an uncontrollable urge to sprint, and, in rare cases, spontaneous giggling./n""";
     }
 
     public void setTextTurtles(){

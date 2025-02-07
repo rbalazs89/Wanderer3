@@ -5,7 +5,7 @@ import main.GamePanel;
 public class OBJ_TreasureChest extends SuperObject{
     public int chestType;
     //1 quest chest
-    //2 cave lvl standard treausre chest
+    //2 cave lvl standard treasure chest
     public OBJ_TreasureChest(GamePanel gp) {
         super(gp);
         getImage();

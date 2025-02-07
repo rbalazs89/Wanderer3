@@ -52,7 +52,7 @@ public class DamageNumber {
             color = new Color(255,10,10);
         }
         worldX = attackedEntity.worldMiddleX() + random.nextInt(41) - 20;
-        worldY = attackedEntity.worldMiddleY() + random.nextInt(41) - 20;;
+        worldY = attackedEntity.worldMiddleY() + random.nextInt(41) - 20;
     }
 
     public void draw(Graphics2D g2){

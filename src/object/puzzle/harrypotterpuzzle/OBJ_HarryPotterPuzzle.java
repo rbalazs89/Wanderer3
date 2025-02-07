@@ -13,9 +13,7 @@ public class OBJ_HarryPotterPuzzle extends SuperObject {
     public OBJ_HarryPotterPuzzle(GamePanel gp){
         super(gp);
         this.gp = gp;
-        if(!gp.progress.act1BookPickedUp[6]){
-            interactable = true;
-        } else interactable = false;
+        interactable = !gp.progress.act1BookPickedUp[6];
         solidArea.y = 32;
         solidArea.height = 64;
         getUpdatedImage();
@@ -29,14 +27,14 @@ public class OBJ_HarryPotterPuzzle extends SuperObject {
         if(!gp.harryPotterPuzzle.startFireRemoved){
             gp.harryPotterPuzzle.startFireAdded = true;
             gp.obj[10][29] = new OBJ_FireObject(gp);
-            gp.obj[10][29].worldX = 12 * gp.tileSize;
-            gp.obj[10][29].worldY = 14 * gp.tileSize;
+            gp.obj[10][29].worldX = 12 * GamePanel.tileSize;
+            gp.obj[10][29].worldY = 14 * GamePanel.tileSize;
         }
     }
 
     public void getUpdatedImage(){
         image = new BufferedImage(160, 160, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = (Graphics2D)image.createGraphics();
+        Graphics2D g2 = image.createGraphics();
         for (int i = 0; i < 7; i++) {
             if(!gp.harryPotterPuzzle.potions[i].drank){
                 g2.drawImage(gp.harryPotterPuzzle.potions[i].image, 20, i * 19,19, 19, null);
@@ -50,10 +48,10 @@ public class OBJ_HarryPotterPuzzle extends SuperObject {
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        if(worldX +  gp.tileSize  > gp.player.worldX - gp.player.screenX &&
-                worldX -  gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY +  gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY -  gp.tileSize < gp.player.worldY + gp.player.screenY){
+        if(worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY){
             g2.drawImage(image, screenX, screenY,null);
 
             if(showGlitter && shouldShowGlitter){

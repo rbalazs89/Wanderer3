@@ -161,6 +161,7 @@ public class SuperObject {
     public BufferedImage setup(String imageName) {
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
         }catch (IOException e){
             e.printStackTrace();
@@ -172,6 +173,7 @@ public class SuperObject {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
             image = uTool.scaleImage(image, width, height);
         }catch (IOException e){
@@ -301,7 +303,7 @@ public class SuperObject {
         g2.drawRoundRect(x + 1, y + 1, width - 3, height - 3, 25, 25);
     }
 
-    private ArrayList<String> formattedLines = new ArrayList<>();
+    private final ArrayList<String> formattedLines = new ArrayList<>();
 
     public int setLinesFromTextAndGetHeight(Graphics2D g2, int width) {
         formattedLines.clear();

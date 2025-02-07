@@ -99,13 +99,6 @@ public class DataBaseClass1 {
         };
     }
 
-    public float currentMapDarkness(int map){
-        return switch (map) {
-            case 1 -> 0.6f;
-            case 2 -> 1f;
-            default -> 0.6f;
-        };
-    }
 
     public int currentMapDarknessMultiplier(int map){
         return switch (map) {

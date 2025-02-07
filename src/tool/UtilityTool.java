@@ -29,6 +29,7 @@ public class    UtilityTool {
 
         BufferedImage originalSheet = null;
         try {
+            // noinspection ConstantConditions
             originalSheet = ImageIO.read(getClass().getResourceAsStream(imagePath +".png"));
         } catch (IOException e){
             throw new RuntimeException(e);
@@ -120,6 +121,7 @@ public class    UtilityTool {
     public BufferedImage loadImage(String imageName) {
         BufferedImage image = null;
         try {
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
             //image = ImageIO.read(Player.class.getResourceAsStream(imageName + ".png"));
             if (image == null) {
@@ -231,6 +233,7 @@ public class    UtilityTool {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
             image = uTool.scaleImage(image, width, height);
         }catch (IOException e){
@@ -242,6 +245,7 @@ public class    UtilityTool {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
         }catch (IOException e){
             e.printStackTrace();
@@ -253,6 +257,7 @@ public class    UtilityTool {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
             image = image.getSubimage(x, y, width, height);
             image = uTool.scaleImage(image, scaleWidth, scaleHeight);
@@ -266,6 +271,7 @@ public class    UtilityTool {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
         try{
+            // noinspection ConstantConditions
             image = ImageIO.read(getClass().getResourceAsStream(imageName +".png"));
             image = image.getSubimage(x, y, width, height);
         }catch (IOException e){

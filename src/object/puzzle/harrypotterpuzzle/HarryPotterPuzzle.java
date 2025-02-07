@@ -1,7 +1,6 @@
 package object.puzzle.harrypotterpuzzle;
 
 import main.GamePanel;
-import tool.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -119,40 +118,37 @@ public class HarryPotterPuzzle {
             }
         }
 
-        switch (potion.type){
-            case 0:{
+        switch (potion.type) {
+            case 0 -> {
                 gp.ui.addMessage("You drank some tasty wine");
                 gp.player.winMana(20);
                 gp.playSE(47);
                 break;
             }
-
-            case 1:{
+            case 1 -> {
                 gp.playSE(47);
                 gp.ui.addMessage("You drank poison and died.");
                 gp.player.life = -100;
                 gp.gameState = gp.playState;
                 break;
             }
-
-            case 2:{
+            case 2 -> {
                 gp.playSE(47);
                 gp.ui.addMessage("Tastes like chicken. You are free to go back if you wish.");
                 gp.player.winMana(5);
-                if(gp.obj[10][29] !=  null){
+                if (gp.obj[10][29] != null) {
                     gp.obj[10][29] = null;
                 }
                 startFireRemoved = true;
                 break;
             }
-
-            case 3:{
+            case 3 -> {
                 gp.playSE(47);
                 gp.ui.addMessage("The way ahead is open.");
-                if(gp.obj[10][1] != null){
+                if (gp.obj[10][1] != null) {
                     gp.obj[10][1] = null;
                 }
-                if(gp.obj[10][29] !=  null){
+                if (gp.obj[10][29] != null) {
                     gp.obj[10][29] = null;
                 }
                 gp.obj[10][0].interactable = false;

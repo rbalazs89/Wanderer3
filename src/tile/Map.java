@@ -21,7 +21,7 @@ public class Map{
         int worldMapHeight = GamePanel.tileSize * gp.currentMapMaxRow;
 
         worldMap = new BufferedImage(worldMapWidth, worldMapHeight, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = (Graphics2D)worldMap.createGraphics();
+        Graphics2D g2 = worldMap.createGraphics();
         int col = 0;
         int row = 0;
 
@@ -110,7 +110,7 @@ public class Map{
             // Draw the player
             int playerX = (int) (x + gp.player.worldMiddleX() / scaleX);
             int playerY = (int) (y + gp.player.worldMiddleY() / scaleY);
-            int playerSize = Math.min(Math.max(12, (int) (gp.tileSize / Math.min(scaleX, scaleY))), 24);
+            int playerSize = Math.min(Math.max(12, (int) (GamePanel.tileSize / Math.min(scaleX, scaleY))), 24);
             g2.drawImage(gp.player.idleDown1, playerX - playerSize / 2, playerY - playerSize / 2, playerSize, playerSize, null);
 
             // Draw the objects

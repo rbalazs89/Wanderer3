@@ -21,7 +21,7 @@ public class PathFinder {
     }
 
     public void instantiateNodes(){
-        // if first map loaded has low col numbers, this method can fail?
+        // if first map loaded has low col numbers, this method can fail
 
         node = new Node[gp.currentMapMaxCol][gp.currentMapMaxRow];
 

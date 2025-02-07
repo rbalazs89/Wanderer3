@@ -79,30 +79,14 @@ public class MouseHandler implements MouseListener, MouseMotionListener {
                 int slice = (int) Math.round(angle / 45.0) % 8;
 
                 switch (slice) {
-                    case 0:
-                        gp.player.attackDirection = 1;
-                        break;
-                    case 1:
-                        gp.player.attackDirection = 2;
-                        break;
-                    case 2:
-                        gp.player.attackDirection = 3;
-                        break;
-                    case 3:
-                        gp.player.attackDirection = 4;
-                        break;
-                    case 4:
-                        gp.player.attackDirection = 5;
-                        break;
-                    case 5:
-                        gp.player.attackDirection = 6;
-                        break;
-                    case 6:
-                        gp.player.attackDirection = 7;
-                        break;
-                    case 7:
-                        gp.player.attackDirection = 8;
-                        break;
+                    case 0 -> gp.player.attackDirection = 1;
+                    case 1 -> gp.player.attackDirection = 2;
+                    case 2 -> gp.player.attackDirection = 3;
+                    case 3 -> gp.player.attackDirection = 4;
+                    case 4 -> gp.player.attackDirection = 5;
+                    case 5 -> gp.player.attackDirection = 6;
+                    case 6 -> gp.player.attackDirection = 7;
+                    case 7 -> gp.player.attackDirection = 8;
                 }
             }
 
@@ -149,18 +133,10 @@ public class MouseHandler implements MouseListener, MouseMotionListener {
                     }
                     int slice = (int) Math.round(angle / 90) % 4;
                     switch (slice) {
-                        case 0:
-                            gp.player.direction = "right";
-                            break;
-                        case 1:
-                            gp.player.direction = "down";
-                            break;
-                        case 2:
-                            gp.player.direction = "left";
-                            break;
-                        case 3:
-                            gp.player.direction = "up";
-                            break;
+                        case 0 -> gp.player.direction = "right";
+                        case 1 -> gp.player.direction = "down";
+                        case 2 -> gp.player.direction = "left";
+                        case 3 -> gp.player.direction = "up";
                     }
                 }
             }
@@ -482,9 +458,7 @@ public class MouseHandler implements MouseListener, MouseMotionListener {
     }
 
     public boolean mouseAreaAbs(int x, int x2, int y, int y2){
-        if(mouseX > x && mouseX < x2 && mouseY > y && mouseY < y2){
-            return true;
-        } else return false;
+        return mouseX > x && mouseX < x2 && mouseY > y && mouseY < y2;
     }
 
     private void mouseSkillPageState1() {
