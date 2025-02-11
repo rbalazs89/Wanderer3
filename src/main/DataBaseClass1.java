@@ -91,21 +91,21 @@ public class DataBaseClass1 {
 
     public int currentMapLightingRadius(int map){
         return switch (map) {
-            case 1 -> 900;
-            case 2 -> 600;
-            case 3 -> 800;
-            case 4 -> 810;
-            default -> 820;
+            case 1 -> 570;
+            case 2 -> 500;
+            case 3 -> 700;
+            case 4 -> 720;
+            default -> 620;
         };
     }
 
 
     public int currentMapDarknessMultiplier(int map){
         return switch (map) {
-            case 1 -> 12;
-            case 2 -> 20;
-            case 3 -> 15;
-            default -> 11;
+            case 1 -> 13;
+            case 2 -> 18;
+            case 3 -> 14;
+            default -> 12;
         };
     }
 

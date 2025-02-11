@@ -204,7 +204,7 @@ public class A_Brother extends Fighter {
         handleDeathRelated();
     }
 
-    public void searchEnemies() {
+    public void searchEnemies() { // only called when sleeping
         for (int i = 0; i < gp.allFightingEntities.size(); i++) {
             Entity currentEntity = gp.allFightingEntities.get(i);
             if(isHostile(this,currentEntity)){
@@ -221,6 +221,7 @@ public class A_Brother extends Fighter {
         if(middleDistance(gp.player) < (int)(1.5 * GamePanel.tileSize)) {
             sleeping = false;
             actionWhenNear1 = true;
+            gp.playDialogue(94);
         }
     }
 

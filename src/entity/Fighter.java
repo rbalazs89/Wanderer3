@@ -16,7 +16,7 @@ public abstract class Fighter extends Entity {
     public int[] resist = new int[4];
     public int contactGraceCounter = 0;
     public boolean contactGraced = false;
-    public int contactGraceFrame = 35;
+    public int contactGraceFrame = 55;
     public boolean drawHpBar = false;
     public int experienceValue = 1;
     public int meleeAttackRange = GamePanel.tileSize;

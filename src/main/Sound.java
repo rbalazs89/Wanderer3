@@ -108,6 +108,12 @@ public class Sound {
         soundURL[86] = getClass().getResource("/sound/npc/childcry2.wav");
         soundURL[87] = getClass().getResource("/sound/npc/childcry3.wav");
         soundURL[88] = getClass().getResource("/sound/objects/eating.wav");
+        soundURL[89] = getClass().getResource("/sound/objects/eating.wav"); // TODO fleet mushroom book a1 enc
+        soundURL[90] = getClass().getResource("/sound/book/statueenc.wav"); // statue in middle of the town, google cloud -> UK eng -> male B
+        soundURL[91] = getClass().getResource("/sound/objects/eating.wav"); // TODO turtle enc
+        soundURL[92] = getClass().getResource("/sound/objects/eating.wav"); // TODO TBD sea kingdom
+        soundURL[93] = getClass().getResource("/sound/objects/eating.wav"); // TODO captain letter
+        soundURL[94] = getClass().getResource("/sound/dialogue/bro/bro_cellar_dialogue.wav"); // cellar bro, hailuo.ai/audio -> male debater
     }
 
     public void setFile(int i){

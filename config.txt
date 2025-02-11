@@ -1,6 +1,6 @@
 8
 8
 repsawnoff
-visibleexpon
-visibledamagetoyouon
-damagenumberson
+visibleexpoff
+visibledamagetoyouoff
+damagenumbersoff

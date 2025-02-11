@@ -46,6 +46,9 @@ public class SuperObject {
         this.gp = gp;
     }
 
+    public SuperObject() {
+    }
+
     public void draw(Graphics2D g2, GamePanel gp) {
         this.gp = gp;
         int screenX = worldX - gp.player.worldX + gp.player.screenX;

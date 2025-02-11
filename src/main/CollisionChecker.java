@@ -19,7 +19,7 @@ public class CollisionChecker {
         this.gp = gp;
     }
 
-    public void checkMapEnd(Entity entity){
+    public void checkMapEnd(Entity entity){ // only for butterflies atm
 
         int entityLeftWorldX = entity.worldX + entity.solidArea.x;
         int entityRightWorldX = entity.worldX + entity.solidArea.x + entity.solidArea.width;
@@ -232,7 +232,6 @@ public class CollisionChecker {
     }
 
     //NPC OR MONSTER COLLISION WITH PLAYER
-    /*
     public int checkEntity(Entity entity, Entity[][] target){
         int index = 999;
 
@@ -266,7 +265,7 @@ public class CollisionChecker {
             }
         }
         return index;
-    }*/
+    }
 
     public boolean dropItemTileCollisionCheck(int worldX, int worldY){
         int x1 = Math.min(Math.max((worldX + 16) / 64,0),gp.currentMapMaxCol - 1);
@@ -280,7 +279,7 @@ public class CollisionChecker {
         return !gp.tileM.tile[tileNum1].collision && !gp.tileM.tile[tileNum2].collision && !gp.tileM.tile[tileNum3].collision && !gp.tileM.tile[tileNum4].collision;
     }
 
-    //entity collision with player:
+    //entity collision with player, player doesnt call it, only entity
     public boolean checkPlayer(Entity entity) {
         boolean contactPlayer = false;
         // GET entity's solid area position
@@ -310,5 +309,93 @@ public class CollisionChecker {
         gp.player.solidArea.x = gp.player.solidAreaDefaultX;
         gp.player.solidArea.y = gp.player.solidAreaDefaultY;
         return contactPlayer;
+    }
+    /**
+     player collision values: 64 x 64
+     x = 12; = GamePanel.tileSize / 16,
+     solidArea.x = 40; = GamePanel.tileSize * 10 / 16,
+     y = 12; = GamePanel.tileSize * 3 / 16,
+     solidArea.y = 48; = GamePanel.tileSize * 12 / 16);
+
+     fineTileSize =  64 / 4 = 16;
+
+     Using this method for player only
+     */
+    public void fineTileCollision(Entity entity){
+        //int fineTileSize = 16;
+        switch (entity.direction) {
+            case "up" -> {
+                int topY = entity.worldY + entity.solidArea.y - entity.speed;
+                if(gp.tileM.fineCollisionMapManager.fineTileCollision[entity.worldX/16][topY/16] ||
+                        gp.tileM.fineCollisionMapManager.fineTileCollision[entity.worldX/16 + 1][topY/16] ||
+                        gp.tileM.fineCollisionMapManager.fineTileCollision[entity.worldX/16 + 2][topY/16]) {
+                    entity.collisionOn = true;
+                }
+                if(entity.collisionOn && !gp.tileM.fineCollisionMapManager.fineTileCollision[entity.worldX/16 + 1][topY/16]){
+                    if(!gp.tileM.fineCollisionMapManager.fineTileCollision[entity.worldX/16][topY/16]){
+                        entity.worldX --;
+                    } else {
+                        entity.worldX ++;
+                    }
+                }
+            }
+            case "down" -> {
+                int bottomY = entity.worldY + entity.solidArea.y + entity.solidArea.height + entity.speed;
+                if(gp.tileM.fineCollisionMapManager.fineTileCollision[entity.worldX/16][bottomY/16] ||
+                        gp.tileM.fineCollisionMapManager.fineTileCollision[entity.worldX/16 + 1][bottomY/16] ||
+                        gp.tileM.fineCollisionMapManager.fineTileCollision[entity.worldX/16 + 2][bottomY/16]) {
+                    entity.collisionOn = true;
+                }
+                if(entity.collisionOn && !gp.tileM.fineCollisionMapManager.fineTileCollision[entity.worldX/16 + 1][bottomY/16]){
+                    if(gp.tileM.fineCollisionMapManager.fineTileCollision[entity.worldX/16][bottomY/16]){
+                        entity.worldX --;
+                    } else {
+                        entity.worldX ++;
+                    }
+                }
+            }
+            case "left" -> {
+                int leftX = entity.worldX + entity.solidArea.x - entity.speed;
+                if(gp.tileM.fineCollisionMapManager.fineTileCollision[leftX][entity.worldY/16] ||
+                        gp.tileM.fineCollisionMapManager.fineTileCollision[leftX][entity.worldY/16 + 1] ||
+                        gp.tileM.fineCollisionMapManager.fineTileCollision[leftX][entity.worldY/16 + 2]) {
+                    entity.collisionOn = true;
+                }
+                if(entity.collisionOn && !gp.tileM.fineCollisionMapManager.fineTileCollision[leftX][entity.worldY/16 + 1]) {
+                    if(!gp.tileM.fineCollisionMapManager.fineTileCollision[leftX][entity.worldY/16 + 1]){
+                        if(!gp.tileM.fineCollisionMapManager.fineTileCollision[leftX][entity.worldY/16]){
+                            entity.worldY --;
+                        } else {
+                            entity.worldY ++;
+                        }
+                    }
+                }
+            }
+            case "right" -> {
+                int rightX = entity.worldX + entity.solidArea.x + entity.solidArea.width+ entity.speed;
+                if(gp.tileM.fineCollisionMapManager.fineTileCollision[rightX][entity.worldY/16] ||
+                        gp.tileM.fineCollisionMapManager.fineTileCollision[rightX][entity.worldY/16 + 1] ||
+                        gp.tileM.fineCollisionMapManager.fineTileCollision[rightX][entity.worldY/16 + 2]) {
+                    entity.collisionOn = true;
+                }
+                if(entity.collisionOn && !gp.tileM.fineCollisionMapManager.fineTileCollision[rightX][entity.worldY/16 + 1]) {
+                    if(!gp.tileM.fineCollisionMapManager.fineTileCollision[rightX][entity.worldY/16 + 1]){
+                        if(!gp.tileM.fineCollisionMapManager.fineTileCollision[rightX][entity.worldY/16]){
+                            entity.worldY --;
+                        } else {
+                            entity.worldY ++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void movePlayerIfStuckByDiagonalTile(){
+
+    }
+
+    public void movePlayerIfStuckByObject(){
+
     }
 }

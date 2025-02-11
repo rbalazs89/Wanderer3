@@ -19,7 +19,7 @@ public class TileManager {
     public BufferedImage tileSheetImage;
     //TODO fine tile
     public boolean fineTileActive = false;
-    private FineCollisionMapManager fineCollisionMapManager;
+    public FineCollisionMapManager fineCollisionMapManager;
 
     public TileManager(GamePanel gp){
         this.gp = gp;
@@ -27,6 +27,7 @@ public class TileManager {
         getTileImage();
         //getTileImageFromSheetAct1(); didnt work well, better load time, but draw method is gives black lines sometimes
         getTileManagerDataCurrentMap(gp.currentMap);
+        //TODO this.fineCollisionMapManager = new FineCollisionMapManager(this);
     }
 
     public void getTileManagerDataCurrentMap(int mapNumber){

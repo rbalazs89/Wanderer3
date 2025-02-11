@@ -477,7 +477,7 @@ public class AssetSetter {
     }
 
     private void setObjectMap13(int currentMap){
-        gp.obj[currentMap][0] = new OBJ_BookInLibrary(gp);
+        gp.obj[currentMap][0] = new OBJ_BookInLibrary(gp, 90);
         gp.obj[currentMap][0].worldX = 4 * tileSize;
         gp.obj[currentMap][0].worldY = 3 * tileSize;
         ((OBJ_BookInLibrary) gp.obj[currentMap][0]).setTextTownStatue();

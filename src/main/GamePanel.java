@@ -81,6 +81,7 @@ public class GamePanel extends JPanel implements Runnable{
     public MouseHandler mouseH = new MouseHandler(this);
     public Sound music = new Sound();
     public Sound se = new Sound();
+    public Sound dialogue = new Sound();
     public HarryPotterPuzzle harryPotterPuzzle = new HarryPotterPuzzle(this);
 
     Config config = new Config(this);
@@ -144,6 +145,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int gameEndState = 11;
     public final int newGameLoadingState = 12;
     public final int loadSavedGameLoadingState = 13;
+    public StateHandler stateHandler = new StateHandler(this);
 
     public final  UtilityTool uTool = new UtilityTool(this);
     // TODO not used for now, player middle position is used, will be calculated from player class
@@ -466,6 +468,16 @@ public class GamePanel extends JPanel implements Runnable{
         se.play();
     }
 
+    public void playDialogue(int i) {
+        dialogue.stop();
+        dialogue.setFile(i);
+        dialogue.play();
+    }
+
+    public void stopDialogue(int i){
+        dialogue.stop();
+    }
+
     public void testMusic(int i) {
         music.setFile(i);
         music.play();
@@ -686,7 +698,6 @@ public class GamePanel extends JPanel implements Runnable{
                 startSinging(currentMap);
             }
         }
-
     }
 
     public void resetPuzzles(){

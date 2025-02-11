@@ -5,9 +5,20 @@ import main.GamePanel;
 import java.awt.*;
 
 public class OBJ_BookInLibrary extends SuperObject {
+    public int soundNumber;
 
     public OBJ_BookInLibrary(GamePanel gp) {
         super(gp);
+        getImage();
+        interactable = true;
+        getGlitterImages();
+        textToShow = "";
+        soundNumber = -1;
+    }
+
+    public OBJ_BookInLibrary(GamePanel gp, int soundNumber){
+        this.gp = gp;
+        this.soundNumber = soundNumber;
         getImage();
         interactable = true;
         getGlitterImages();
@@ -20,6 +31,10 @@ public class OBJ_BookInLibrary extends SuperObject {
 
     public void interact(){
         currentlyInteracting = true;
+        if(soundNumber != -1){
+            gp.playDialogue(soundNumber);
+        }
+        // TODO allow to stop dialogue
     }
 
     public void drawSpecial(Graphics2D g2){
@@ -28,6 +43,10 @@ public class OBJ_BookInLibrary extends SuperObject {
         }
         if(middleDistance(gp.player) >= GamePanel.tileSize * 3 / 2){
             currentlyInteracting = false;
+        }
+        if(currentlyInteracting && gp.keyH.escapePressed){
+            currentlyInteracting = false;
+            gp.keyH.escapePressed = false;
         }
     }
 

@@ -175,7 +175,7 @@ public class Player extends Entity {
 
         solidArea = new Rectangle(
                 3 * GamePanel.tileSize / 16,
-                GamePanel.tileSize * 3/ 16,
+                GamePanel.tileSize * 7 / 32,
                 GamePanel.tileSize * 10 / 16,
                 GamePanel.tileSize * 12 / 16);
         solidAreaDefaultX = solidArea.x;
@@ -782,11 +782,13 @@ public class Player extends Entity {
         collisionOn = false;
         gp.cChecker.checkTile(this);
 
+
         //CHECK OBJECT COLLISION
         int objIndex = gp.cChecker.checkObject(this, true);
         pickupObject(objIndex);
 
         // COLLISION MONSTER
+        gp.cChecker.checkEntity(this, gp.fighters);
         //int monsterIndex = gp.cChecker.checkEntity(this, gp.fighters);
         //contactMonster(monsterIndex);
     }
@@ -1430,9 +1432,16 @@ public class Player extends Entity {
 
     public void respawn(int[] respawnData){
         //respawn sound
+        for (int i = 0; i < gp.allFightingEntities.size(); i++) {
+            Entity current = gp.allFightingEntities.get(i);
+            if(current instanceof Fighter){
+                ((Fighter) current).targetEntity = null;
+            }
+        }
+
         gp.playSE(73);
 
-        //for now same as maptransition object but enemy health set to max and player health set to half
+        //for now same as maptransition object
         gp.gameState = gp.transitionState;
 
         //puzzle
@@ -1638,8 +1647,9 @@ public class Player extends Entity {
     public void testCommand() {
         //gp.ui.drawTestOn = !gp.ui.drawTestOn;
         gp.keyH.lPressed = false;
+        gp.dialogue.stop();
 
-        new Teleport(gp);
+        //new Teleport(gp);
     }
 
     public int auraRadius() {

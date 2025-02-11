@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, lPressed, fPressed, qPressed;
+    public boolean escapePressed;
     public boolean checkDrawTime;
     //Only for dashing:
     public boolean upPressed2, downPressed2, leftPressed2, rightPressed2;
@@ -93,6 +94,8 @@ public class KeyHandler implements KeyListener {
             }
 
             if(code == KeyEvent.VK_ESCAPE){
+                escapePressed = true; // TODO used to close book will need to update this with the whole ui class
+                // TODO need to separate functions
                 gp.gameState = gp.mainMenuState;
                 gp.ui.commandNum = 0;
                 gp.ui.previousCommandNum = 0;
