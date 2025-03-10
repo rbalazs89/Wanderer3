@@ -111,7 +111,7 @@ public class TileManager {
         setup2(70, "act1/stonewall_2", true);
         setup2(71, "act1/stonedesk_1", true);
         setup2(72, "act1/stonedesk_2", true);
-        //setup2(73, "act1/stonedesk_1", true); // duplicate mistake
+        setup2(73, "act1/stonedesk_1", true); // duplicate mistake, not used
         setup2(74, "act1/stonebarrel", true); // 60th
         setup2(75, "act1/stonesmalldesk", true);
         setup(76, "act1/pebble", true); // not used
@@ -137,7 +137,6 @@ public class TileManager {
         setup2(96, "act1/cave", true); // duplicate for collision
         setup2(97, "act1/bosstile2", false); // not used
         setup2(98, "act1/bosstile3", false);
-        //skip 99
         setup(99, "nullimage", false); // endblock
         setup2(100, "act1/bosswall", true);
         setup2(101, "act1/bosswall_side_left", true);
@@ -146,7 +145,7 @@ public class TileManager {
         setup2(104, "act1/totemtile", false);
     }
 
-    /*
+
     public void getTileImageFromSheetAct1(){
         tileSheetImage = setup("act1/tileSheet");
         setupTileFromSheetAct1(0, 1, 1, false);
@@ -243,7 +242,7 @@ public class TileManager {
         setupTileFromSheetAct1(93, 8, 2, true);
         setupTileFromSheetAct1(94, 8, 3, true);
         setupTileFromSheetAct1(95, 8, 4, true);
-    }*/
+    }
 
     public void setup(int index, String imagePath, boolean collision){
         UtilityTool uTool = new UtilityTool();

@@ -87,15 +87,16 @@ public class MapBlockManager {
             case 2:
                 break;
             case 3:
-                mapBlock[0] = new MapBlock();
-                mapBlock[0].worldX = 41 * GamePanel.tileSize;
-                mapBlock[0].worldY = (int)(37.5 * GamePanel.tileSize);
-                mapBlock[0].image = setup("/mapblock/a1/tortoiseden", GamePanel.tileSize * 3, GamePanel.tileSize * 2);
-
-                mapBlock[1] = new MapBlock();
-                mapBlock[1].worldX = 38 * GamePanel.tileSize;
-                mapBlock[1].worldY = 28 * GamePanel.tileSize;
-                mapBlock[1].image = setup("/mapblock/a1/hole", GamePanel.tileSize, GamePanel.tileSize / 2);
+                setMap3();
+//                mapBlock[0] = new MapBlock();
+//                mapBlock[0].worldX = 2624;
+//                mapBlock[0].worldY = 2400;
+//                mapBlock[0].image = setup("/mapblock/a1/tortoiseden", GamePanel.tileSize * 3, GamePanel.tileSize * 2);
+//
+//                mapBlock[1] = new MapBlock();
+//                mapBlock[1].worldX = 38 * GamePanel.tileSize;
+//                mapBlock[1].worldY = 28 * GamePanel.tileSize;
+//                mapBlock[1].image = setup("/mapblock/a1/hole", GamePanel.tileSize, GamePanel.tileSize / 2);
 
                 break;
             case 5:
@@ -813,6 +814,18 @@ public class MapBlockManager {
         mapBlock[33].worldX = 1536;
         mapBlock[33].worldY = 2624;
         mapBlock[33].image = setup("/mapblock/a1/fruittree");
+    }
+
+    public void setMap3(){
+        mapBlock[0] = new MapBlock();
+        mapBlock[0].worldX = 2624;
+        mapBlock[0].worldY = 2400;
+        mapBlock[0].image = setup("/mapblock/a1/tortoiseden");
+
+        mapBlock[1] = new MapBlock();
+        mapBlock[1].worldX = 2432;
+        mapBlock[1].worldY = 1792;
+        mapBlock[1].image = setup("/mapblock/a1/hole");
     }
 
     public void setMap13(){
