@@ -21,8 +21,8 @@ public class MapBlockManager {
         savedImages = new BufferedImage[100];
     }
 
-    public void draw(Graphics2D g2, GamePanel gp) {
-        this.gp = gp;
+    public void draw(Graphics2D g2) {
+//        this.gp = gp;
         for (int i = 0; i < mapBlock.length; i++) {
             //if (mapBlock[i] != null) {
             if(mapBlock[i] == null) {
@@ -728,7 +728,7 @@ public class MapBlockManager {
         mapBlock[16] = new MapBlock();
         mapBlock[16].worldX = 1459;
         mapBlock[16].worldY = 1472;
-        mapBlock[16].image = setup("/mapblock/a1/statue");
+        mapBlock[16].image = setup("/mapblock/a1/townstatue");
 
         mapBlock[17] = new MapBlock();
         mapBlock[17].worldX = 1536;

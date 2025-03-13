@@ -14,7 +14,6 @@ public class Sound {
     public int volumeScale = 8; //starting volume
     public float volume;
 
-    //
     public int fadeOutCounter = 0;
     public int fadeOutOriginalVolumeScale;
 

@@ -15,6 +15,7 @@ public class DecorManager {
     GamePanel gp;
     public int[][] mapLocationNum;
     Decor[] images = new Decor[300];
+
     public DecorManager(GamePanel gp) {
         this.gp = gp;
         getDecorImage();

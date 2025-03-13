@@ -356,10 +356,12 @@ public class GamePanel extends JPanel implements Runnable{
                 tileM.draw(g2);
 
                 decorManager.draw(g2);
-                mapBlockManager.draw(g2, this);
+//                mapBlockManager.draw(g2, this);
+                mapBlockManager.draw(g2);
                 for (int i = 0; i < obj[1].length; i++) {
                     if (obj[currentMap][i] != null) {
                         if(!obj[currentMap][i].interactable){
+//                            obj[currentMap][i].draw(g2, this);
                             obj[currentMap][i].draw(g2, this);
                         }
                     }
